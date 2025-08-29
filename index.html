@@ -37,12 +37,12 @@
     animation: water-flow 8s linear infinite;
     text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3); /* Lighter blue glow */
     /* --- End New Styling --- */
-    font-size: clamp(1.2rem, 2.5vw, 1.5rem); 
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     letter-spacing: 1px;
     opacity: 0;
     transform: translateY(10px);
     animation: fadeUp 1s ease forwards;
-    margin-top: 0; 
+    margin-top: 0;
   }
   h3 {
     text-align: center;
@@ -55,8 +55,8 @@
     text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); /* White inner/outer glow */
     /* --- End New Styling --- */
     font-weight: normal;
-    margin-top: 8px; 
-    font-size: clamp(0.8rem, 1.5vw, 1rem); 
+    margin-top: 8px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
     opacity: 0;
     transform: translateY(10px);
     animation: fadeUp 1s ease forwards;
@@ -127,14 +127,14 @@
     overflow: hidden;
     border-radius: 10px;
     user-select: none;
-    transform: scale(0.98); 
+    transform: scale(0.98);
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease, box-shadow 0.8s ease;
     filter: brightness(0.89);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   }
-  
+
   .slider-container.in-focus {
-    transform: scale(1.06); 
+    transform: scale(1.06);
     filter: brightness(1);
     box-shadow: none;
   }
@@ -200,12 +200,12 @@
     color: white;
     font-size: 12px;
   }
-  
+
   /* NEW: Water-like animation and glass effect for menu button and volume panel */
   #menu-btn, #volume-panel {
-    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f); 
+    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
-    backdrop-filter: blur(10px); 
+    backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
@@ -213,8 +213,8 @@
   }
 
   #menu-btn:hover, #volume-panel:hover {
-    animation: water-flow 8s linear infinite; 
-    transform: scale(1.05); 
+    animation: water-flow 8s linear infinite;
+    transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
   }
 
@@ -319,14 +319,14 @@
     left: 20px;
     color: white;
     border-radius: 10px;
-    width: 250px; 
-    padding: 20px; 
+    width: 250px;
+    padding: 20px;
     z-index: 10000;
-    background: rgba(17, 17, 17, 0.6); 
-    backdrop-filter: blur(15px); 
-    border: 1px solid rgba(255, 255, 255, 0.15); 
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    display: none; 
+    display: none;
   }
   #contact-popup h3 {
     margin: 0;
@@ -340,8 +340,8 @@
   }
   #contact-popup a {
     display: block;
-    padding: 10px; 
-    margin-top: 8px; 
+    padding: 10px;
+    margin-top: 8px;
     border-radius: 6px;
     text-decoration: none;
     font-size: 14px;
@@ -352,16 +352,39 @@
   #contact-popup a:hover {
     background: rgba(51, 51, 51, 0.9);
   }
-  
+
   /* New CSS for blurred placeholders */
   .blurred {
     filter: blur(15px);
-    transition: filter 0.8s ease; 
+    transition: filter 0.8s ease;
   }
   .loaded {
     filter: blur(0);
   }
 </style>
+  <script async>
+    // Moved the data fetching logic to the head with 'async'
+    let allImagePairs = [];
+    const jsonPath = 'images.json';
+
+    fetch(jsonPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        allImagePairs = data;
+        // Check if the gallery element is available before trying to load
+        if (document.getElementById('gallery')) {
+          loadAllBatches();
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching the gallery data:', error);
+      });
+  </script>
 </head>
 <body>
 
@@ -447,7 +470,7 @@
 
   // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
   let audio = null;
-  const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3"; 
+  const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
   const volumeSlider = document.getElementById('volume-slider');
   const volumeIcon = document.getElementById('volume-icon');
   let hasInteracted = false;
@@ -514,16 +537,15 @@
   // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
 
   // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE ---
-  
+
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
   let currentBatch = 0;
-  let allImagePairs = []; // This will be populated from the JSON file
 
   function createSlider(pair) {
     const container = document.createElement("div");
     container.classList.add("slider-container");
-    
+
     // Create and append images with blur class initially
     const afterImg = document.createElement("img");
     afterImg.src = pair.after;
@@ -542,7 +564,7 @@
     const handle = document.createElement("div");
     handle.classList.add("handle");
     container.appendChild(handle);
-    
+
     gallery.appendChild(container);
 
     // Remove blur class once images are loaded
@@ -620,25 +642,6 @@
   // Run on page load to set initial focus
   window.addEventListener('load', updateFocus);
 
-  // Start the batch loading process by fetching the data
-  document.addEventListener('DOMContentLoaded', () => {
-    const jsonPath = 'images.json';
-
-    fetch(jsonPath)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        allImagePairs = data;
-        loadAllBatches();
-      })
-      .catch(error => {
-        console.error('Error fetching the gallery data:', error);
-      });
-  });
   // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
 </script>
 
