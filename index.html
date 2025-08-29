@@ -514,25 +514,11 @@
   // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
 
   // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE ---
-  const allImagePairs = [
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before1.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after1.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before9.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after9.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before4.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after4.jpeg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before2.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after2.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before6.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after6.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before5.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after5.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before7.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after7.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before8.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after8.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before10.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after10.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before11.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after11.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before12.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after12.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before13.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after13.jpg" },
-    { before: "https://sahil-aditya.github.io/Creative_Gallery/images/before3.jpg", after: "https://sahil-aditya.github.io/Creative_Gallery/images/after3.jpg" }
-  ];
-
+  
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
   let currentBatch = 0;
+  let allImagePairs = []; // This will be populated from the JSON file
 
   function createSlider(pair) {
     const container = document.createElement("div");
@@ -634,9 +620,25 @@
   // Run on page load to set initial focus
   window.addEventListener('load', updateFocus);
 
-  // Start the batch loading process
-  document.addEventListener('DOMContentLoaded', loadAllBatches);
+  // Start the batch loading process by fetching the data
+  document.addEventListener('DOMContentLoaded', () => {
+    const jsonPath = 'images.json';
 
+    fetch(jsonPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        allImagePairs = data;
+        loadAllBatches();
+      })
+      .catch(error => {
+        console.error('Error fetching the gallery data:', error);
+      });
+  });
   // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
 </script>
 
