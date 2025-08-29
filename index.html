@@ -263,36 +263,6 @@
     z-index: 10;
   }
 
-  /* Loading Spinner */
-  #loading-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fff;
-    border-top-color: transparent;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    display: none; /* Initially hidden */
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 11; /* Above other elements */
-  }
-
-  .spinner-hidden {
-    display: none;
-  }
-
-  .spinner-visible {
-    display: block;
-  }
-
-  @keyframes spin {
-    to {
-      transform: translate(-50%, -50%) rotate(360deg);
-    }
-  }
-
   .volume-slider {
     -webkit-appearance: none;
     appearance: none;
@@ -403,7 +373,6 @@
 
 <div id="volume-panel" class="control-btn" style="right: 20px;">
   <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
-  <div id="loading-spinner" class="spinner-hidden"></div>
   <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
 </div>
 
@@ -481,27 +450,14 @@
   const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3"; 
   const volumeSlider = document.getElementById('volume-slider');
   const volumeIcon = document.getElementById('volume-icon');
-  const loadingSpinner = document.getElementById('loading-spinner'); // New: Get the spinner element
   let hasInteracted = false;
   let isExpanded = false;
-  let isLoading = false; // New: Loading state flag
 
   function initializeAudio() {
     if (!audio) {
       audio = new Audio(musicSource);
       audio.loop = true;
       audio.volume = 0;
-
-      // New: Add event listener to hide spinner once music is ready
-      audio.addEventListener('canplaythrough', () => {
-        if (isLoading) {
-          loadingSpinner.classList.remove('spinner-visible');
-          loadingSpinner.classList.add('spinner-hidden');
-          volumeIcon.style.display = 'block';
-          isLoading = false;
-          audio.play(); // Play the music now that it's loaded
-        }
-      });
     }
   }
 
@@ -523,8 +479,6 @@
   });
 
   volumeIcon.addEventListener('click', () => {
-    if (isLoading) return; // Prevent multiple clicks while loading
-
     initializeAudio();
 
     // Toggle the expanded state of the panel
@@ -538,13 +492,10 @@
 
     // Play/Pause logic
     if (!hasInteracted) {
-      isLoading = true;
-      volumeIcon.style.display = 'none'; // Hide the icon
-      loadingSpinner.classList.remove('spinner-hidden');
-      loadingSpinner.classList.add('spinner-visible'); // Show the spinner
-
-      // The canplaythrough event will handle playing the audio after loading
-      audio.load(); // Start loading the music file
+      audio.volume = 0.5;
+      volumeSlider.value = 0.5;
+      volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
+      audio.play();
       hasInteracted = true;
     } else {
       if (audio.volume > 0) {
@@ -562,7 +513,8 @@
   });
   // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
 
-  // ... (rest of your existing script for the gallery) ...
+  // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE ---
+  
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
   let currentBatch = 0;
@@ -687,6 +639,7 @@
         console.error('Error fetching the gallery data:', error);
       });
   });
+  // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
 </script>
 
 </body>
