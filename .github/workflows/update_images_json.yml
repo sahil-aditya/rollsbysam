@@ -14,6 +14,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
+
       - name: Generate new images.json
         run: |
           # Create a temporary array for new images
@@ -52,4 +55,4 @@ jobs:
           git add images.json
           git commit -m "chore: Auto-generated images.json"
           git push
-
+          
