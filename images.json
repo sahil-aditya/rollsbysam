@@ -50,5 +50,57 @@
   {
     "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before3.jpg",
     "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after3.jpg"
+  },
+  {
+    "before": "images/before1.jpg",
+    "after": "after1.jpg"
+  },
+  {
+    "before": "images/before10.jpg",
+    "after": "after10.jpg"
+  },
+  {
+    "before": "images/before11.jpg",
+    "after": "after11.jpg"
+  },
+  {
+    "before": "images/before12.jpg",
+    "after": "after12.jpg"
+  },
+  {
+    "before": "images/before13.jpg",
+    "after": "after13.jpg"
+  },
+  {
+    "before": "images/before14.jpg",
+    "after": "after14.jpg"
+  },
+  {
+    "before": "images/before2.jpg",
+    "after": "after2.jpg"
+  },
+  {
+    "before": "images/before3.jpg",
+    "after": "after3.jpg"
+  },
+  {
+    "before": "images/before5.jpg",
+    "after": "after5.jpg"
+  },
+  {
+    "before": "images/before6.jpg",
+    "after": "after6.jpg"
+  },
+  {
+    "before": "images/before7.jpg",
+    "after": "after7.jpg"
+  },
+  {
+    "before": "images/before8.jpg",
+    "after": "after8.jpg"
+  },
+  {
+    "before": "images/before9.jpg",
+    "after": "after9.jpg"
   }
 ]
