@@ -1,0 +1,55 @@
+name: Update Images JSON
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'images/**'
+
+jobs:
+  generate_json:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: List image files and generate JSON
+        id: generate
+        run: |
+          echo "Listing all image files in the 'images' directory..."
+          ls -R images/
+          
+          echo "Generating new images.json file..."
+          ls images/ | sort | while read -r line
+          do
+            if [[ $line == *"_before."* ]]; then
+              before_path="images/$line"
+              after_path=$(echo $line | sed 's/_before/_after/')
+              echo "  - Before: $before_path, After: $after_path"
+              
+              if [ -f "$after_path" ]; then
+                echo "    Found pair: $line and $(basename $after_path)"
+                echo "{\"before\": \"$before_path\", \"after\": \"$after_path\"}" >> images.json.tmp
+              else
+                echo "    Warning: Missing 'after' image for $line"
+              fi
+            fi
+          done
+
+      - name: Finalize JSON file
+        run: |
+          echo "[" > images.json
+          if [ -f images.json.tmp ]; then
+            sed '$s/$/},/g' images.json.tmp | sed 's/},$/}/g' >> images.json
+          fi
+          echo "]" >> images.json
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'actions@github.com'
+          git add images.json
+          git commit -m "chore: Auto-generated images.json"
+          git push
+          
