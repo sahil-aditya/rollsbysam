@@ -14,36 +14,36 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: List image files and generate JSON
-        id: generate
+      - name: Generate new images.json
         run: |
-          echo "Listing all image files in the 'images' directory..."
-          ls -R images/
-          
-          echo "Generating new images.json file..."
+          # Create a temporary array for new images
+          echo "[]" > new_images.json
+
+          # Find all pairs of before/after images in the images folder
           ls images/ | sort | while read -r line
           do
             if [[ $line == *"_before."* ]]; then
               before_path="images/$line"
-              after_path=$(echo $line | sed 's/_before/_after/')
-              echo "  - Before: $before_path, After: $after_path"
-              
+              after_path=$(echo "$line" | sed 's/_before/_after/')
+
+              # Check if the "after" image exists
               if [ -f "$after_path" ]; then
-                echo "    Found pair: $line and $(basename $after_path)"
-                echo "{\"before\": \"$before_path\", \"after\": \"$after_path\"}" >> images.json.tmp
-              else
-                echo "    Warning: Missing 'after' image for $line"
+                # Add the new pair to the temporary array
+                jq '. += [{"before": "'"$before_path"'", "after": "'"$after_path"'"}]' new_images.json > tmp.json && mv tmp.json new_images.json
               fi
             fi
           done
 
-      - name: Finalize JSON file
-        run: |
-          echo "[" > images.json
-          if [ -f images.json.tmp ]; then
-            sed '$s/$/},/g' images.json.tmp | sed 's/},$/}/g' >> images.json
+          # Combine old and new image lists
+          if [ -f images.json ]; then
+            jq --slurp '.[0] + .[1]' images.json new_images.json > combined.json
+            mv combined.json images.json
+          else
+            mv new_images.json images.json
           fi
-          echo "]" >> images.json
+
+          echo "Final images.json content:"
+          cat images.json
 
       - name: Commit and push changes
         run: |
@@ -52,4 +52,4 @@ jobs:
           git add images.json
           git commit -m "chore: Auto-generated images.json"
           git push
-          
+
