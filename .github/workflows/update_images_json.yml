@@ -25,12 +25,12 @@ jobs:
           # Find all pairs of before/after images in the images folder
           ls images/ | sort | while read -r line
           do
-            if [[ $line == *"_before."* ]]; then
+            if [[ $line == *"before"* ]]; then
               before_path="images/$line"
-              after_path=$(echo "$line" | sed 's/_before/_after/')
+              after_path=$(echo "$line" | sed 's/before/after/')
 
               # Check if the "after" image exists
-              if [ -f "$after_path" ]; then
+              if [ -f "images/$after_path" ]; then
                 # Add the new pair to the temporary array
                 jq '. += [{"before": "'"$before_path"'", "after": "'"$after_path"'"}]' new_images.json > tmp.json && mv tmp.json new_images.json
               fi
