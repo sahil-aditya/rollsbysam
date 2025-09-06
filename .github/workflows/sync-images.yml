@@ -16,7 +16,7 @@ jobs:
 
       - name: Configure rclone with service account
         run: |
-          echo '${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}' > sa.json
+          echo -e "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
           mkdir -p ~/.config/rclone
           {
             echo "[gdrive]"
