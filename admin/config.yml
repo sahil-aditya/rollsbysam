@@ -1,6 +1,6 @@
 backend:
-  name: github
-  repo: sahil-aditya/Creative_Gallery
+  name: google-drive
+  repo: "1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w"
   branch: main
 
 media_folder: "images"
