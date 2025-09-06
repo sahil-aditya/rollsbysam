@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "scenic-parity-383518",
+  "private_key_id": "5be20b01af8e6ccb50ee8d141bbe9cd403434e4a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDGFzVHRHr/rzFc\nk7PFezjvX+KeSZdgyk06GHfisbjR3E7VXSs2QBWEqFGD5UVUXgwTCGJw1G1h3Mu4\nYQwiqFhICEtwFz89/5WluN/QT+Hy+L9tTT5OyPNYiYEX/HSL85RF3VpJKPKvX/+L\ni6zKtXgvjpjw5Jf+JHSMF5idPDx+7eMTSfyBxLYrzaDFKGoTWXwDHSwJ1bS1+B2U\ng7a3evNcPEZGq1v6agervgBe7T6dQAdzbzbMPGSMMnnGitVzcm3x2+fsYo6ffsqH\nK2omu7KHrU+Q5zFBCnXs6HCHmLSCUAo+EOYtSqNYIaQazLWwsdWvH7ectviTGtB7\n+vmTE1HBAgMBAAECggEAVtnKFEskGoJ3g/2GbmlOVzWVKI1ff6JzJaugtJXzUJ/l\nOIs27Pw/8v/RbaDSOuFZLecZMhsRMj0aXOa/6VoiCsMIQEcRBV/P/u8FwlGj4WHK\nnGOnk+drOkBfh2K6vrm3IsKgWT9I2Deg1VASHHZgEYnV6JhxQ448Q0f9M8M7SvLA\niT7jvwVqtFDsnMh8re8/r4Qds6MlmUSQ9qBjmIROoBIX35QafngkZT74si/uG7t5\nZN5wygHYrZhKGB2rmfCevry7CKITHRIdsGUCfy2l3p+9PNMnM57EeJhccsOszxo7\nADbl9QrMDiVfeD3zEr4zXrvClm82xzq5BgZu3ERXWQKBgQDi6YgWjBna0FZGqXT4\naxW5L9HggCEnsOaFFf5XKl5A0jENBcBXZOqOphonInMQ0biip/96t5xQpIXvz6AN\nmcE8QS0Oeog2E92SxNF+Xv9DcOqlVq8Etkc55e5i/AzQ7YdvIzZpBpDAivv6PSgB\ns2svekTaS4Y+55qrK32S64dkywKBgQDfe9pWKgs0XRdNKBxY0HtgVcgV9aSTCe6G\nzrpz8gmfD2RVxCuOZ+T6SKA2zywc5+964v6AHfBToRqJNmgsOeAD6301cqmmXe6P\nx1EA9wHvXNgw6czw/D/pFljJATOekBH7ZIjJ/FQ0ApupbHuHxnRe7Hc2CMb6lEUA\n54HmtepeIwKBgEUbyw7S7Kzv9tbelXlzY9Ja9hjh7TchcZPm9uelR7+GRNoqfkIf\nwjBf9mck3taoiQtBD1ZYxYrqEMDRA3Yg9fFcCFT4jLOrqTgiKYvLcwMfSNfCZtuQ\niHDhzpDnIyAet7jpiJDEJyH9MnEsXxrlgiebnYy+o8xUzY6EWGJ+yWWxAoGASFjv\n9bTmq6z3PiMeCiJzzlv2yiUbgf5VGY8TDTXtp3B0Ks+2ygMYPW4Fb7jhrvnmrQGP\nIiqPAoPE82aJksepnZs+jW7xPMpr0F/V+Vn9Zl/IHQ2TKvB+QBbb5zZcX5iEOb3y\nCnGFUNEHU3GrC+lTAufKL9PnlncpX4GSq/14QcECgYBhElZ4cE5bB9ewclf2GH35\nx3Ya7wlABogPg9PMqJm9GZ4yX7/VesRJLWbtgW/97VMO3Vz8+1Tl+4HFURJ/B/tL\nQ/6Y/Wq6GYHRzPyEEpnqQB3yU3XonbEZPh/R8gN281wsDJIrqHnoV3MA0UFCuV6V\nC83JFZ+GuaQvbRYtjDT95A==\n-----END PRIVATE KEY-----\n",
+  "client_email": "github-sync@scenic-parity-383518.iam.gserviceaccount.com",
+  "client_id": "106932841392774437535",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/github-sync%40scenic-parity-383518.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
