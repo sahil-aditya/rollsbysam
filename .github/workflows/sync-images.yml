@@ -19,11 +19,18 @@ jobs:
           echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
           rclone config create gdrive drive \
             scope=drive \
-            service_account_file=sa.json
+            service_account_file=sa.json \
+            --non-interactive
+
+      - name: Test connection
+        run: |
+          rclone ls gdrive: --max-depth 1 || true
 
       - name: Sync files from Google Drive
         run: |
-          rclone copy gdrive:1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w ./images --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w --progress
+          rclone copy gdrive: ./images \
+            --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
+            --progress -vv
 
       - name: Commit and push changes
         run: |
