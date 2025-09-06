@@ -1,10 +1,9 @@
 name: Sync Images from Google Drive
 
 on:
-  workflow_dispatch: # Allows you to manually trigger the workflow
-  # If you want to run it on a schedule, uncomment the following section:
+  workflow_dispatch:
   # schedule:
-  #   - cron: '0 8 * * *' # Runs every day at 8:00 AM
+  #   - cron: '0 8 * * *'
 
 jobs:
   sync:
@@ -14,11 +13,11 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download files from Google Drive
-        uses: ahmed-al-fawzan/google-drive-downloader@v1.1
+        uses: ndrecha/google-drive-downloader@v1 # This is the new, working action
         with:
           credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
           folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
-          destination: ./images # The folder to save images in your repository
+          destination: ./images
 
       - name: Commit and push changes
         run: |
