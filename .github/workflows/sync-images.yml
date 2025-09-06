@@ -2,8 +2,6 @@ name: Sync Images from Google Drive
 
 on:
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 8 * * *'
 
 jobs:
   sync:
@@ -12,18 +10,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install gdrive CLI
+      - name: Install rclone
         run: |
-          sudo apt-get update
-          sudo apt-get install -y gdrive
+          curl https://rclone.org/install.sh | sudo bash
+
+      - name: Configure rclone
+        run: |
+          echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
+          rclone config create gdrive drive \
+            scope=drive \
+            service_account_file=sa.json
 
       - name: Sync files from Google Drive
-        uses: gautamkrishnar/google-drive-upload@v1.3.1
-        with:
-          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
-          destination: ./images
-          command: download
+        run: |
+          rclone copy gdrive:1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w ./images --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w --progress
 
       - name: Commit and push changes
         run: |
