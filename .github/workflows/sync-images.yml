@@ -18,10 +18,12 @@ jobs:
         run: |
           echo '${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}' > sa.json
           mkdir -p ~/.config/rclone
-          printf "[gdrive]\n"
-          printf "type = drive\n"
-          printf "scope = drive\n"
-          printf "service_account_file = %s/sa.json\n" "$(pwd)" > ~/.config/rclone/rclone.conf
+          {
+            echo "[gdrive]"
+            echo "type = drive"
+            echo "scope = drive"
+            echo "service_account_file = $(pwd)/sa.json"
+          } > ~/.config/rclone/rclone.conf
           cat ~/.config/rclone/rclone.conf
 
       - name: Test connection
