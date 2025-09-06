@@ -1,9 +1,28 @@
+name: Custom Google Drive Sync
+
+on:
+  workflow_dispatch:
+  # schedule:
+  #   - cron: '0 8 * * *'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
       - name: Download and Sync Files
         env:
           GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
           FOLDER_ID: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
         run: |
-          npm install googleapis fs path # Install the necessary libraries
+          npm install googleapis fs path
           
           node -e '
             const { google } = require("googleapis");
