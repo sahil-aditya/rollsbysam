@@ -14,28 +14,21 @@ jobs:
         run: |
           curl https://rclone.org/install.sh | sudo bash
 
-      - name: Configure rclone
+      - name: Configure rclone with service account
         run: |
           echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
-          rclone config create gdrive drive \
-            scope=drive \
-            service_account_file=sa.json \
-            --non-interactive
+          mkdir -p ~/.config/rclone
+          cat <<EOF > ~/.config/rclone/rclone.conf
+[gdrive]
+type = drive
+scope = drive
+service_account_file = $(pwd)/sa.json
+EOF
 
       - name: Test connection
-        run: |
-          rclone ls gdrive: --max-depth 1 || true
+        run: rclone ls gdrive: --max-depth 1 -vv || true
 
       - name: Sync files from Google Drive
-        run: |
-          rclone copy gdrive: ./images \
-            --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
-            --progress -vv
-
-      - name: Commit and push changes
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "chore: Sync images from Google Drive" || true
-          git push
+        run: rclone copy gdrive: ./images \
+          --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
+          --progress -vv
