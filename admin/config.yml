@@ -1,15 +1,15 @@
 backend:
   name: github
-  repo: your-github-username/your-repo-name # Replace with your GitHub username and repo name
-  branch: main # or master
+  repo: sahil-aditya/Creative_Gallery
+  branch: main
 
-media_folder: "images" # Folder where uploaded images will be stored
-public_folder: "/images" # Folder from which to access the images on the website
+media_folder: "images"
+public_folder: "/images"
 
 collections:
   - name: "content"
     label: "Website Content"
-    folder: "_posts/content"
+    folder: "content"
     create: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
