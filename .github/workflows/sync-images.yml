@@ -12,12 +12,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download files from Google Drive
-        uses: ndrecha/google-drive-downloader@v1 # This is the new, working action
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
         with:
-          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
-          destination: ./images
+          node-version: '18'
+
+      - name: Install Google Drive CLI
+        run: npm install -g google-drive-cli
+
+      - name: Authenticate and Download Files
+        env:
+          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+        run: |
+          echo $GOOGLE_DRIVE_CREDENTIALS > credentials.json
+          google-drive-cli sync --credentials credentials.json --folder-id 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w --destination ./images
 
       - name: Commit and push changes
         run: |
