@@ -1,78 +1,182 @@
 [
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before1.png",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after1.png"
+    "name": "Firefly 20250621234952_polarr.jpeg",
+    "path": "./images/Firefly 20250621234952_polarr.jpeg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before21.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after21.jpg"
+    "name": "after1.png",
+    "path": "./images/after1.png"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before22.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after22.jpg"
+    "name": "after21.jpg",
+    "path": "./images/after21.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before23.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after23.jpg"
+    "name": "after22.jpg",
+    "path": "./images/after22.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before24.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after24.jpg"
+    "name": "after23.jpg",
+    "path": "./images/after23.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before25.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after25.jpg"
+    "name": "after24.jpg",
+    "path": "./images/after24.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before26.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after26.jpeg"
+    "name": "after25.jpg",
+    "path": "./images/after25.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before27.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after27.jpg"
+    "name": "after26.jpeg",
+    "path": "./images/after26.jpeg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before28.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after28.jpg"
+    "name": "after27.jpg",
+    "path": "./images/after27.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before29.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after29.jpg"
+    "name": "after28.jpg",
+    "path": "./images/after28.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before30.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after30.jpg"
+    "name": "after29.jpg",
+    "path": "./images/after29.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before31.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after31.jpg"
+    "name": "after30.jpg",
+    "path": "./images/after30.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before32.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after32.jpg"
+    "name": "after31.jpg",
+    "path": "./images/after31.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before33.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after33.jpg"
+    "name": "after32.jpg",
+    "path": "./images/after32.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before34.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after34.jpg"
+    "name": "after33.jpg",
+    "path": "./images/after33.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before35.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after35.jpg"
+    "name": "after34.jpg",
+    "path": "./images/after34.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before36.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after36.jpg"
+    "name": "after35.jpg",
+    "path": "./images/after35.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before37.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after37.jpg"
+    "name": "after36.jpg",
+    "path": "./images/after36.jpg"
   },
   {
-    "before": "https://sahil-aditya.github.io/Creative_Gallery/images/before99.jpg",
-    "after": "https://sahil-aditya.github.io/Creative_Gallery/images/after99.jpg"
+    "name": "after37.jpg",
+    "path": "./images/after37.jpg"
+  },
+  {
+    "name": "after96.jpg",
+    "path": "./images/after96.jpg"
+  },
+  {
+    "name": "after99.jpg",
+    "path": "./images/after99.jpg"
+  },
+  {
+    "name": "before1.png",
+    "path": "./images/before1.png"
+  },
+  {
+    "name": "before21.jpg",
+    "path": "./images/before21.jpg"
+  },
+  {
+    "name": "before22.jpg",
+    "path": "./images/before22.jpg"
+  },
+  {
+    "name": "before23.jpg",
+    "path": "./images/before23.jpg"
+  },
+  {
+    "name": "before24.jpg",
+    "path": "./images/before24.jpg"
+  },
+  {
+    "name": "before25.jpg",
+    "path": "./images/before25.jpg"
+  },
+  {
+    "name": "before26.jpg",
+    "path": "./images/before26.jpg"
+  },
+  {
+    "name": "before27.jpg",
+    "path": "./images/before27.jpg"
+  },
+  {
+    "name": "before28.jpg",
+    "path": "./images/before28.jpg"
+  },
+  {
+    "name": "before29.jpg",
+    "path": "./images/before29.jpg"
+  },
+  {
+    "name": "before30.jpg",
+    "path": "./images/before30.jpg"
+  },
+  {
+    "name": "before31.jpg",
+    "path": "./images/before31.jpg"
+  },
+  {
+    "name": "before32.jpg",
+    "path": "./images/before32.jpg"
+  },
+  {
+    "name": "before33.jpg",
+    "path": "./images/before33.jpg"
+  },
+  {
+    "name": "before34.jpg",
+    "path": "./images/before34.jpg"
+  },
+  {
+    "name": "before35.jpg",
+    "path": "./images/before35.jpg"
+  },
+  {
+    "name": "before36.jpg",
+    "path": "./images/before36.jpg"
+  },
+  {
+    "name": "before37.jpg",
+    "path": "./images/before37.jpg"
+  },
+  {
+    "name": "before96.jpg",
+    "path": "./images/before96.jpg"
+  },
+  {
+    "name": "before99.jpg",
+    "path": "./images/before99.jpg"
+  },
+  {
+    "name": "music.mp3",
+    "path": "./images/music.mp3"
+  },
+  {
+    "name": "mute.png",
+    "path": "./images/mute.png"
+  },
+  {
+    "name": "play.png",
+    "path": "./images/play.png"
+  },
+  {
+    "name": "​",
+    "path": "./images/​"
   }
 ]
