@@ -1,10 +1,9 @@
 name: Custom Google Drive Sync
 
 on:
-  push:
-    paths:
-      - 'images/**'
   workflow_dispatch:
+  # schedule:
+  #   - cron: '0 8 * * *' # Runs at 8:00 AM UTC every day
 
 jobs:
   sync:
@@ -18,7 +17,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Download Files and Update JSON
+      - name: Mirror Google Drive to GitHub
         env:
           GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
           FOLDER_ID: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
@@ -51,56 +50,72 @@ jobs:
                 console.log("Created destination folder: " + destPath);
               }
 
-              console.log(`Listing files in folder with ID: ${folderId}`);
+              console.log(`Listing files in Google Drive folder: ${folderId}`);
               const res = await drive.files.list({
                 q: `"${folderId}" in parents`,
-                fields: "files(id, name)",
+                fields: "files(id, name, modifiedTime)",
               });
               
-              const files = res.data.files;
-              console.log(`Found ${files.length} files in the folder.`);
+              const driveFiles = res.data.files;
+              console.log(`Found ${driveFiles.length} files in Google Drive.`);
 
-              if (files.length > 0) {
-                // Download files
-                for (const file of files) {
-                  console.log(`Downloading file: ${file.name}`);
-                  const dest = fs.createWriteStream(path.join(destPath, file.name));
-                  const fileRes = await drive.files.get(
-                    { fileId: file.id, alt: "media" },
-                    { responseType: "stream" }
-                  );
-                  await new Promise((resolve, reject) => {
-                    fileRes.data
-                      .on("end", () => resolve())
-                      .on("error", (err) => {
-                        console.error(`Error downloading file ${file.name}:`, err);
-                        reject(err);
-                      })
-                      .pipe(dest);
+              const githubFiles = fs.existsSync(destPath) ? fs.readdirSync(destPath).filter(name => !/^\..*/.test(name)) : [];
+
+              // Delete files from GitHub that are not in Google Drive
+              for (const fileName of githubFiles) {
+                if (!driveFiles.some(f => f.name === fileName)) {
+                  const filePath = path.join(destPath, fileName);
+                  fs.unlinkSync(filePath);
+                  console.log(`Deleted file from GitHub: ${fileName}`);
+                }
+              }
+
+              // Download or update files from Google Drive
+              for (const driveFile of driveFiles) {
+                const filePath = path.join(destPath, driveFile.name);
+                const isNew = !fs.existsSync(filePath);
+                
+                if (isNew) {
+                  console.log(`Downloading new file: ${driveFile.name}`);
+                } else {
+                  console.log(`Updating existing file: ${driveFile.name}`);
+                  fs.unlinkSync(filePath); // Delete the old version to ensure it is replaced
+                }
+                
+                const dest = fs.createWriteStream(filePath);
+                const fileRes = await drive.files.get(
+                  { fileId: driveFile.id, alt: "media" },
+                  { responseType: "stream" }
+                );
+                await new Promise((resolve, reject) => {
+                  fileRes.data
+                    .on("end", () => resolve())
+                    .on("error", (err) => {
+                      console.error(`Error downloading file ${driveFile.name}:`, err);
+                      reject(err);
+                    })
+                    .pipe(dest);
+                });
+              }
+
+              // Update images.json with the new format
+              console.log("Updating images.json...");
+              const allFileNames = fs.readdirSync(destPath).filter(name => !/^\..*/.test(name) && !name.includes("music"));
+              const afterImages = allFileNames.filter(name => name.startsWith("after"));
+              const beforeAfterPairs = [];
+
+              for (const afterFile of afterImages) {
+                const baseName = afterFile.replace("after", "before");
+                if (allFileNames.includes(baseName)) {
+                  beforeAfterPairs.push({
+                    before: `${repoUrl}/images/${baseName}`,
+                    after: `${repoUrl}/images/${afterFile}`
                   });
                 }
-
-                // Update images.json with the new format
-                console.log("Updating images.json with the correct format...");
-                const allFileNames = fs.readdirSync(destPath).filter(name => !/^\..*/.test(name) && !name.includes("music"));
-                const afterImages = allFileNames.filter(name => name.startsWith("after"));
-                const beforeAfterPairs = [];
-
-                for (const afterFile of afterImages) {
-                  const baseName = afterFile.replace("after", "before");
-                  if (allFileNames.includes(baseName)) {
-                    beforeAfterPairs.push({
-                      before: `${repoUrl}/images/${baseName}`,
-                      after: `${repoUrl}/images/${afterFile}`
-                    });
-                  }
-                }
-
-                fs.writeFileSync(jsonFilePath, JSON.stringify(beforeAfterPairs, null, 2));
-                console.log("images.json updated with before/after pairs.");
-              } else {
-                console.log("No new files to download or update in images.json.");
               }
+
+              fs.writeFileSync(jsonFilePath, JSON.stringify(beforeAfterPairs, null, 2));
+              console.log("images.json updated with before/after pairs.");
             }
 
             syncFiles().catch(console.error);
@@ -111,6 +126,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: Sync images and update images.json to the correct format" || true
+          git commit -m "chore: Mirror Google Drive and update images.json" || true
           git push
           
