@@ -17,18 +17,14 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Install Google Drive CLI
-        run: npm install -g google-drive-cli
-
-      - name: Authenticate and Download Files
+      - name: Authenticate, Download, and Commit
         env:
           GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
         run: |
+          npm install -g google-drive-cli
           echo $GOOGLE_DRIVE_CREDENTIALS > credentials.json
           google-drive-cli sync --credentials credentials.json --folder-id 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w --destination ./images
 
-      - name: Commit and push changes
-        run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
