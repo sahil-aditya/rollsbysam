@@ -1,9 +1,10 @@
 name: Custom Google Drive Sync
 
 on:
+  push:
+    paths:
+      - 'images/**'
   workflow_dispatch:
-  # schedule:
-  #   - cron: '0 8 * * *'
 
 jobs:
   sync:
@@ -17,7 +18,7 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Download and Sync Files
+      - name: Download Files and Update JSON
         env:
           GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
           FOLDER_ID: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
@@ -32,6 +33,7 @@ jobs:
             const credentials = JSON.parse(process.env.GOOGLE_DRIVE_CREDENTIALS);
             const folderId = process.env.FOLDER_ID;
             const destPath = "./images";
+            const jsonFilePath = "./images.json";
 
             async function syncFiles() {
               console.log("Starting authentication...");
@@ -48,20 +50,16 @@ jobs:
               }
 
               console.log(`Listing files in folder with ID: ${folderId}`);
-              try {
-                const res = await drive.files.list({
-                  q: `"${folderId}" in parents`,
-                  fields: "files(id, name)",
-                });
+              const res = await drive.files.list({
+                q: `"${folderId}" in parents`,
+                fields: "files(id, name)",
+              });
+              
+              const files = res.data.files;
+              console.log(`Found ${files.length} files in the folder.`);
 
-                const files = res.data.files;
-                console.log(`Found ${files.length} files in the folder.`);
-
-                if (files.length === 0) {
-                  console.log("No files found to download. Please check the folder ID and permissions.");
-                  return;
-                }
-
+              if (files.length > 0) {
+                // Download files
                 for (const file of files) {
                   console.log(`Downloading file: ${file.name}`);
                   const dest = fs.createWriteStream(path.join(destPath, file.name));
@@ -79,9 +77,19 @@ jobs:
                       .pipe(dest);
                   });
                 }
-                console.log("Sync complete. All files downloaded.");
-              } catch (error) {
-                console.error("An error occurred during file listing or download:", error);
+
+                // Update images.json
+                console.log("Updating images.json...");
+                const imageFileNames = fs.readdirSync(destPath).filter(name => !/^\..*/.test(name)); // Exclude hidden files
+                const imagesJson = imageFileNames.map(fileName => ({
+                  "name": fileName,
+                  "path": `./images/${fileName}`
+                }));
+
+                fs.writeFileSync(jsonFilePath, JSON.stringify(imagesJson, null, 2));
+                console.log("images.json updated.");
+              } else {
+                console.log("No new files to download or update in images.json.");
               }
             }
 
@@ -93,6 +101,6 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "chore: Sync images from Google Drive" || true
+          git commit -m "chore: Sync images from Google Drive and update images.json" || true
           git push
           
