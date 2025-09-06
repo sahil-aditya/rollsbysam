@@ -1,12 +1,18 @@
 [build]
-publish = "dist" # Change this to your publish folder if different
+  publish = "."
+  command = "echo 'No build command specified, serving static files.'"
 
 [functions]
-directory = "netlify/functions" # Change this to your functions folder if different
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
 
-# For Identity and Git Gateway
-[functions."netlify-identity-signup"]
-external_node_modules = ["netlify-identity-client"]
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
 
-[functions."netlify-auth"]
-external_node_modules = ["netlify-identity-widget"]
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  
