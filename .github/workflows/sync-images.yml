@@ -16,19 +16,19 @@ jobs:
 
       - name: Configure rclone with service account
         run: |
-          echo "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
+          echo '${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}' > sa.json
           mkdir -p ~/.config/rclone
-          cat <<EOF > ~/.config/rclone/rclone.conf
-[gdrive]
-type = drive
-scope = drive
-service_account_file = $(pwd)/sa.json
-EOF
+          printf "[gdrive]\n"
+          printf "type = drive\n"
+          printf "scope = drive\n"
+          printf "service_account_file = %s/sa.json\n" "$(pwd)" > ~/.config/rclone/rclone.conf
+          cat ~/.config/rclone/rclone.conf
 
       - name: Test connection
         run: rclone ls gdrive: --max-depth 1 -vv || true
 
       - name: Sync files from Google Drive
-        run: rclone copy gdrive: ./images \
-          --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
-          --progress -vv
+        run: |
+          rclone copy gdrive: ./images \
+            --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
+            --progress -vv
