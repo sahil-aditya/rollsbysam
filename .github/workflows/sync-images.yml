@@ -1,4 +1,4 @@
-name: Sync Images from Google Drive
+name: Custom Google Drive Sync
 
 on:
   workflow_dispatch:
@@ -12,25 +12,75 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Debug: List files before sync
-        run: ls -lR
-
-      - name: Sync files from Google Drive
-        id: gdrive
-        uses: gautamkrishnar/google-drive-upload@v1.3.1
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
-          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
-          destination: ./images
-          command: download
+          node-version: '18'
 
-      - name: Debug: List files after sync
-        run: ls -lR
+      - name: Download and Sync Files
+        env:
+          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          FOLDER_ID: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
+        run: |
+          npm install googleapis fs path # Install the necessary libraries
+          
+          # This is the script that does the work.
+          node -e '
+            const { google } = require("googleapis");
+            const fs = require("fs");
+            const path = require("path");
+
+            const credentials = JSON.parse(process.env.GOOGLE_DRIVE_CREDENTIALS);
+            const folderId = process.env.FOLDER_ID;
+            const destPath = "./images";
+
+            async function syncFiles() {
+              const auth = new google.auth.GoogleAuth({
+                credentials,
+                scopes: ["https://www.googleapis.com/auth/drive.readonly"],
+              });
+              const drive = google.drive({ version: "v3", auth });
+
+              if (!fs.existsSync(destPath)) {
+                fs.mkdirSync(destPath);
+              }
+
+              const res = await drive.files.list({
+                q: `'${folderId}' in parents`,
+                fields: "nextPageToken, files(id, name)",
+              });
+              
+              const files = res.data.files;
+              if (files.length === 0) {
+                console.log("No files found in folder.");
+                return;
+              }
+
+              for (const file of files) {
+                console.log(`Downloading: ${file.name}`);
+                const dest = fs.createWriteStream(path.join(destPath, file.name));
+                const fileRes = await drive.files.get(
+                  { fileId: file.id, alt: "media" },
+                  { responseType: "stream" }
+                );
+                await new Promise((resolve, reject) => {
+                  fileRes.data
+                    .on("end", () => resolve())
+                    .on("error", (err) => reject(err))
+                    .pipe(dest);
+                });
+              }
+              console.log("Sync complete.");
+            }
+
+            syncFiles().catch(console.error);
+          '
 
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
-          git diff --cached --quiet || git commit -m "chore: Sync images from Google Drive"
+          git commit -m "chore: Sync images from Google Drive" || true
           git push
+          
