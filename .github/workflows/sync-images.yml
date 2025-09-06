@@ -12,22 +12,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - name: Authenticate, Download, and Commit
-        env:
-          GOOGLE_DRIVE_CREDENTIALS: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+      - name: Install gdrive CLI
         run: |
-          npm install -g google-drive-cli
-          echo $GOOGLE_DRIVE_CREDENTIALS > credentials.json
-          google-drive-cli sync --credentials credentials.json --folder-id 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w --destination ./images
+          sudo apt-get update
+          sudo apt-get install -y gdrive
 
+      - name: Sync files from Google Drive
+        uses: gautamkrishnar/google-drive-upload@v1.3.1
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
+          destination: ./images
+          command: download
+
+      - name: Commit and push changes
+        run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add .
           git commit -m "chore: Sync images from Google Drive" || true
           git push
-          
