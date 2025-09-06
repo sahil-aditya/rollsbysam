@@ -1,0 +1,12 @@
+[build]
+publish = "dist" # Change this to your publish folder if different
+
+[functions]
+directory = "netlify/functions" # Change this to your functions folder if different
+
+# For Identity and Git Gateway
+[functions."netlify-identity-signup"]
+external_node_modules = ["netlify-identity-client"]
+
+[functions."netlify-auth"]
+external_node_modules = ["netlify-identity-widget"]
