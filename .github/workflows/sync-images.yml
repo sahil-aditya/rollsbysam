@@ -1,0 +1,30 @@
+name: Sync Images from Google Drive
+
+on:
+  workflow_dispatch: # Allows you to manually trigger the workflow
+  # If you want to run it on a schedule, uncomment the following section:
+  # schedule:
+  #   - cron: '0 8 * * *' # Runs every day at 8:00 AM
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download files from Google Drive
+        uses: ahmed-al-fawzan/google-drive-downloader@v1.1
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
+          destination: ./images # The folder to save images in your repository
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: Sync images from Google Drive" || true
+          git push
+          
