@@ -2,6 +2,8 @@ name: Sync Images from Google Drive
 
 on:
   workflow_dispatch:
+  # schedule:
+  #   - cron: '0 8 * * *'
 
 jobs:
   sync:
@@ -10,27 +12,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install rclone
-        run: |
-          curl https://rclone.org/install.sh | sudo bash
-
-      - name: Configure rclone with service account
-        run: |
-          echo -e "${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}" > sa.json
-          mkdir -p ~/.config/rclone
-          {
-            echo "[gdrive]"
-            echo "type = drive"
-            echo "scope = drive"
-            echo "service_account_file = $(pwd)/sa.json"
-          } > ~/.config/rclone/rclone.conf
-          cat ~/.config/rclone/rclone.conf
-
-      - name: Test connection
-        run: rclone ls gdrive: --max-depth 1 -vv || true
+      - name: Debug: List files before sync
+        run: ls -lR
 
       - name: Sync files from Google Drive
+        id: gdrive
+        uses: gautamkrishnar/google-drive-upload@v1.3.1
+        with:
+          credentials: ${{ secrets.GOOGLE_DRIVE_CREDENTIALS }}
+          folder_id: 1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w
+          destination: ./images
+          command: download
+
+      - name: Debug: List files after sync
+        run: ls -lR
+
+      - name: Commit and push changes
         run: |
-          rclone copy gdrive: ./images \
-            --drive-root-folder-id=1XqT2oggvaYNpguTjBfjJMsUKzvYSyY5w \
-            --progress -vv
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "chore: Sync images from Google Drive"
+          git push
