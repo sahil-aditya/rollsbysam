@@ -1,17 +1,18 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: your-github-username/your-repo-name # Replace with your GitHub username and repo name
   branch: main # or master
 
-media_folder: "images"
-public_folder: "/images"
+media_folder: "images" # Folder where uploaded images will be stored
+public_folder: "/images" # Folder from which to access the images on the website
 
 collections:
   - name: "content"
-    label: "Content"
-    folder: "content"
+    label: "Website Content"
+    folder: "_posts/content"
     create: true
     fields:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Body", name: "body", widget: "markdown"}
       - {label: "Image", name: "image", widget: "image"}
-      "}
+      
