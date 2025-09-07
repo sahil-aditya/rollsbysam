@@ -22,39 +22,38 @@
   .header-container {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Align to the top */
+    align-items: flex-start;
     padding: 20px;
-    position: fixed; /* Keep it fixed at the top */
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    box-sizing: border-box; /* Include padding in the element's total width and height */
+    box-sizing: border-box;
     z-index: 10000;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for hide/show */
   }
   
   /* Buttons Container */
   .buttons-container {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between buttons */
+    gap: 10px;
   }
 
   /* Title */
   .heading-container {
-    text-align: right; /* Align heading to the right */
+    text-align: right;
     flex-grow: 1;
-    margin-right: 20px; /* Add some space from the edge */
+    margin-right: 20px;
   }
   h1 {
     margin: 0;
-    /* --- New Glowing, Animated Gradient Styling --- */
-    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9); /* Lighter blue-black gradient */
+    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: water-flow 8s linear infinite;
-    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3); /* Lighter blue glow */
-    /* --- End New Styling --- */
+    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3);
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     letter-spacing: 1px;
     opacity: 0;
@@ -64,14 +63,12 @@
   }
   h3 {
     text-align: right;
-    /* --- New Glowing, Animated Gradient Styling --- */
-    background: linear-gradient(90deg, #adadad, #777778, #adadad); /* Lighter white-black gradient */
+    background: linear-gradient(90deg, #adadad, #777778, #adadad);
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: water-flow 8s linear infinite;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); /* White inner/outer glow */
-    /* --- End New Styling --- */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
     font-weight: normal;
     margin-top: 8px;
     font-size: clamp(0.8rem, 1.5vw, 1rem);
@@ -81,7 +78,6 @@
     animation-delay: 0.2s;
   }
 
-  /* Fade-up animation */
   @keyframes fadeUp {
     to {
       opacity: 1;
@@ -89,8 +85,6 @@
     }
   }
 
-  /* Info icon (Disclaimer Button) - Now inside the popup */
-  /* This class is now used for the button inside the popup */
   .info-icon {
     font-size: 18px;
     color: #c0abe1;
@@ -100,14 +94,13 @@
     border-radius: 6px;
     text-align: center;
     line-height: 18px;
-    margin-top: 8px; /* Added spacing */
+    margin-top: 8px;
     transition: background 0.3s;
   }
   .info-icon:hover {
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* Disclaimer popup */
   .popup {
     display: none;
     position: fixed;
@@ -137,7 +130,6 @@
     background: #333;
   }
 
-  /* Slider styles */
   .slider-container {
     max-width: 800px;
     margin: 40px auto;
@@ -171,7 +163,6 @@
     clip-path: inset(0 50% 0 0);
     transition: clip-path 0.2s ease-out;
   }
-  /* IMPROVED HANDLE STYLING */
   .handle {
     position: absolute;
     top: 0;
@@ -184,40 +175,37 @@
     z-index: 10;
   }
   .handle::before {
-    content: '←'; /* The arrow itself */
+    content: '←';
     position: absolute;
     top: 50%;
-    left: -25px; /* Positioned to the left of the slider line */
+    left: -25px;
     transform: translateY(-50%);
     color: #fff;
     font-size: 14px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #111; /* Background to make it stand out */
-    border: 1px solid #fff; /* A subtle white border */
+    background: #111;
+    border: 1px solid #fff;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, background 0.2s ease;
   }
   .handle:hover::before {
-    transform: translateY(-50%) scale(1.2); /* Scale up on hover */
-    background: #333; /* Darker background on hover */
+    transform: translateY(-50%) scale(1.2);
+    background: #333;
   }
 
-  /* Control Buttons */
   .control-btn {
     border: none;
     cursor: pointer;
     border-radius: 8px;
-    z-index: 9999;
     transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     color: white;
     font-size: 12px;
   }
 
-  /* NEW: Water-like animation and glass effect for menu button and volume panel */
   #menu-btn, #shop-btn, #volume-panel {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
@@ -256,14 +244,13 @@
     font-size: 14px;
   }
 
-  /* --- वॉल्यूम पैनल के लिए नया CSS --- */
   #volume-panel {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 40px;
     height: 40px;
     padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
   }
 
@@ -303,7 +290,6 @@
     opacity: 1;
   }
 
-  /* स्लाइडर थंब */
   .volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -322,7 +308,6 @@
     border: none;
   }
 
-  /* लहरदार पानी एनीमेशन */
   @keyframes wavy-water {
     0% {
       background-position: 100% 0;
@@ -331,8 +316,7 @@
       background-position: 0 0;
     }
   }
-  /* --- वॉल्यूम पैनल के लिए नया CSS --- */
-  /* Contact Popup */
+
   #contact-popup {
     position: fixed;
     top: 60px;
@@ -373,7 +357,6 @@
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* New CSS for blurred placeholders */
   .blurred {
     filter: blur(15px);
     transition: filter 0.8s ease;
@@ -381,9 +364,12 @@
   .loaded {
     filter: blur(0);
   }
+
+  .gallery-content {
+      margin-top: 100px;
+  }
 </style>
   <script async>
-    // Moved the data fetching logic to the head with 'async'
     let allImagePairs = [];
     const jsonPath = 'images.json';
 
@@ -396,7 +382,6 @@
       })
       .then(data => {
         allImagePairs = data;
-        // Check if the gallery element is available before trying to load
         if (document.getElementById('gallery')) {
           loadAllBatches();
         }
@@ -432,15 +417,25 @@
   </div>
 </div>
   
+<div id="contact-popup">
+  <h3>Get Your Photo Edited</h3>
+  <p>Contact Us</p>
+  <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
+  <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
+  <a id="phone-link" href="#">📞 Call</a>
+  <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
+</div>
+
 <div id="disclaimer-popup" class="popup">
   <p>Disclaimer: Not every image here is clicked by me. Some are non-copyright images used only to demonstrate my color grading skills.</p>
   <button onclick="closeDisclaimer()">Close</button>
 </div>
 
-<div id="gallery"></div>
+<div class="gallery-content">
+  <div id="gallery"></div>
+</div>
 
 <script>
-  // Contact menu toggle
   const menuBtn = document.getElementById('menu-btn');
   const contactPopup = document.getElementById('contact-popup');
   const phoneLink = document.getElementById('phone-link');
@@ -457,14 +452,12 @@
   });
 
   document.addEventListener('click', (e) => {
-    if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
+    if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target) && !infoIcon.contains(e.target)) {
       contactPopup.style.display = "none";
     }
   });
 
-  // Disclaimer toggle
   function showDisclaimer() {
-    // --- New logic to close contact popup ---
     contactPopup.style.display = 'none';
     document.getElementById('disclaimer-popup').style.display = 'block';
   }
@@ -472,24 +465,27 @@
     document.getElementById('disclaimer-popup').style.display = 'none';
   }
 
-  // Fade buttons on scroll
-  const volumePanel = document.getElementById('volume-panel');
-  const shopBtn = document.getElementById('shop-btn');
   const headerContainer = document.querySelector('.header-container');
+  let lastScrollTop = 0;
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      headerContainer.style.opacity = '0';
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop > lastScrollTop) {
+      // Scrolling down
+      headerContainer.style.transform = 'translateY(-100%)';
     } else {
-      headerContainer.style.opacity = '1';
+      // Scrolling up
+      headerContainer.style.transform = 'translateY(0)';
     }
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For mobile or other browsers
   });
 
-  // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
   let audio = null;
   const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
   const volumeSlider = document.getElementById('volume-slider');
   const volumeIcon = document.getElementById('volume-icon');
+  const volumePanel = document.getElementById('volume-panel');
   let hasInteracted = false;
   let isExpanded = false;
 
@@ -521,7 +517,6 @@
   volumeIcon.addEventListener('click', () => {
     initializeAudio();
 
-    // Toggle the expanded state of the panel
     if (!isExpanded) {
         volumePanel.classList.add('expanded');
         isExpanded = true;
@@ -530,7 +525,6 @@
         isExpanded = false;
     }
 
-    // Play/Pause logic
     if (!hasInteracted) {
       audio.volume = 0.5;
       volumeSlider.value = 0.5;
@@ -551,45 +545,33 @@
       }
     }
   });
-  // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
-
-  // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE ---
 
   const gallery = document.getElementById("gallery");
-  const batchSize = 2; // Number of sliders to load per batch
+  const batchSize = 2;
   let currentBatch = 0;
 
   function createSlider(pair) {
     const container = document.createElement("div");
     container.classList.add("slider-container");
-
-    // Create and append images with blur class initially
     const afterImg = document.createElement("img");
     afterImg.src = pair.after;
     afterImg.alt = "After Image";
     afterImg.classList.add("after-img", "blurred");
-
     const beforeImg = document.createElement("img");
     beforeImg.src = pair.before;
     beforeImg.alt = "Before Image";
     beforeImg.classList.add("before-img", "blurred");
-
     container.appendChild(afterImg);
     container.appendChild(beforeImg);
-
-    // Create and append the handle
     const handle = document.createElement("div");
     handle.classList.add("handle");
     container.appendChild(handle);
-
     gallery.appendChild(container);
 
-    // Remove blur class once images are loaded
     afterImg.onload = () => afterImg.classList.remove("blurred");
     beforeImg.onload = () => beforeImg.classList.remove("blurred");
 
     let dragging = false;
-
     const move = (x) => {
       const rect = container.getBoundingClientRect();
       let offsetX = x - rect.left;
@@ -603,7 +585,6 @@
     handle.addEventListener("mousedown", () => dragging = true);
     window.addEventListener("mouseup", () => dragging = false);
     window.addEventListener("mousemove", e => { if (dragging) move(e.clientX); });
-
     handle.addEventListener("touchstart", () => dragging = true);
     window.addEventListener("touchend", () => dragging = false);
     window.addEventListener("touchmove", e => { if (dragging) move(e.touches[0].clientX); });
@@ -612,35 +593,26 @@
   function loadAllBatches() {
     let startIndex = currentBatch * batchSize;
     let endIndex = startIndex + batchSize;
-
-    // Load a batch of sliders
     for (let i = startIndex; i < endIndex && i < allImagePairs.length; i++) {
       createSlider(allImagePairs[i]);
     }
-
     currentBatch++;
-
-    // If there are more batches, schedule the next one
     if (startIndex + batchSize < allImagePairs.length) {
-      setTimeout(loadAllBatches, 500); // Wait 0.5 seconds before loading the next batch
+      setTimeout(loadAllBatches, 500);
     }
   }
 
-  // --- Performance-Optimized JS for focus effect ---
   const sliderContainers = document.querySelectorAll('.slider-container');
   let isUpdatingFocus = false;
-
   function updateFocus() {
     isUpdatingFocus = false;
     const windowHeight = window.innerHeight;
     const focusZoneStart = windowHeight * 0.3;
     const focusZoneEnd = windowHeight * 0.7;
-
-    const containers = document.querySelectorAll('.slider-container'); // Re-querying here is okay
+    const containers = document.querySelectorAll('.slider-container');
     containers.forEach(container => {
       const rect = container.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
-
       if (elementCenter > focusZoneStart && elementCenter < focusZoneEnd) {
         container.classList.add('in-focus');
       } else {
@@ -648,18 +620,13 @@
       }
     });
   }
-
   window.addEventListener('scroll', () => {
     if (!isUpdatingFocus) {
       window.requestAnimationFrame(updateFocus);
       isUpdatingFocus = true;
     }
   });
-
-  // Run on page load to set initial focus
   window.addEventListener('load', updateFocus);
-
-  // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
 </script>
 
 </body>
