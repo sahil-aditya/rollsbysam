@@ -1,12 +1,12 @@
 [
   {
     "name": "Rich & Clean",
-    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image1.jpg",
+    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich-&-Clean/Image1.jpg",
     "images": [
-      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image1.jpg",
-      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image2.jpg"
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Clean&-Clean/Image1.jpg",
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich-&-Clean/Image2.jpg"
     ],
-    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Description.txt",
-    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/price.txt"
+    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Clean&-Clean/Description.txt",
+    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Clean&-Clean/price.txt"
   }
 ]
