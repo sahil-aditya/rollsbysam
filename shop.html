@@ -187,9 +187,10 @@
   .product-thumbnail {
     width: 100%;
     height: 200px;
-    object-fit: cover;
+    object-fit: contain; /* Changed from 'cover' to 'contain' */
     display: block;
     border-radius: 12px 12px 0 0;
+    background-color: #333; /* Added for better visibility with 'contain' */
   }
   .product-info {
     padding: 15px;
@@ -206,6 +207,7 @@
     min-height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
+    white-space: nowrap; /* Ensures only one line */
   }
   .product-footer {
     display: flex;
@@ -227,6 +229,7 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
+    text-decoration: none; /* For the 'a' tag Buy Now button */
   }
   .buy-btn:hover {
     background-color: #218838;
@@ -274,14 +277,16 @@
     width: 100%;
     text-align: center;
     margin-bottom: 20px;
+    position: relative;
   }
   .modal-image {
     max-width: 100%;
     max-height: 70vh;
-    object-fit: contain;
+    object-fit: contain; /* Ensure images fit without cropping in modal */
     border-radius: 8px;
     display: none;
     animation: fadeIn 0.5s ease forwards;
+    background-color: #333; /* Added for better visibility with 'contain' */
   }
   .modal-image.active {
     display: block;
@@ -322,8 +327,34 @@
     font-size: 1rem;
     color: #ccc;
     line-height: 1.5;
+    white-space: pre-wrap; /* Allows multiple lines in modal description */
   }
   
+  /* Dots for image navigation */
+  .image-dots {
+    position: absolute;
+    bottom: 0px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    padding: 5px 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    display: none; /* Hidden by default, shown if multiple images */
+  }
+  .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #555;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .dot.active {
+    background-color: #fff;
+  }
+
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
@@ -358,13 +389,16 @@
   <div class="modal-content">
     <span class="close-btn">&times;</span>
     <div class="modal-image-container">
-      <img src="" alt="Product Image" class="modal-image" id="modal-image">
+        <img src="" alt="Product Image" class="modal-image" id="modal-image">
+        <span class="modal-nav-btn modal-nav-prev" id="prev-btn" style="display:none;">&lt;</span>
+        <span class="modal-nav-btn modal-nav-next" id="next-btn" style="display:none;">&gt;</span>
+        <div class="image-dots" id="image-dots"></div>
     </div>
     <div class="modal-info">
       <h2 class="modal-name" id="modal-name"></h2>
       <div class="modal-price-buy">
         <span class="modal-price" id="modal-price"></span>
-        <button class="buy-btn">Buy Now</button>
+        <a id="buy-link" href="#" target="_blank" class="buy-btn">Buy Now</a>
       </div>
       <p class="modal-desc" id="modal-desc"></p>
     </div>
@@ -394,8 +428,6 @@
     }
   });
 
-  // Disclaimer popup logic is not included as per user request (only menu button and contact popup)
-  
   // Shop page specific JS
   const shopGrid = document.getElementById('shop-grid');
   const modal = document.getElementById('product-modal');
@@ -404,14 +436,20 @@
   const modalPrice = document.getElementById('modal-price');
   const modalDesc = document.getElementById('modal-desc');
   const modalImage = document.getElementById('modal-image');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const buyLink = document.getElementById('buy-link');
+  const imageDotsContainer = document.getElementById('image-dots');
 
   let shopData = [];
+  let currentProduct = null;
+  let currentImageIndex = 0;
 
   // Corrected fetch path - using absolute path from root
-  fetch('/Creative_Gallery/shop.json')
+  fetch('/Creative_Gallery/shop.json') // Make sure this path is correct for your GitHub Pages setup
     .then(response => {
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        throw new Error('Network response was not ok, status: ' + response.status);
       }
       return response.json();
     })
@@ -425,6 +463,7 @@
     products.forEach(product => {
       const card = document.createElement('div');
       card.classList.add('product-card');
+      
       card.innerHTML = `
         <img src="${product.thumbnail}" alt="${product.name}" class="product-thumbnail">
         <div class="product-info">
@@ -433,72 +472,4 @@
           <div class="product-footer">
             <span class="product-price"></span>
             <button class="buy-btn">Buy Now</button>
-          </div>
-        </div>
-      `;
-      
-      // Fetch and display partial description
-      fetch(product.descriptionPath)
-        .then(response => response.text())
-        .then(text => {
-          const firstLine = text.split('\n')[0];
-          card.querySelector('.product-desc').textContent = firstLine;
-        })
-        .catch(error => console.error('Error fetching partial description:', error));
-        
-      // Fetch and display price
-      fetch(product.price)
-        .then(response => response.text())
-        .then(text => {
-          card.querySelector('.product-price').textContent = text.trim();
-        })
-        .catch(error => console.error('Error fetching price:', error));
-
-      card.addEventListener('click', () => showModal(product));
-      shopGrid.appendChild(card);
-    });
-  }
-
-  function showModal(product) {
-    modalName.textContent = product.name;
-
-    // Fetch and display full description
-    fetch(product.descriptionPath)
-      .then(response => response.text())
-      .then(text => {
-        modalDesc.textContent = text;
-      })
-      .catch(error => {
-        console.error('Error fetching description:', error);
-        modalDesc.textContent = 'Description not found.';
-      });
-
-    // Fetch and display price
-    fetch(product.price)
-      .then(response => response.text())
-      .then(text => {
-        modalPrice.textContent = text.trim();
-      })
-      .catch(error => {
-        console.error('Error fetching price:', error);
-        modalPrice.textContent = 'Price not found.';
-      });
-      
-    // Display images
-    modalImage.src = product.images[0];
-    modal.style.display = 'flex';
-  }
-
-  closeModalBtn.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  window.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-</script>
-
-</body>
-</html>
+</div>
