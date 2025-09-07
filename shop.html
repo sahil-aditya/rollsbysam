@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-WWR2K6DG');</script>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Shop</title>
+<style>
+  body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+
+  /* --- Heading Container for Alignment --- */
+  .heading-container {
+    text-align: center;
+    padding-top: 10px;
+    margin-left: 20px;
+  }
+
+  /* Title */
+  h1 {
+    text-align: center;
+    margin-bottom: 5px;
+    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: water-flow 8s linear infinite;
+    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3);
+    font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 1s ease forwards;
+    margin-top: 0;
+  }
+  h3 {
+    text-align: center;
+    background: linear-gradient(90deg, #adadad, #777778, #adadad);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: water-flow 8s linear infinite;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+    font-weight: normal;
+    margin-top: 8px;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    opacity: 0;
+    transform: translateY(10px);
+    animation: fadeUp 1s ease forwards;
+    animation-delay: 0.2s;
+  }
+
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes water-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .control-btn {
+    position: fixed;
+    top: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    z-index: 9999;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    color: white;
+    font-size: 12px;
+  }
+  #menu-btn {
+    left: 20px;
+    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
+    background-size: 200% 200%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    padding: 10px 12px;
+  }
+  #menu-btn:hover {
+    animation: water-flow 8s linear infinite;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+  #menu-btn div {
+    width: 20px;
+    height: 2px;
+    background: white;
+    margin: 4px 0;
+  }
+
+  /* Contact Popup */
+  #contact-popup {
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    color: white;
+    border-radius: 10px;
+    width: 250px;
+    padding: 20px;
+    z-index: 10000;
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: none;
+  }
+  #contact-popup h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  #contact-popup p {
+    margin: 4px 0 12px;
+    font-size: 13px;
+    color: #ccc;
+  }
+  #contact-popup a {
+    display: block;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    background: rgba(34, 34, 34, 0.7);
+    color: white;
+    transition: background 0.3s;
+  }
+  #contact-popup a:hover {
+    background: rgba(51, 51, 51, 0.9);
+  }
+  .info-icon {
+    font-size: 18px;
+    color: #c0abe1;
+    cursor: pointer;
+    background: rgba(34, 34, 34, 0.7);
+    padding: 10px 12px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 18px;
+    margin-top: 8px;
+    transition: background 0.3s;
+  }
+  .info-icon:hover {
+    background: rgba(51, 51, 51, 0.9);
+  }
+
+  /* Shop Grid Styling */
+  .shop-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 40px;
+    max-width: 1000px;
+    margin: 60px auto;
+    padding: 0 20px;
+    justify-content: center;
+  }
+  .product-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  }
+  .product-thumbnail {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    border-radius: 12px 12px 0 0;
+  }
+  .product-info {
+    padding: 15px;
+  }
+  .product-name {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0 0 5px;
+  }
+  .product-desc {
+    font-size: 0.85rem;
+    color: #bbb;
+    margin: 0;
+    min-height: 40px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+  }
+  .product-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+  .buy-btn {
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  .buy-btn:hover {
+    background-color: #218838;
+  }
+
+  /* Product Modal (Enlarged View) */
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10001;
+    display: none;
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .modal-content {
+    background: #1c1c1c;
+    border-radius: 10px;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 25px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+  .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    color: #fff;
+    cursor: pointer;
+  }
+  .modal-image-container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .modal-image {
+    max-width: 100%;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 8px;
+    display: none;
+    animation: fadeIn 0.5s ease forwards;
+  }
+  .modal-image.active {
+    display: block;
+  }
+  .modal-nav-btn {
+    font-size: 3rem;
+    color: #fff;
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+  }
+  .modal-nav-prev { left: 20px; }
+  .modal-nav-next { right: 20px; }
+  .modal-info {
+    text-align: center;
+    max-width: 90%;
+  }
+  .modal-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 10px 0 5px;
+  }
+  .modal-price-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  .modal-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #28a745;
+  }
+  .modal-desc {
+    font-size: 1rem;
+    color: #ccc;
+    line-height: 1.5;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+</head>
+<body>
+
+<button id="menu-btn" class="control-btn">
+  <div></div>
+  <div></div>
+  <div></div>
+</button>
+
+<div id="contact-popup">
+  <h3>Get Your Photo Edited</h3>
+  <p>Contact Us</p>
+  <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
+  <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
+  <a id="phone-link" href="#" style="display:none;">📞 Call</a>
+  <div class="info-icon">ⓘ</div>
+</div>
+
+<div class="heading-container">
+    <h1>SamTouched Presets</h1>
+    <h3>Colorist | sahil.aditya_</h3>
+</div>
+
+<div id="shop-grid" class="shop-grid"></div>
+
+<div id="product-modal" class="modal-overlay">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+    <div class="modal-image-container">
+      <img src="" alt="Product Image" class="modal-image" id="modal-image">
+    </div>
+    <div class="modal-info">
+      <h2 class="modal-name" id="modal-name"></h2>
+      <div class="modal-price-buy">
+        <span class="modal-price" id="modal-price"></span>
+        <button class="buy-btn">Buy Now</button>
+      </div>
+      <p class="modal-desc" id="modal-desc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Contact menu toggle
+  const menuBtn = document.getElementById('menu-btn');
+  const contactPopup = document.getElementById('contact-popup');
+  const phoneLink = document.getElementById('phone-link');
+  const infoIcon = document.querySelector('.info-icon');
+
+  const phoneNumber = "";
+  if (phoneNumber) {
+    phoneLink.href = "tel:" + phoneNumber;
+    phoneLink.style.display = "block";
+  }
+
+  menuBtn.addEventListener('click', () => {
+    contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
+      contactPopup.style.display = "none";
+    }
+  });
+
+  // Disclaimer popup logic is not included as per user request (only menu button and contact popup)
+  
+  // Shop page specific JS
+  const shopGrid = document.getElementById('shop-grid');
+  const modal = document.getElementById('product-modal');
+  const closeModalBtn = document.querySelector('.close-btn');
+  const modalName = document.getElementById('modal-name');
+  const modalPrice = document.getElementById('modal-price');
+  const modalDesc = document.getElementById('modal-desc');
+  const modalImage = document.getElementById('modal-image');
+
+  let shopData = [];
+
+  // Fetch shop data
+  fetch('shop.json')
+    .then(response => response.json())
+    .then(data => {
+      shopData = data;
+      renderProducts(shopData);
+    })
+    .catch(error => console.error('Error fetching shop data:', error));
+
+  function renderProducts(products) {
+    products.forEach(product => {
+      const card = document.createElement('div');
+      card.classList.add('product-card');
+      card.innerHTML = `
+        <img src="${product.thumbnail}" alt="${product.name}" class="product-thumbnail">
+        <div class="product-info">
+          <h4 class="product-name">${product.name}</h4>
+          <p class="product-desc">${product.description.split('. ')[0] + '.'}</p>
+          <div class="product-footer">
+            <span class="product-price">${product.price}</span>
+            <button class="buy-btn">Buy Now</button>
+          </div>
+        </div>
+      `;
+      card.addEventListener('click', () => showModal(product));
+      shopGrid.appendChild(card);
+    });
+  }
+
+  function showModal(product) {
+    modalName.textContent = product.name;
+    modalPrice.textContent = product.price;
+
+    // Fetch and display description
+    fetch(product.descriptionPath)
+      .then(response => response.text())
+      .then(text => {
+        modalDesc.textContent = text;
+      })
+      .catch(error => {
+        console.error('Error fetching description:', error);
+        modalDesc.textContent = 'Description not found.';
+      });
+
+    // Display images
+    modalImage.src = product.images[0];
+    modal.style.display = 'flex';
+  }
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+
+</script>
+
+</body>
+      </html>
+      
