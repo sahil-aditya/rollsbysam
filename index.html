@@ -17,18 +17,30 @@
     margin: 0;
     padding: 20px;
   }
-
-  /* --- New Heading Container for Alignment --- */
-  .heading-container {
-    text-align: center;
-    padding-top: 10px; /* Reduced to move the heading up */
-    margin-left: 20px; /* Align with the menu button */
+  
+  /* --- Global Flex Container for Header --- */
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Align to the top */
+    padding: 20px;
+  }
+  
+  /* Buttons Container */
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
 
   /* Title */
+  .heading-container {
+    text-align: right; /* Align heading to the right */
+    flex-grow: 1;
+    margin-right: 20px; /* Add some space from the edge */
+  }
   h1 {
-    text-align: center;
-    margin-bottom: 5px;
+    margin: 0;
     /* --- New Glowing, Animated Gradient Styling --- */
     background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9); /* Lighter blue-black gradient */
     background-size: 200% 200%;
@@ -45,7 +57,7 @@
     margin-top: 0;
   }
   h3 {
-    text-align: center;
+    text-align: right;
     /* --- New Glowing, Animated Gradient Styling --- */
     background: linear-gradient(90deg, #adadad, #777778, #adadad); /* Lighter white-black gradient */
     background-size: 200% 200%;
@@ -191,7 +203,6 @@
   /* Control Buttons */
   .control-btn {
     position: fixed;
-    top: 20px;
     border: none;
     cursor: pointer;
     border-radius: 8px;
@@ -202,7 +213,7 @@
   }
 
   /* NEW: Water-like animation and glass effect for menu button and volume panel */
-  #menu-btn, #volume-panel {
+  #menu-btn, #shop-btn, #volume-panel {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
     backdrop-filter: blur(10px);
@@ -212,7 +223,7 @@
     padding: 10px 12px;
   }
 
-  #menu-btn:hover, #volume-panel:hover {
+  #menu-btn:hover, #shop-btn:hover, #volume-panel:hover {
     animation: water-flow 8s linear infinite;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -224,8 +235,9 @@
     100% { background-position: 0% 50%; }
   }
 
+  /* Now positioned with the buttons container */
   #menu-btn {
-    left: 20px;
+    padding: 10px 12px;
   }
   #menu-btn div {
     width: 20px;
@@ -233,13 +245,21 @@
     background: white;
     margin: 4px 0;
   }
+  #shop-btn {
+    padding: 10px 12px;
+  }
+  #shop-btn a {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+    font-size: 14px;
+  }
 
   /* --- वॉल्यूम पैनल के लिए नया CSS --- */
   #volume-panel {
     display: flex;
     align-items: center;
     justify-content: center;
-    right: 20px;
     width: 40px;
     height: 40px;
     padding: 0;
@@ -311,7 +331,6 @@
     }
   }
   /* --- वॉल्यूम पैनल के लिए नया CSS --- */
-
   /* Contact Popup */
   #contact-popup {
     position: fixed;
@@ -388,32 +407,29 @@
 </head>
 <body>
 
-<button id="menu-btn" class="control-btn">
-  <div></div>
-  <div></div>
-  <div></div>
-</button>
+<div class="header-container">
+  <div class="buttons-container">
+    <button id="menu-btn" class="control-btn">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button>
+    
+    <button id="shop-btn" class="control-btn">
+      <a href="/shop.html">Shop</a>
+    </button>
+    
+    <div id="volume-panel" class="control-btn">
+      <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
+    </div>
+  </div>
 
-<div id="volume-panel" class="control-btn" style="right: 20px;">
-  <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
-  <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
+  <div class="heading-container">
+      <h1>Showcasing My Skills</h1>
+      <h3>Colorist | sahil.aditya_</h3>
+  </div>
 </div>
-
-
-<div id="contact-popup">
-  <h3>Get Your Photo Edited</h3>
-  <p>Contact Us</p>
-  <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
-  <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
-  <a id="phone-link" href="#" style="display:none;">📞 Call</a>
-  <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
-</div>
-
-<div class="heading-container">
-    <h1>Showcasing My Skills</h1>
-    <h3>Colorist | sahil.aditya_</h3>
-</div>
-
 
 <div id="disclaimer-popup" class="popup">
   <p>Disclaimer: Not every image here is clicked by me. Some are non-copyright images used only to demonstrate my color grading skills.</p>
@@ -457,13 +473,16 @@
 
   // Fade buttons on scroll
   const volumePanel = document.getElementById('volume-panel');
+  const shopBtn = document.getElementById('shop-btn');
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
       menuBtn.style.opacity = '0';
+      shopBtn.style.opacity = '0';
       volumePanel.style.opacity = '0';
     } else {
       menuBtn.style.opacity = '1';
+      shopBtn.style.opacity = '1';
       volumePanel.style.opacity = '1';
     }
   });
