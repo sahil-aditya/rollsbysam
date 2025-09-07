@@ -484,7 +484,7 @@
           <p class="product-desc"></p>
           <div class="product-footer">
             <span class="product-price"></span>
-            <button class="buy-btn">Buy Now</button>
+            <a class="buy-btn">Buy Now</a>
           </div>
         </div>
       `;
@@ -520,28 +520,30 @@
     currentImageIndex = 0;
     
     modalName.textContent = product.name;
-    buyLink.href = "https://www.instagram.com/sahil.aditya_";
-    buyLink.textContent = "Buy Now";
     
-    fetch(product.descriptionPath)
-      .then(response => response.text())
-      .then(text => {
-        modalDesc.textContent = text || 'No description available.';
-      })
-      .catch(error => {
-        console.error('Error fetching description:', error);
-        modalDesc.textContent = 'Description not found.';
-      });
-
-    fetch(product.price)
-      .then(response => response.text())
-      .then(text => {
-        modalPrice.textContent = text.trim() || 'Price N/A';
-      })
-      .catch(error => {
-        console.error('Error fetching price:', error);
-        modalPrice.textContent = 'Price not found.';
-      });
+    // Use Promise.all to fetch all data concurrently for efficiency
+    Promise.all([
+      fetch(product.descriptionPath).then(response => response.text()),
+      fetch(product.price).then(response => response.text()),
+      product.buyLinkPath ? fetch(product.buyLinkPath).then(response => response.text()) : Promise.resolve(null)
+    ]).then(([descriptionText, priceText, buyLinkText]) => {
+      modalDesc.textContent = descriptionText || 'No description available.';
+      modalPrice.textContent = priceText.trim() || 'Price N/A';
+      
+      if (buyLinkText) {
+        buyLink.href = buyLinkText.trim();
+        buyLink.style.display = 'inline-block';
+      } else {
+        buyLink.href = '#';
+        buyLink.style.display = 'none'; // Hide if no link is provided
+      }
+    }).catch(error => {
+      console.error('Error fetching product data:', error);
+      modalDesc.textContent = 'Description not found.';
+      modalPrice.textContent = 'Price not found.';
+      buyLink.href = '#';
+      buyLink.textContent = "Link N/A";
+    });
       
     updateModalImage();
     
