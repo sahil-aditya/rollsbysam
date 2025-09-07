@@ -186,7 +186,7 @@
   }
   .thumbnail-container {
     width: 100%;
-    padding-top: 100%; /* Creates a 1:1 aspect ratio square */
+    padding-top: 100%;
     position: relative;
     overflow: hidden;
     border-radius: 12px 12px 0 0;
@@ -197,7 +197,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; /* This is the key change for cropping */
+    object-fit: cover;
     display: block;
   }
   .product-info {
@@ -262,13 +262,13 @@
   }
   
   .close-btn {
-    position: fixed; /* Changed from absolute to fixed */
+    position: fixed;
     top: 20px;
     right: 20px;
     font-size: 28px;
     color: #fff;
     cursor: pointer;
-    z-index: 10002; /* Ensure it's on top of everything */
+    z-index: 10002;
   }
   
   .modal-content {
@@ -287,8 +287,8 @@
   
   .modal-image-container {
     width: 100%;
-    max-width: 600px; /* Increased size */
-    padding-top: 100%; /* Creates a 1:1 aspect ratio square */
+    max-width: 600px;
+    padding-top: 100%;
     position: relative;
     text-align: center;
     margin-bottom: 20px;
@@ -310,21 +310,15 @@
   .modal-image.active {
     display: block;
   }
+  /* The navigation buttons are removed from the HTML, so this is just for reference */
   .modal-nav-btn {
-    font-size: 3rem;
-    color: #fff;
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
+      display: none !important;
   }
-  .modal-nav-prev { left: 20px; }
-  .modal-nav-next { right: 20px; }
+  
   .modal-info {
     text-align: center;
     max-width: 90%;
-    padding: 0 15px; /* Added padding */
+    padding: 0 15px;
   }
   .modal-name {
     font-size: 1.8rem;
@@ -344,11 +338,11 @@
     color: #28a745;
   }
   .modal-desc {
-    font-size: 0.9rem; /* Reduced font size */
+    font-size: 0.9rem;
     color: #ccc;
     line-height: 1.5;
     white-space: pre-wrap;
-    opacity: 0.8; /* Lowered opacity */
+    opacity: 0.8;
   }
   
   /* Dots for image navigation */
@@ -375,7 +369,7 @@
   .dot.active {
     background-color: #fff;
   }
-
+  
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
@@ -411,8 +405,6 @@
   <div class="modal-content">
     <div class="modal-image-container">
         <img src="" alt="Product Image" class="modal-image" id="modal-image">
-        <span class="modal-nav-btn modal-nav-prev" id="prev-btn" style="display:none;">&lt;</span>
-        <span class="modal-nav-btn modal-nav-next" id="next-btn" style="display:none;">&gt;</span>
         <div class="image-dots" id="image-dots"></div>
     </div>
     <div class="modal-info">
@@ -457,14 +449,15 @@
   const modalPrice = document.getElementById('modal-price');
   const modalDesc = document.getElementById('modal-desc');
   const modalImage = document.getElementById('modal-image');
-  const prevBtn = document.getElementById('prev-btn');
-  const nextBtn = document.getElementById('next-btn');
   const buyLink = document.getElementById('buy-link');
   const imageDotsContainer = document.getElementById('image-dots');
+  const modalImageContainer = document.querySelector('.modal-image-container');
 
   let shopData = [];
   let currentProduct = null;
   let currentImageIndex = 0;
+  let slideshowInterval;
+  let touchStartX = 0;
 
   fetch('shop.json')
     .then(response => {
@@ -553,8 +546,26 @@
       });
       
     updateModalImage();
+    startSlideshow();
     
     modal.style.display = 'flex';
+  }
+
+  function startSlideshow() {
+      // Clear any existing interval
+      clearInterval(slideshowInterval);
+      
+      // Only start slideshow if there is more than one image
+      if (currentProduct.images.length > 1) {
+          slideshowInterval = setInterval(() => {
+              currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
+              updateModalImage();
+          }, 3000); // Change image every 3 seconds
+      }
+  }
+
+  function stopSlideshow() {
+      clearInterval(slideshowInterval);
   }
 
   function updateModalImage() {
@@ -562,9 +573,7 @@
     modalImage.classList.remove('active');
     setTimeout(() => modalImage.classList.add('active'), 10);
     
-    prevBtn.style.display = currentProduct.images.length > 1 && currentImageIndex > 0 ? 'block' : 'none';
-    nextBtn.style.display = currentProduct.images.length > 1 && currentImageIndex < currentProduct.images.length - 1 ? 'block' : 'none';
-
+    // Update image dots
     imageDotsContainer.innerHTML = '';
     if (currentProduct.images.length > 1) {
         imageDotsContainer.style.display = 'flex';
@@ -576,6 +585,7 @@
             }
             dot.addEventListener('click', (e) => {
                 e.stopPropagation();
+                stopSlideshow();
                 currentImageIndex = index;
                 updateModalImage();
             });
@@ -586,30 +596,55 @@
     }
   }
   
-  prevBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentImageIndex > 0) {
-          currentImageIndex--;
-          updateModalImage();
-      }
-  });
-
-  nextBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (currentImageIndex < currentProduct.images.length - 1) {
-          currentImageIndex++;
-          updateModalImage();
-      }
-  });
-
   closeModalBtn.addEventListener('click', () => {
     modal.style.display = 'none';
+    stopSlideshow(); // Stop the slideshow when the modal is closed
   });
 
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.style.display = 'none';
+      stopSlideshow(); // Stop the slideshow when the modal is clicked outside
     }
+  });
+
+  // Touch and drag event listeners for mobile swipe control
+  modalImageContainer.addEventListener('mousedown', (e) => {
+      stopSlideshow();
+      touchStartX = e.clientX;
+  });
+
+  modalImageContainer.addEventListener('mouseup', (e) => {
+      const touchEndX = e.clientX;
+      const threshold = 50; // Minimum drag distance to trigger slide
+
+      if (touchStartX - touchEndX > threshold) {
+          // Swiped left, go to next image
+          currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
+          updateModalImage();
+      } else if (touchEndX - touchStartX > threshold) {
+          // Swiped right, go to previous image
+          currentImageIndex = (currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+          updateModalImage();
+      }
+  });
+
+  modalImageContainer.addEventListener('touchstart', (e) => {
+      stopSlideshow();
+      touchStartX = e.touches[0].clientX;
+  });
+
+  modalImageContainer.addEventListener('touchend', (e) => {
+      const touchEndX = e.changedTouches[0].clientX;
+      const threshold = 50;
+
+      if (touchStartX - touchEndX > threshold) {
+          currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
+          updateModalImage();
+      } else if (touchEndX - touchStartX > threshold) {
+          currentImageIndex = (currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+          updateModalImage();
+      }
   });
 </script>
 
