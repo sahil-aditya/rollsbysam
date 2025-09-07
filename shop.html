@@ -407,9 +407,14 @@
 
   let shopData = [];
 
-  // Corrected fetch path
-  fetch('../shop.json')
-    .then(response => response.json())
+  // Corrected fetch path - using absolute path from root
+  fetch('/Creative_Gallery/shop.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(data => {
       shopData = data;
       renderProducts(shopData);
@@ -424,13 +429,31 @@
         <img src="${product.thumbnail}" alt="${product.name}" class="product-thumbnail">
         <div class="product-info">
           <h4 class="product-name">${product.name}</h4>
-          <p class="product-desc">${product.description.split('. ')[0] + '.'}</p>
+          <p class="product-desc"></p>
           <div class="product-footer">
-            <span class="product-price">${product.price}</span>
+            <span class="product-price"></span>
             <button class="buy-btn">Buy Now</button>
           </div>
         </div>
       `;
+      
+      // Fetch and display partial description
+      fetch(product.descriptionPath)
+        .then(response => response.text())
+        .then(text => {
+          const firstLine = text.split('\n')[0];
+          card.querySelector('.product-desc').textContent = firstLine;
+        })
+        .catch(error => console.error('Error fetching partial description:', error));
+        
+      // Fetch and display price
+      fetch(product.price)
+        .then(response => response.text())
+        .then(text => {
+          card.querySelector('.product-price').textContent = text.trim();
+        })
+        .catch(error => console.error('Error fetching price:', error));
+
       card.addEventListener('click', () => showModal(product));
       shopGrid.appendChild(card);
     });
@@ -438,9 +461,8 @@
 
   function showModal(product) {
     modalName.textContent = product.name;
-    modalPrice.textContent = product.price;
 
-    // Fetch and display description
+    // Fetch and display full description
     fetch(product.descriptionPath)
       .then(response => response.text())
       .then(text => {
@@ -451,6 +473,17 @@
         modalDesc.textContent = 'Description not found.';
       });
 
+    // Fetch and display price
+    fetch(product.price)
+      .then(response => response.text())
+      .then(text => {
+        modalPrice.textContent = text.trim();
+      })
+      .catch(error => {
+        console.error('Error fetching price:', error);
+        modalPrice.textContent = 'Price not found.';
+      });
+      
     // Display images
     modalImage.src = product.images[0];
     modal.style.display = 'flex';
