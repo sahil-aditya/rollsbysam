@@ -15,7 +15,6 @@
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 20px;
   }
   
   /* --- Global Flex Container for Header --- */
@@ -30,7 +29,7 @@
     width: 100%;
     box-sizing: border-box;
     z-index: 10000;
-    transition: transform 0.3s ease-in-out; /* Smooth transition for hide/show */
+    transition: transform 0.3s ease-in-out;
   }
   
   /* Buttons Container */
@@ -204,6 +203,7 @@
     transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     color: white;
     font-size: 12px;
+    flex: 0 0 auto; 
   }
 
   #menu-btn, #shop-btn, #volume-panel {
@@ -364,9 +364,10 @@
   .loaded {
     filter: blur(0);
   }
-
+  
   .gallery-content {
-      margin-top: 100px;
+    /* Corrected spacing to be below the fixed header */
+    margin-top: 100px; 
   }
 </style>
   <script async>
@@ -472,13 +473,11 @@
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
     if (scrollTop > lastScrollTop) {
-      // Scrolling down
       headerContainer.style.transform = 'translateY(-100%)';
     } else {
-      // Scrolling up
       headerContainer.style.transform = 'translateY(0)';
     }
-    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For mobile or other browsers
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
   });
 
   let audio = null;
