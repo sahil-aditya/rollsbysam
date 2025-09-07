@@ -407,8 +407,8 @@
 
   let shopData = [];
 
-  // Fetch shop data
-  fetch('shop.json')
+  // Corrected fetch path
+  fetch('../shop.json')
     .then(response => response.json())
     .then(data => {
       shopData = data;
@@ -465,9 +465,7 @@
       modal.style.display = 'none';
     }
   });
-
 </script>
 
 </body>
-      </html>
-      
+</html>
