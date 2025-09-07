@@ -202,7 +202,7 @@
   }
 
   /* NEW: Water-like animation and glass effect for menu button and volume panel */
-  #menu-btn, #volume-panel {
+  #menu-btn, #volume-panel, #shop-btn {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
     backdrop-filter: blur(10px);
@@ -212,7 +212,7 @@
     padding: 10px 12px;
   }
 
-  #menu-btn:hover, #volume-panel:hover {
+  #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
     animation: water-flow 8s linear infinite;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -226,8 +226,15 @@
 
   #menu-btn {
     left: 20px;
+    top: 20px;
   }
-  #menu-btn div {
+  
+  #shop-btn {
+    left: 20px;
+    top: 70px; /* Positioned below the menu button */
+  }
+  
+  #menu-btn div, #shop-btn div {
     width: 20px;
     height: 2px;
     background: white;
@@ -394,6 +401,10 @@
   <div></div>
 </button>
 
+<button id="shop-btn" class="control-btn" onclick="window.location.href='shop.html'">
+  <div style="width: 16px; margin: 0 auto;">🛒</div>
+</button>
+
 <div id="volume-panel" class="control-btn" style="right: 20px;">
   <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
   <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
@@ -457,14 +468,17 @@
 
   // Fade buttons on scroll
   const volumePanel = document.getElementById('volume-panel');
+  const shopBtn = document.getElementById('shop-btn');
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
       menuBtn.style.opacity = '0';
       volumePanel.style.opacity = '0';
+      shopBtn.style.opacity = '0';
     } else {
       menuBtn.style.opacity = '1';
       volumePanel.style.opacity = '1';
+      shopBtn.style.opacity = '1';
     }
   });
 
