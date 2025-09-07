@@ -226,15 +226,15 @@
 
   #menu-btn {
     left: 20px;
-    top: 20px;
   }
-  
+
   #shop-btn {
     left: 20px;
-    top: 70px; /* Positioned below the menu button */
+    top: 75px; /* Positions the button below the menu button */
+    padding: 10px 12px;
   }
-  
-  #menu-btn div, #shop-btn div {
+
+  #menu-btn div {
     width: 20px;
     height: 2px;
     background: white;
@@ -401,8 +401,8 @@
   <div></div>
 </button>
 
-<button id="shop-btn" class="control-btn" onclick="window.location.href='shop.html'">
-  <div style="width: 16px; margin: 0 auto;">🛒</div>
+<button id="shop-btn" class="control-btn">
+  Shop
 </button>
 
 <div id="volume-panel" class="control-btn" style="right: 20px;">
@@ -480,6 +480,11 @@
       volumePanel.style.opacity = '1';
       shopBtn.style.opacity = '1';
     }
+  });
+
+  // Shop button redirect
+  shopBtn.addEventListener('click', () => {
+    window.location.href = "shop.html";
   });
 
   // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
