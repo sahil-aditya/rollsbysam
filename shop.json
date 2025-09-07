@@ -1,43 +1,12 @@
 [
   {
-    "name": "Cinematic Tones",
-    "thumbnail": "Shop/Cinematic Tones/Image1.jpeg",
+    "name": "Rich & Clean",
+    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image1.jpg",
     "images": [
-      "Shop/Cinematic Tones/Image1.jpeg",
-      "Shop/Cinematic Tones/Image2.jpeg",
-      "Shop/Cinematic Tones/Image3.jpeg"
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image1.jpg",
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Image2.jpg"
     ],
-    "descriptionPath": "Shop/Cinematic Tones/description.txt",
-    "price": "Shop/Cinematic Tones/price.txt"
-  },
-  {
-    "name": "Moody Landscapes",
-    "thumbnail": "Shop/Moody Landscapes/Image1.jpeg",
-    "images": [
-      "Shop/Moody Landscapes/Image1.jpeg",
-      "Shop/Moody Landscapes/Image2.jpeg"
-    ],
-    "descriptionPath": "Shop/Moody Landscapes/description.txt",
-    "price": "Shop/Moody Landscapes/price.txt"
-  },
-  {
-    "name": "Urban Vibe",
-    "thumbnail": "Shop/Urban Vibe/Image1.jpeg",
-    "images": [
-      "Shop/Urban Vibe/Image1.jpeg",
-      "Shop/Urban Vibe/Image2.jpeg",
-      "Shop/Urban Vibe/Image3.jpeg"
-    ],
-    "descriptionPath": "Shop/Urban Vibe/description.txt",
-    "price": "Shop/Urban Vibe/price.txt"
-  },
-  {
-    "name": "Golden Hour",
-    "thumbnail": "Shop/Golden Hour/Image1.jpeg",
-    "images": [
-      "Shop/Golden Hour/Image1.jpeg"
-    ],
-    "descriptionPath": "Shop/Golden Hour/description.txt",
-    "price": "Shop/Golden Hour/price.txt"
+    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/Description.txt",
+    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean/price.txt"
   }
 ]
