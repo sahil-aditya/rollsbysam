@@ -187,10 +187,10 @@
   .product-thumbnail {
     width: 100%;
     height: 200px;
-    object-fit: contain; /* Changed from 'cover' to 'contain' */
+    object-fit: contain;
     display: block;
     border-radius: 12px 12px 0 0;
-    background-color: #333; /* Added for better visibility with 'contain' */
+    background-color: #333;
   }
   .product-info {
     padding: 15px;
@@ -207,7 +207,7 @@
     min-height: 40px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap; /* Ensures only one line */
+    white-space: nowrap;
   }
   .product-footer {
     display: flex;
@@ -229,7 +229,7 @@
     cursor: pointer;
     font-weight: bold;
     transition: background-color 0.3s;
-    text-decoration: none; /* For the 'a' tag Buy Now button */
+    text-decoration: none;
   }
   .buy-btn:hover {
     background-color: #218838;
@@ -282,11 +282,11 @@
   .modal-image {
     max-width: 100%;
     max-height: 70vh;
-    object-fit: contain; /* Ensure images fit without cropping in modal */
+    object-fit: contain;
     border-radius: 8px;
     display: none;
     animation: fadeIn 0.5s ease forwards;
-    background-color: #333; /* Added for better visibility with 'contain' */
+    background-color: #333;
   }
   .modal-image.active {
     display: block;
@@ -327,13 +327,13 @@
     font-size: 1rem;
     color: #ccc;
     line-height: 1.5;
-    white-space: pre-wrap; /* Allows multiple lines in modal description */
+    white-space: pre-wrap;
   }
   
   /* Dots for image navigation */
   .image-dots {
     position: absolute;
-    bottom: 0px; /* Adjust as needed */
+    bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -341,7 +341,7 @@
     padding: 5px 0;
     background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    display: none; /* Hidden by default, shown if multiple images */
+    display: none;
   }
   .dot {
     width: 10px;
@@ -445,8 +445,8 @@
   let currentProduct = null;
   let currentImageIndex = 0;
 
-  // Corrected fetch path - using absolute path from root
-  fetch('/Creative_Gallery/shop.json') // Make sure this path is correct for your GitHub Pages setup
+  // Corrected fetch path - using simple relative path
+  fetch('shop.json')
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok, status: ' + response.status);
@@ -472,4 +472,135 @@
           <div class="product-footer">
             <span class="product-price"></span>
             <button class="buy-btn">Buy Now</button>
-</div>
+          </div>
+        </div>
+      `;
+      
+      // Fetch and display only the first line of description
+      fetch(product.descriptionPath)
+        .then(response => response.text())
+        .then(text => {
+          const firstLine = text.split('\n')[0].trim();
+          card.querySelector('.product-desc').textContent = firstLine || 'No description available.';
+        })
+        .catch(error => {
+          console.error(`Error fetching partial description for ${product.name}:`, error);
+          card.querySelector('.product-desc').textContent = 'No description available.';
+        });
+        
+      // Fetch and display price
+      fetch(product.price)
+        .then(response => response.text())
+        .then(text => {
+          card.querySelector('.product-price').textContent = text.trim() || 'Price N/A';
+        })
+        .catch(error => {
+          console.error(`Error fetching price for ${product.name}:`, error);
+          card.querySelector('.product-price').textContent = 'Price N/A';
+        });
+
+      card.addEventListener('click', () => showModal(product));
+      shopGrid.appendChild(card);
+    });
+  }
+
+  function showModal(product) {
+    currentProduct = product;
+    currentImageIndex = 0;
+    
+    // Update modal content
+    modalName.textContent = product.name;
+    // Example: Direct link to a hypothetical checkout page with product name in URL
+    buyLink.href = "https://sahil-aditya.github.io/Creative_Gallery/checkout.html?preset=" + encodeURIComponent(product.name); 
+    buyLink.textContent = "Buy Now";
+    
+    // Fetch and display full description
+    fetch(product.descriptionPath)
+      .then(response => response.text())
+      .then(text => {
+        modalDesc.textContent = text || 'No description available.';
+      })
+      .catch(error => {
+        console.error('Error fetching description:', error);
+        modalDesc.textContent = 'Description not found.';
+      });
+
+    // Fetch and display price
+    fetch(product.price)
+      .then(response => response.text())
+      .then(text => {
+        modalPrice.textContent = text.trim() || 'Price N/A';
+      })
+      .catch(error => {
+        console.error('Error fetching price:', error);
+        modalPrice.textContent = 'Price not found.';
+      });
+      
+    // Set initial image and show/hide navigation
+    updateModalImage();
+    
+    // Display the modal
+    modal.style.display = 'flex';
+  }
+
+  function updateModalImage() {
+    modalImage.src = currentProduct.images[currentImageIndex];
+    modalImage.classList.remove('active');
+    setTimeout(() => modalImage.classList.add('active'), 10);
+    
+    // Show/hide navigation buttons
+    prevBtn.style.display = currentProduct.images.length > 1 && currentImageIndex > 0 ? 'block' : 'none';
+    nextBtn.style.display = currentProduct.images.length > 1 && currentImageIndex < currentProduct.images.length - 1 ? 'block' : 'none';
+
+    // Update image dots
+    imageDotsContainer.innerHTML = '';
+    if (currentProduct.images.length > 1) {
+        imageDotsContainer.style.display = 'flex';
+        currentProduct.images.forEach((_, index) => {
+            const dot = document.createElement('span');
+            dot.classList.add('dot');
+            if (index === currentImageIndex) {
+                dot.classList.add('active');
+            }
+            dot.addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentImageIndex = index;
+                updateModalImage();
+            });
+            imageDotsContainer.appendChild(dot);
+        });
+    } else {
+        imageDotsContainer.style.display = 'none';
+    }
+  }
+  
+  prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentImageIndex > 0) {
+          currentImageIndex--;
+          updateModalImage();
+      }
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (currentImageIndex < currentProduct.images.length - 1) {
+          currentImageIndex++;
+          updateModalImage();
+      }
+  });
+
+
+  closeModalBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
