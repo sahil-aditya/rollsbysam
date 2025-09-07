@@ -18,25 +18,25 @@
     padding: 20px;
   }
 
-  /* --- New Heading Container for Alignment --- */
+  / --- New Heading Container for Alignment --- /
   .heading-container {
     text-align: center;
-    padding-top: 10px; /* Reduced to move the heading up */
-    margin-left: 20px; /* Align with the menu button */
+    padding-top: 10px; / Reduced to move the heading up /
+    margin-left: 20px; / Align with the menu button /
   }
 
-  /* Title */
+  / Title /
   h1 {
     text-align: center;
     margin-bottom: 5px;
-    /* --- New Glowing, Animated Gradient Styling --- */
-    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9); /* Lighter blue-black gradient */
+    / --- New Glowing, Animated Gradient Styling --- /
+    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9); / Lighter blue-black gradient /
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: water-flow 8s linear infinite;
-    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3); /* Lighter blue glow */
-    /* --- End New Styling --- */
+    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3); / Lighter blue glow /
+    / --- End New Styling --- /
     font-size: clamp(1.2rem, 2.5vw, 1.5rem);
     letter-spacing: 1px;
     opacity: 0;
@@ -46,14 +46,14 @@
   }
   h3 {
     text-align: center;
-    /* --- New Glowing, Animated Gradient Styling --- */
-    background: linear-gradient(90deg, #adadad, #777778, #adadad); /* Lighter white-black gradient */
+    / --- New Glowing, Animated Gradient Styling --- /
+    background: linear-gradient(90deg, #adadad, #777778, #adadad); / Lighter white-black gradient /
     background-size: 200% 200%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     animation: water-flow 8s linear infinite;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); /* White inner/outer glow */
-    /* --- End New Styling --- */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3); / White inner/outer glow /
+    / --- End New Styling --- /
     font-weight: normal;
     margin-top: 8px;
     font-size: clamp(0.8rem, 1.5vw, 1rem);
@@ -63,7 +63,7 @@
     animation-delay: 0.2s;
   }
 
-  /* Fade-up animation */
+  / Fade-up animation /
   @keyframes fadeUp {
     to {
       opacity: 1;
@@ -71,8 +71,8 @@
     }
   }
 
-  /* Info icon (Disclaimer Button) - Now inside the popup */
-  /* This class is now used for the button inside the popup */
+  / Info icon (Disclaimer Button) - Now inside the popup /
+  / This class is now used for the button inside the popup /
   .info-icon {
     font-size: 18px;
     color: #c0abe1;
@@ -82,14 +82,14 @@
     border-radius: 6px;
     text-align: center;
     line-height: 18px;
-    margin-top: 8px; /* Added spacing */
+    margin-top: 8px; / Added spacing /
     transition: background 0.3s;
   }
   .info-icon:hover {
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* Disclaimer popup */
+  / Disclaimer popup /
   .popup {
     display: none;
     position: fixed;
@@ -119,7 +119,7 @@
     background: #333;
   }
 
-  /* Slider styles */
+  / Slider styles /
   .slider-container {
     max-width: 800px;
     margin: 40px auto;
@@ -153,7 +153,7 @@
     clip-path: inset(0 50% 0 0);
     transition: clip-path 0.2s ease-out;
   }
-  /* IMPROVED HANDLE STYLING */
+  / IMPROVED HANDLE STYLING /
   .handle {
     position: absolute;
     top: 0;
@@ -166,29 +166,29 @@
     z-index: 10;
   }
   .handle::before {
-    content: '←'; /* The arrow itself */
+    content: '←'; / The arrow itself /
     position: absolute;
     top: 50%;
-    left: -25px; /* Positioned to the left of the slider line */
+    left: -25px; / Positioned to the left of the slider line /
     transform: translateY(-50%);
     color: #fff;
     font-size: 14px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #111; /* Background to make it stand out */
-    border: 1px solid #fff; /* A subtle white border */
+    background: #111; / Background to make it stand out /
+    border: 1px solid #fff; / A subtle white border /
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, background 0.2s ease;
   }
   .handle:hover::before {
-    transform: translateY(-50%) scale(1.2); /* Scale up on hover */
-    background: #333; /* Darker background on hover */
+    transform: translateY(-50%) scale(1.2); / Scale up on hover /
+    background: #333; / Darker background on hover /
   }
 
-  /* Control Buttons */
+  / Control Buttons /
   .control-btn {
     position: fixed;
     top: 20px;
@@ -201,8 +201,9 @@
     font-size: 12px;
   }
 
-  /* NEW: Water-like animation and glass effect for menu button and volume panel */
-  #menu-btn, #volume-panel {
+  / NEW: Water-like animation and glass effect for menu button and volume panel /
+
+menu-btn, #volume-panel {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
     backdrop-filter: blur(10px);
@@ -212,7 +213,7 @@
     padding: 10px 12px;
   }
 
-  #menu-btn:hover, #volume-panel:hover {
+menu-btn:hover, #volume-panel:hover {
     animation: water-flow 8s linear infinite;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -224,18 +225,33 @@
     100% { background-position: 0% 50%; }
   }
 
-  #menu-btn {
+menu-btn {
     left: 20px;
   }
-  #menu-btn div {
+
+menu-btn div {
     width: 20px;
     height: 2px;
     background: white;
     margin: 4px 0;
   }
 
-  /* --- वॉल्यूम पैनल के लिए नया CSS --- */
-  #volume-panel {
+  / NEW: Shop Button Styling /
+  #shop-btn {
+    top: 70px;
+    left: 20px;
+    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
+    background-size: 200% 200%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    padding: 10px 12px;
+  }
+
+  / --- वॉल्यूम पैनल के लिए नया CSS --- /
+
+volume-panel {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -246,7 +262,7 @@
     overflow: hidden;
   }
 
-  #volume-panel.expanded {
+volume-panel.expanded {
     width: 150px;
     justify-content: space-between;
     padding: 0 10px;
@@ -278,11 +294,11 @@
     right: 10px;
   }
 
-  #volume-panel.expanded .volume-slider {
+volume-panel.expanded .volume-slider {
     opacity: 1;
   }
 
-  /* स्लाइडर थंब */
+  / स्लाइडर थंब /
   .volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
@@ -301,7 +317,7 @@
     border: none;
   }
 
-  /* लहरदार पानी एनीमेशन */
+  / लहरदार पानी एनीमेशन /
   @keyframes wavy-water {
     0% {
       background-position: 100% 0;
@@ -310,10 +326,11 @@
       background-position: 0 0;
     }
   }
-  /* --- वॉल्यूम पैनल के लिए नया CSS --- */
+  / --- वॉल्यूम पैनल के लिए नया CSS --- /
 
-  /* Contact Popup */
-  #contact-popup {
+  / Contact Popup /
+
+contact-popup {
     position: fixed;
     top: 60px;
     left: 20px;
@@ -328,17 +345,20 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     display: none;
   }
-  #contact-popup h3 {
+
+contact-popup h3 {
     margin: 0;
     font-size: 16px;
     font-weight: bold;
   }
-  #contact-popup p {
+
+contact-popup p {
     margin: 4px 0 12px;
     font-size: 13px;
     color: #ccc;
   }
-  #contact-popup a {
+
+contact-popup a {
     display: block;
     padding: 10px;
     margin-top: 8px;
@@ -349,11 +369,12 @@
     color: white;
     transition: background 0.3s;
   }
-  #contact-popup a:hover {
+
+contact-popup a:hover {
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* New CSS for blurred placeholders */
+  / New CSS for blurred placeholders /
   .blurred {
     filter: blur(15px);
     transition: filter 0.8s ease;
@@ -370,7 +391,7 @@
     fetch(jsonPath)
       .then(response => {
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(HTTP error! status: ${response.status});
         }
         return response.json();
       })
@@ -393,6 +414,7 @@
   <div></div>
   <div></div>
 </button>
+<button id="shop-btn" class="control-btn" onclick="location.href='shop.html'">🛒 Shop</button>
 
 <div id="volume-panel" class="control-btn" style="right: 20px;">
   <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
@@ -403,7 +425,7 @@
 <div id="contact-popup">
   <h3>Get Your Photo Edited</h3>
   <p>Contact Us</p>
-  <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
+  <a href="https://www.instagram.com/sahil.aditya" target="blank">📩 DM on Instagram</a>
   <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
   <a id="phone-link" href="#" style="display:none;">📞 Call</a>
   <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
@@ -457,14 +479,17 @@
 
   // Fade buttons on scroll
   const volumePanel = document.getElementById('volume-panel');
+  const shopBtn = document.getElementById('shop-btn');
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
       menuBtn.style.opacity = '0';
       volumePanel.style.opacity = '0';
+      shopBtn.style.opacity = '0';
     } else {
       menuBtn.style.opacity = '1';
       volumePanel.style.opacity = '1';
+      shopBtn.style.opacity = '1';
     }
   });
 
@@ -579,8 +604,8 @@
       if (offsetX < 0) offsetX = 0;
       if (offsetX > rect.width) offsetX = rect.width;
       const percent = (offsetX / rect.width) * 100;
-      beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
-      handle.style.left = `${percent}%`;
+      beforeImg.style.clipPath = inset(0 ${100 - percent}% 0 0);
+      handle.style.left = ${percent}%;
     };
 
     handle.addEventListener("mousedown", () => dragging = true);
@@ -633,17 +658,5 @@
   }
 
   window.addEventListener('scroll', () => {
-    if (!isUpdatingFocus) {
-      window.requestAnimationFrame(updateFocus);
-      isUpdatingFocus = true;
-    }
-  });
-
-  // Run on page load to set initial focus
-  window.addEventListener('load', updateFocus);
-
-  // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
-</script>
-
-</body>
-</html>
+    if (!isUpdatingFocus)
+  
