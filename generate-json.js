@@ -47,18 +47,6 @@ async function generateShopJson() {
       const descriptionURL = descriptionFile ? `${baseURL}${path.join('Shop', folderName, path.basename(descriptionFile)).replace(/\\/g, '/')}` : null;
       const priceURL = priceFile ? `${baseURL}${path.join('Shop', folderName, path.basename(priceFile)).replace(/\\/g, '/')}` : null;
 
-      const buyJsonFile = findFileInsensitive(folderPath, 'buy.json');
-      let buyLink = null;
-      if (buyJsonFile) {
-        try {
-          const buyJsonContent = fs.readFileSync(buyJsonFile, 'utf8');
-          const data = JSON.parse(buyJsonContent);
-          buyLink = data.buyLink || null;
-        } catch (error) {
-          console.error(`Error parsing buy.json in folder "${folderName}":`, error);
-        }
-      }
-
       const thumbnailPath = path.join('Shop', folderName, images[0]).replace(/\\/g, '/');
       const thumbnailURL = `${baseURL}${thumbnailPath}`;
 
@@ -73,7 +61,7 @@ async function generateShopJson() {
         images: imageURLs,
         descriptionPath: descriptionURL,
         price: priceURL,
-        buyLink: buyLink,
+        buyLink: '', // Set buyLink to an empty string
       };
 
       shopJson.push(product);
