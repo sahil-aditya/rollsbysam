@@ -1,10 +1,20 @@
 const fs = require('fs');
 const path = require('path');
 
-// Updated paths to be relative to the repository's root
 const shopDirPath = path.join(__dirname, 'Shop');
 const outputFilePath = path.join(__dirname, 'shop.json');
 const baseURL = 'https://sahil-aditya.github.io/Creative_Gallery/';
+
+function findFileInsensitive(folderPath, fileName) {
+  try {
+    const files = fs.readdirSync(folderPath);
+    const found = files.find(file => file.toLowerCase() === fileName.toLowerCase());
+    return found ? path.join(folderPath, found) : null;
+  } catch (error) {
+    console.warn(`Could not read directory: ${folderPath}`);
+    return null;
+  }
+}
 
 async function generateShopJson() {
   const shopJson = [];
@@ -18,11 +28,9 @@ async function generateShopJson() {
       const folderPath = path.join(shopDirPath, folderName);
       const files = fs.readdirSync(folderPath);
 
-      // Find images (case-insensitive)
       const images = files
         .filter(file => /\.(jpeg|jpg|png|gif)$/i.test(file))
         .sort((a, b) => {
-          // Sorts images by number (e.g., Image1.jpg, Image2.jpg)
           const numA = parseInt(a.match(/(\d+)/)?.[1] || 0);
           const numB = parseInt(b.match(/(\d+)/)?.[1] || 0);
           return numA - numB;
@@ -33,8 +41,24 @@ async function generateShopJson() {
         continue;
       }
 
-      // Construct URLs
-      const encodedFolderName = encodeURIComponent(folderName);
+      const descriptionFile = findFileInsensitive(folderPath, 'description.txt');
+      const priceFile = findFileInsensitive(folderPath, 'price.txt');
+      
+      const descriptionURL = descriptionFile ? `${baseURL}${path.join('Shop', folderName, path.basename(descriptionFile)).replace(/\\/g, '/')}` : null;
+      const priceURL = priceFile ? `${baseURL}${path.join('Shop', folderName, path.basename(priceFile)).replace(/\\/g, '/')}` : null;
+
+      const buyJsonFile = findFileInsensitive(folderPath, 'buy.json');
+      let buyLink = null;
+      if (buyJsonFile) {
+        try {
+          const buyJsonContent = fs.readFileSync(buyJsonFile, 'utf8');
+          const data = JSON.parse(buyJsonContent);
+          buyLink = data.buyLink || null;
+        } catch (error) {
+          console.error(`Error parsing buy.json in folder "${folderName}":`, error);
+        }
+      }
+
       const thumbnailPath = path.join('Shop', folderName, images[0]).replace(/\\/g, '/');
       const thumbnailURL = `${baseURL}${thumbnailPath}`;
 
@@ -43,22 +67,13 @@ async function generateShopJson() {
         return `${baseURL}${imagePath}`;
       });
 
-      // Check for file existence before adding to JSON
-      const descriptionFile = path.join(folderPath, 'Description.txt');
-      const priceFile = path.join(folderPath, 'price.txt');
-      const buyLinkFile = path.join(folderPath, 'buy.txt');
-
-      const descriptionURL = fs.existsSync(descriptionFile) ? `${baseURL}${path.join('Shop', folderName, 'Description.txt').replace(/\\/g, '/')}` : null;
-      const priceURL = fs.existsSync(priceFile) ? `${baseURL}${path.join('Shop', folderName, 'price.txt').replace(/\\/g, '/')}` : null;
-      const buyLinkURL = fs.existsSync(buyLinkFile) ? `${baseURL}${path.join('Shop', folderName, 'buy.txt').replace(/\\/g, '/')}` : null;
-
       const product = {
         name: folderName,
         thumbnail: thumbnailURL,
         images: imageURLs,
         descriptionPath: descriptionURL,
         price: priceURL,
-        buyLinkPath: buyLinkURL, // Add the buy.txt path here
+        buyLink: buyLink,
       };
 
       shopJson.push(product);
