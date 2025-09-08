@@ -18,15 +18,11 @@
     padding: 20px;
     overflow-x: hidden;
   }
-
-  /* --- Heading Container for Alignment --- */
   .heading-container {
     text-align: center;
     padding-top: 10px;
     margin-left: 20px;
   }
-
-  /* Title */
   h1 {
     text-align: center;
     margin-bottom: 5px;
@@ -59,7 +55,6 @@
     animation: fadeUp 1s ease forwards;
     animation-delay: 0.2s;
   }
-
   @keyframes fadeUp {
     to {
       opacity: 1;
@@ -71,7 +66,6 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
-
   .control-btn {
     position: fixed;
     top: 20px;
@@ -104,8 +98,6 @@
     background: white;
     margin: 4px 0;
   }
-
-  /* Contact Popup */
   #contact-popup {
     position: fixed;
     top: 60px;
@@ -160,8 +152,6 @@
   .info-icon:hover {
     background: rgba(51, 51, 51, 0.9);
   }
-
-  /* Shop Grid Styling */
   .shop-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -242,8 +232,6 @@
   .buy-btn:hover {
     background-color: #218838;
   }
-
-  /* Product Modal (Enlarged View) */
   .modal-overlay {
     position: fixed;
     top: 0;
@@ -260,7 +248,6 @@
     padding: 20px;
     box-sizing: border-box;
   }
-  
   .close-btn {
     position: fixed;
     top: 20px;
@@ -270,7 +257,6 @@
     cursor: pointer;
     z-index: 10002;
   }
-  
   .modal-content {
     background: #1c1c1c;
     border-radius: 10px;
@@ -284,7 +270,6 @@
     align-items: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   }
-  
   .modal-image-container {
     width: 100%;
     max-width: 600px;
@@ -295,7 +280,6 @@
     overflow: hidden;
     border-radius: 8px;
   }
-  
   .modal-image {
     position: absolute;
     top: 0;
@@ -313,7 +297,6 @@
   .modal-nav-btn {
       display: none !important;
   }
-  
   .modal-info {
     text-align: center;
     max-width: 90%;
@@ -343,8 +326,6 @@
     white-space: pre-wrap;
     opacity: 0.8;
   }
-  
-  /* Dots for image navigation */
   .image-dots {
     position: absolute;
     bottom: 10px;
@@ -368,21 +349,43 @@
   .dot.active {
     background-color: #fff;
   }
-  
   @keyframes fadeIn {
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
   }
+
+  /* --- ADDED CSS FOR LARGE SCREENS --- */
+  @media (min-width: 768px) {
+    .modal-content {
+      flex-direction: row; /* Change to a row layout for larger screens */
+      align-items: flex-start;
+      max-width: 1000px;
+      overflow-y: hidden; /* Prevent scrolling on the modal itself */
+      height: auto;
+    }
+
+    .modal-image-container {
+      width: 50%; /* Image container takes up half the space */
+      max-width: none;
+      padding-top: 50%; /* Adjust for a responsive aspect ratio */
+      margin-bottom: 0;
+    }
+
+    .modal-info {
+      width: 50%; /* Info takes up the other half */
+      text-align: left;
+      padding-left: 30px;
+      padding-right: 0;
+    }
+  }
 </style>
 </head>
 <body>
-
 <button id="menu-btn" class="control-btn">
   <div></div>
   <div></div>
   <div></div>
 </button>
-
 <div id="contact-popup">
   <h3>Get Your Photo Edited</h3>
   <p>Contact Us</p>
@@ -391,14 +394,11 @@
   <a id="phone-link" href="#" style="display:none;">📞 Call</a>
   <div class="info-icon">ⓘ</div>
 </div>
-
 <div class="heading-container">
     <h1>SamTouched Presets</h1>
     <h3>Colorist | sahil.aditya_</h3>
 </div>
-
 <div id="shop-grid" class="shop-grid"></div>
-
 <div id="product-modal" class="modal-overlay">
   <span class="close-btn">&times;</span>
   <div class="modal-content">
@@ -416,31 +416,24 @@
     </div>
   </div>
 </div>
-
 <script>
-  // Contact menu toggle
   const menuBtn = document.getElementById('menu-btn');
   const contactPopup = document.getElementById('contact-popup');
   const phoneLink = document.getElementById('phone-link');
   const infoIcon = document.querySelector('.info-icon');
-
   const phoneNumber = "";
   if (phoneNumber) {
     phoneLink.href = "tel:" + phoneNumber;
     phoneLink.style.display = "block";
   }
-
   menuBtn.addEventListener('click', () => {
     contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
   });
-
   document.addEventListener('click', (e) => {
     if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
       contactPopup.style.display = "none";
     }
   });
-
-  // Shop page specific JS
   const shopGrid = document.getElementById('shop-grid');
   const modal = document.getElementById('product-modal');
   const closeModalBtn = document.querySelector('.close-btn');
@@ -451,12 +444,10 @@
   const buyLink = document.getElementById('buy-link');
   const imageDotsContainer = document.getElementById('image-dots');
   const modalImageContainer = document.querySelector('.modal-image-container');
-
   let shopData = [];
   let currentProduct = null;
   let currentImageIndex = 0;
   let touchStartX = 0;
-
   fetch('shop.json')
     .then(response => {
       if (!response.ok) {
@@ -468,94 +459,84 @@
       shopData = data;
       renderProducts(shopData);
     })
-    .catch(error => console.error('Error fetching shop data:', error));
-
+    .catch(error => {
+      console.error('Error fetching shop data:', error);
+      shopGrid.innerHTML = `
+        <div style="text-align: center; color: #aaa; margin-top: 50px;">
+          <h2>Sorry! Products could not be loaded.</h2>
+          <p>Please check your internet connection or try again later.</p>
+        </div>
+      `;
+    });
   function renderProducts(products) {
     products.forEach(product => {
       const card = document.createElement('div');
       card.classList.add('product-card');
-      
       card.innerHTML = `
         <div class="thumbnail-container">
             <img src="${product.thumbnail}" alt="${product.name}" class="product-thumbnail">
         </div>
         <div class="product-info">
           <h4 class="product-name">${product.name}</h4>
-          <p class="product-desc"></p>
+          <p class="product-desc">Loading...</p>
           <div class="product-footer">
-            <span class="product-price"></span>
+            <span class="product-price">Loading...</span>
             <a class="buy-btn">Buy Now</a>
           </div>
         </div>
       `;
-      
-      fetch(product.descriptionPath)
-        .then(response => response.text())
-        .then(text => {
-          const firstLine = text.split('\n')[0].trim();
-          card.querySelector('.product-desc').textContent = firstLine || 'No description available.';
-        })
-        .catch(error => {
-          console.error(`Error fetching partial description for ${product.name}:`, error);
-          card.querySelector('.product-desc').textContent = 'No description available.';
-        });
-        
-      fetch(product.price)
-        .then(response => response.text())
-        .then(text => {
-          card.querySelector('.product-price').textContent = text.trim() || 'Price N/A';
-        })
-        .catch(error => {
-          console.error(`Error fetching price for ${product.name}:`, error);
-          card.querySelector('.product-price').textContent = 'Price N/A';
-        });
-
+      const promises = [
+        product.descriptionPath ? fetch(product.descriptionPath).then(res => res.text()).catch(() => 'No description available.') : Promise.resolve('No description available.'),
+        product.price ? fetch(product.price).then(res => res.text()).catch(() => 'Price N/A') : Promise.resolve('Price N/A')
+      ];
+      Promise.all(promises).then(([descriptionText, priceText]) => {
+        const firstLine = descriptionText.split('\n')[0].trim();
+        card.querySelector('.product-desc').textContent = firstLine;
+        card.querySelector('.product-price').textContent = priceText.trim();
+      }).catch(error => {
+        console.error(`Error fetching data for ${product.name}:`, error);
+        card.querySelector('.product-desc').textContent = 'Error loading.';
+        card.querySelector('.product-price').textContent = 'Error loading.';
+      });
       card.addEventListener('click', () => showModal(product));
       shopGrid.appendChild(card);
     });
   }
-
   function showModal(product) {
     currentProduct = product;
     currentImageIndex = 0;
-    
     modalName.textContent = product.name;
-    
-    // Use Promise.all to fetch all data concurrently for efficiency
-    Promise.all([
-      fetch(product.descriptionPath).then(response => response.text()),
-      fetch(product.price).then(response => response.text()),
-      product.buyLinkPath ? fetch(product.buyLinkPath).then(response => response.text()) : Promise.resolve(null)
-    ]).then(([descriptionText, priceText, buyLinkText]) => {
-      modalDesc.textContent = descriptionText || 'No description available.';
-      modalPrice.textContent = priceText.trim() || 'Price N/A';
-      
-      if (buyLinkText) {
-        buyLink.href = buyLinkText.trim();
-        buyLink.style.display = 'inline-block';
-      } else {
+    const fetchPromises = [
+      product.descriptionPath ? fetch(product.descriptionPath).then(res => res.text()).catch(() => 'Description not found.') : Promise.resolve('Description not found.'),
+      product.price ? fetch(product.price).then(res => res.text()).catch(() => 'Price not found.') : Promise.resolve('Price not found.'),
+    ];
+    Promise.all(fetchPromises)
+      .then(([descriptionText, priceText]) => {
+        modalDesc.textContent = descriptionText;
+        modalPrice.textContent = priceText.trim();
+        if (product.buyLink) {
+          buyLink.href = product.buyLink;
+          buyLink.style.display = 'inline-block';
+        } else {
+          buyLink.href = '#';
+          buyLink.style.display = 'none';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching product data:', error);
+        modalDesc.textContent = 'Description not found.';
+        modalPrice.textContent = 'Price not found.';
         buyLink.href = '#';
-        buyLink.style.display = 'none'; // Hide if no link is provided
-      }
-    }).catch(error => {
-      console.error('Error fetching product data:', error);
-      modalDesc.textContent = 'Description not found.';
-      modalPrice.textContent = 'Price not found.';
-      buyLink.href = '#';
-      buyLink.textContent = "Link N/A";
-    });
-      
+        buyLink.textContent = "Link N/A";
+        buyLink.style.display = 'none';
+      });
     updateModalImage();
-    
     modal.style.display = 'flex';
   }
-
   function updateModalImage() {
     modalImage.src = currentProduct.images[currentImageIndex];
     modalImage.classList.remove('active');
     setTimeout(() => modalImage.classList.add('active'), 10);
-    
-    // Update image dots
     imageDotsContainer.innerHTML = '';
     if (currentProduct.images.length > 1) {
         imageDotsContainer.style.display = 'flex';
@@ -576,45 +557,34 @@
         imageDotsContainer.style.display = 'none';
     }
   }
-  
   closeModalBtn.addEventListener('click', () => {
     modal.style.display = 'none';
   });
-
   window.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.style.display = 'none';
     }
   });
-
-  // Touch and drag event listeners for mobile swipe control
   modalImageContainer.addEventListener('mousedown', (e) => {
       touchStartX = e.clientX;
   });
-
   modalImageContainer.addEventListener('mouseup', (e) => {
       const touchEndX = e.clientX;
-      const threshold = 50; // Minimum drag distance to trigger slide
-
+      const threshold = 50;
       if (touchStartX - touchEndX > threshold) {
-          // Swiped left, go to next image
           currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
           updateModalImage();
       } else if (touchEndX - touchStartX > threshold) {
-          // Swiped right, go to previous image
           currentImageIndex = (currentImageIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
           updateModalImage();
       }
   });
-
   modalImageContainer.addEventListener('touchstart', (e) => {
       touchStartX = e.touches[0].clientX;
   });
-
   modalImageContainer.addEventListener('touchend', (e) => {
       const touchEndX = e.changedTouches[0].clientX;
       const threshold = 50;
-
       if (touchStartX - touchEndX > threshold) {
           currentImageIndex = (currentImageIndex + 1) % currentProduct.images.length;
           updateModalImage();
@@ -624,6 +594,5 @@
       }
   });
 </script>
-
 </body>
 </html>
