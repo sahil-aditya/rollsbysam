@@ -524,16 +524,15 @@
     const fetchPromises = [
       product.descriptionPath ? fetch(product.descriptionPath).then(res => res.text()).catch(() => 'Description not found.') : Promise.resolve('Description not found.'),
       product.price ? fetch(product.price).then(res => res.text()).catch(() => 'Price not found.') : Promise.resolve('Price not found.'),
-      product.buyLinkPath ? fetch(product.buyLinkPath).then(res => res.text()).catch(() => null) : Promise.resolve(null),
     ];
     
     Promise.all(fetchPromises)
-      .then(([descriptionText, priceText, buyLinkText]) => {
+      .then(([descriptionText, priceText]) => {
         modalDesc.textContent = descriptionText;
         modalPrice.textContent = priceText.trim();
         
-        if (buyLinkText) {
-          buyLink.href = buyLinkText.trim();
+        if (product.buyLink) {
+          buyLink.href = product.buyLink;
           buyLink.style.display = 'inline-block';
         } else {
           buyLink.href = '#';
