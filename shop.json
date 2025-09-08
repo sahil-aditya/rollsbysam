@@ -9,5 +9,16 @@
     "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/Description.txt",
     "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/price.txt",
     "buyLink": ""
+  },
+  {
+    "name": "Rich & Clean Lightroom Preset",
+    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean Lightroom Preset/Image1.jpg",
+    "images": [
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean Lightroom Preset/Image1.jpg",
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean Lightroom Preset/Image2.jpg"
+    ],
+    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean Lightroom Preset/Description.txt",
+    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich & Clean Lightroom Preset/price.txt",
+    "buyLink": ""
   }
 ]
