@@ -353,6 +353,31 @@
     from { opacity: 0; transform: scale(0.9); }
     to { opacity: 1; transform: scale(1); }
   }
+
+  /* --- ADDED CSS FOR LARGE SCREENS --- */
+  @media (min-width: 768px) {
+    .modal-content {
+      flex-direction: row; /* Change to a row layout for larger screens */
+      align-items: flex-start;
+      max-width: 1000px;
+      overflow-y: hidden; /* Prevent scrolling on the modal itself */
+      height: auto;
+    }
+
+    .modal-image-container {
+      width: 50%; /* Image container takes up half the space */
+      max-width: none;
+      padding-top: 50%; /* Adjust for a responsive aspect ratio */
+      margin-bottom: 0;
+    }
+
+    .modal-info {
+      width: 50%; /* Info takes up the other half */
+      text-align: left;
+      padding-left: 30px;
+      padding-right: 0;
+    }
+  }
 </style>
 </head>
 <body>
@@ -489,8 +514,6 @@
       .then(([descriptionText, priceText]) => {
         modalDesc.textContent = descriptionText;
         modalPrice.textContent = priceText.trim();
-        
-        // FIXED: Directly use the buyLink URL without trying to fetch it
         if (product.buyLink) {
           buyLink.href = product.buyLink;
           buyLink.style.display = 'inline-block';
@@ -503,17 +526,10 @@
         console.error('Error fetching product data:', error);
         modalDesc.textContent = 'Description not found.';
         modalPrice.textContent = 'Price not found.';
-        
-        // FIXED: Directly use the buyLink URL even if other fetches fail
-        if (product.buyLink) {
-          buyLink.href = product.buyLink;
-          buyLink.style.display = 'inline-block';
-        } else {
-          buyLink.href = '#';
-          buyLink.style.display = 'none';
-        }
+        buyLink.href = '#';
+        buyLink.textContent = "Link N/A";
+        buyLink.style.display = 'none';
       });
-      
     updateModalImage();
     modal.style.display = 'flex';
   }
