@@ -1,12 +1,14 @@
 [
   {
     "name": "Rich",
-    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/Image1.jpg",
+    "thumbnail": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/thumb.jpg",
     "images": [
-      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/Image1.jpg",
-      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/Image2.jpg"
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/img1.jpg",
+      "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/img2.jpg"
     ],
-    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/Description.txt",
-    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/price.txt"
+    "descriptionPath": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/description.txt",
+    "price": "https://sahil-aditya.github.io/Creative_Gallery/Shop/Rich/price.txt",
+    "buyLink": "https://www.google.com/search?q=rich+preset"
   }
+  // ...other products
 ]
