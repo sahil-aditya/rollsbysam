@@ -468,7 +468,16 @@
       shopData = data;
       renderProducts(shopData);
     })
-    .catch(error => console.error('Error fetching shop data:', error));
+    .catch(error => {
+      console.error('Error fetching shop data:', error);
+      // Fallback for when no data can be fetched
+      shopGrid.innerHTML = `
+        <div style="text-align: center; color: #aaa; margin-top: 50px;">
+          <h2>Sorry! Products could not be loaded.</h2>
+          <p>Please check your internet connection or try again later.</p>
+        </div>
+      `;
+    });
 
   function renderProducts(products) {
     products.forEach(product => {
@@ -489,26 +498,36 @@
         </div>
       `;
       
-      fetch(product.descriptionPath)
-        .then(response => response.text())
-        .then(text => {
-          const firstLine = text.split('\n')[0].trim();
-          card.querySelector('.product-desc').textContent = firstLine || 'No description available.';
-        })
-        .catch(error => {
-          console.error(`Error fetching partial description for ${product.name}:`, error);
-          card.querySelector('.product-desc').textContent = 'No description available.';
-        });
+      // Fetching description for the card view
+      if (product.descriptionPath) {
+        fetch(product.descriptionPath)
+          .then(response => response.text())
+          .then(text => {
+            const firstLine = text.split('\n')[0].trim();
+            card.querySelector('.product-desc').textContent = firstLine || 'No description available.';
+          })
+          .catch(error => {
+            console.error(`Error fetching partial description for ${product.name}:`, error);
+            card.querySelector('.product-desc').textContent = 'No description available.';
+          });
+      } else {
+        card.querySelector('.product-desc').textContent = 'No description available.';
+      }
         
-      fetch(product.price)
-        .then(response => response.text())
-        .then(text => {
-          card.querySelector('.product-price').textContent = text.trim() || 'Price N/A';
-        })
-        .catch(error => {
-          console.error(`Error fetching price for ${product.name}:`, error);
-          card.querySelector('.product-price').textContent = 'Price N/A';
-        });
+      // Fetching price for the card view
+      if (product.price) {
+        fetch(product.price)
+          .then(response => response.text())
+          .then(text => {
+            card.querySelector('.product-price').textContent = text.trim() || 'Price N/A';
+          })
+          .catch(error => {
+            console.error(`Error fetching price for ${product.name}:`, error);
+            card.querySelector('.product-price').textContent = 'Price N/A';
+          });
+      } else {
+        card.querySelector('.product-price').textContent = 'Price N/A';
+      }
 
       card.addEventListener('click', () => showModal(product));
       shopGrid.appendChild(card);
@@ -521,29 +540,34 @@
     
     modalName.textContent = product.name;
     
-    // Use Promise.all to fetch all data concurrently for efficiency
-    Promise.all([
-      fetch(product.descriptionPath).then(response => response.text()),
-      fetch(product.price).then(response => response.text()),
-      product.buyLinkPath ? fetch(product.buyLinkPath).then(response => response.text()) : Promise.resolve(null)
-    ]).then(([descriptionText, priceText, buyLinkText]) => {
-      modalDesc.textContent = descriptionText || 'No description available.';
-      modalPrice.textContent = priceText.trim() || 'Price N/A';
-      
-      if (buyLinkText) {
-        buyLink.href = buyLinkText.trim();
-        buyLink.style.display = 'inline-block';
-      } else {
+    // Create an array of promises for all data fetches
+    const fetchPromises = [
+      product.descriptionPath ? fetch(product.descriptionPath).then(res => res.text()) : Promise.resolve('No description available.'),
+      product.price ? fetch(product.price).then(res => res.text()) : Promise.resolve('Price N/A'),
+      product.buyLinkPath ? fetch(product.buyLinkPath).then(res => res.text()) : Promise.resolve(null),
+    ];
+    
+    Promise.all(fetchPromises)
+      .then(([descriptionText, priceText, buyLinkText]) => {
+        modalDesc.textContent = descriptionText;
+        modalPrice.textContent = priceText.trim();
+        
+        if (buyLinkText) {
+          buyLink.href = buyLinkText.trim();
+          buyLink.style.display = 'inline-block';
+        } else {
+          buyLink.href = '#';
+          buyLink.style.display = 'none';
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching product data:', error);
+        modalDesc.textContent = 'Description not found.';
+        modalPrice.textContent = 'Price not found.';
         buyLink.href = '#';
-        buyLink.style.display = 'none'; // Hide if no link is provided
-      }
-    }).catch(error => {
-      console.error('Error fetching product data:', error);
-      modalDesc.textContent = 'Description not found.';
-      modalPrice.textContent = 'Price not found.';
-      buyLink.href = '#';
-      buyLink.textContent = "Link N/A";
-    });
+        buyLink.textContent = "Link N/A";
+        buyLink.style.display = 'none';
+      });
       
     updateModalImage();
     
