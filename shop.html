@@ -489,6 +489,8 @@
       .then(([descriptionText, priceText]) => {
         modalDesc.textContent = descriptionText;
         modalPrice.textContent = priceText.trim();
+        
+        // FIXED: Directly use the buyLink URL without trying to fetch it
         if (product.buyLink) {
           buyLink.href = product.buyLink;
           buyLink.style.display = 'inline-block';
@@ -501,10 +503,17 @@
         console.error('Error fetching product data:', error);
         modalDesc.textContent = 'Description not found.';
         modalPrice.textContent = 'Price not found.';
-        buyLink.href = '#';
-        buyLink.textContent = "Link N/A";
-        buyLink.style.display = 'none';
+        
+        // FIXED: Directly use the buyLink URL even if other fetches fail
+        if (product.buyLink) {
+          buyLink.href = product.buyLink;
+          buyLink.style.display = 'inline-block';
+        } else {
+          buyLink.href = '#';
+          buyLink.style.display = 'none';
+        }
       });
+      
     updateModalImage();
     modal.style.display = 'flex';
   }
