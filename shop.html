@@ -481,7 +481,7 @@
           <p class="product-desc">Loading...</p>
           <div class="product-footer">
             <span class="product-price">Loading...</span>
-            <a class="buy-btn">Buy Now</a>
+            <a class="buy-btn" href="${product.buyLink}" target="_blank">Buy Now</a>
           </div>
         </div>
       `;
@@ -498,7 +498,12 @@
         card.querySelector('.product-desc').textContent = 'Error loading.';
         card.querySelector('.product-price').textContent = 'Error loading.';
       });
-      card.addEventListener('click', () => showModal(product));
+      card.addEventListener('click', (e) => {
+        // Prevent modal from opening if the buy button is clicked
+        if (!e.target.closest('.buy-btn')) {
+          showModal(product);
+        }
+      });
       shopGrid.appendChild(card);
     });
   }
