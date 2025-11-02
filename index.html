@@ -3,7 +3,7 @@
 <head>
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l+'':'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-WWR2K6DG');</script>
   <meta charset="UTF-8" />
@@ -26,10 +26,40 @@
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0; 
+    padding: 20px;
   }
 
-  /* Fade-up animation (Kept for gallery elements) */
+  /* --- Hero Slider Styling --- */
+  .hero-slider {
+      max-width: 1000px;
+      margin: 40px auto 60px auto; /* Increased bottom margin for separation */
+      overflow-x: scroll;
+      white-space: nowrap;
+      padding: 0;
+      border-radius: 10px;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
+      scroll-snap-type: x mandatory;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+  }
+  .hero-slider::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+  }
+
+  .hero-slider img {
+      width: 100%;
+      height: auto;
+      display: inline-block;
+      scroll-snap-align: center;
+      object-fit: cover;
+      max-height: 80vh; /* Optional: Limit height for large screens */
+  }
+  /* --- End Hero Slider Styling --- */
+
+  /* --- REMOVED HEADING CONTAINER AND H1/H3 STYLING --- */
+  /* Keeping original animations and helpers */
+
+  /* Fade-up animation */
   @keyframes fadeUp {
     to {
       opacity: 1;
@@ -37,7 +67,8 @@
     }
   }
 
-  /* Info icon (Disclaimer Button) */
+  /* Info icon (Disclaimer Button) - Now inside the popup */
+  /* This class is now used for the button inside the popup */
   .info-icon {
     font-size: 18px;
     color: #c0abe1;
@@ -47,7 +78,7 @@
     border-radius: 6px;
     text-align: center;
     line-height: 18px;
-    margin-top: 8px;
+    margin-top: 8px; /* Added spacing */
     transition: background 0.3s;
   }
   .info-icon:hover {
@@ -84,7 +115,7 @@
     background: #333;
   }
 
-  /* Slider styles (ORIGINAL BEFORE/AFTER GALLERY STYLES) */
+  /* Slider styles (for the before/after images) */
   .slider-container {
     max-width: 800px;
     margin: 40px auto;
@@ -92,14 +123,14 @@
     overflow: hidden;
     border-radius: 10px;
     user-select: none;
-    transform: scale(0.98); 
+    transform: scale(0.98);
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease, box-shadow 0.8s ease;
     filter: brightness(0.89);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   }
 
   .slider-container.in-focus {
-    transform: scale(1.06); /* Restored original zoom effect */
+    transform: scale(1.06);
     filter: brightness(1);
     box-shadow: none;
   }
@@ -131,26 +162,26 @@
     z-index: 10;
   }
   .handle::before {
-    content: '←';
+    content: '←'; /* The arrow itself */
     position: absolute;
     top: 50%;
-    left: -25px;
+    left: -25px; /* Positioned to the left of the slider line */
     transform: translateY(-50%);
     color: #fff;
     font-size: 14px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
-    background: #111;
-    border: 1px solid #fff;
+    background: #111; /* Background to make it stand out */
+    border: 1px solid #fff; /* A subtle white border */
     display: flex;
     align-items: center;
     justify-content: center;
     transition: transform 0.2s ease, background 0.2s ease;
   }
   .handle:hover::before {
-    transform: translateY(-50%) scale(1.2);
-    background: #333;
+    transform: translateY(-50%) scale(1.2); /* Scale up on hover */
+    background: #333; /* Darker background on hover */
   }
 
   /* Control Buttons */
@@ -166,21 +197,18 @@
     font-size: 12px;
   }
 
-  /* Consolidated Menu Button */
-  #header-btn {
-    left: 20px;
-    top: 20px;
-    font-size: 14px;
-    padding: 10px 15px;
+  /* NEW: Water-like animation and glass effect for menu button and volume panel */
+  #menu-btn, #volume-panel, #shop-btn {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    padding: 10px 12px;
   }
 
-  #header-btn:hover {
+  #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
     animation: water-flow 8s linear infinite;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -191,6 +219,107 @@
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
   }
+
+  #menu-btn {
+    left: 20px;
+  }
+  
+  /* REMOVED FIXED POSITION FOR SHOP/VOLUME-PANEL */
+
+  #menu-btn div {
+    width: 20px;
+    height: 2px;
+    background: white;
+    margin: 4px 0;
+  }
+
+  /* --- वॉल्यूम पैनल के लिए नया CSS (Updated for contact-popup) --- */
+  #volume-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    overflow: hidden;
+    position: relative; /* Remove fixed position, now inside popup */
+    margin: 8px auto; /* Centering/Spacing inside the popup */
+  }
+  
+  /* Shop Button Styling for inside popup */
+  #shop-btn {
+    display: block;
+    width: 80%;
+    margin: 15px auto 8px auto;
+    text-align: center;
+    position: relative; /* Remove fixed position, now inside popup */
+  }
+
+  #volume-panel.expanded {
+    width: 150px;
+    justify-content: space-between;
+    padding: 0 10px;
+    background: linear-gradient(90deg, #c0abe1, #7f6e91, #c0abe1);
+    background-size: 200% 100%;
+    animation: wavy-water 10s linear infinite;
+  }
+
+  .volume-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+  }
+
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    position: absolute;
+    right: 10px;
+  }
+
+  #volume-panel.expanded .volume-slider {
+    opacity: 1;
+  }
+
+  /* स्लाइडर थंब */
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+
+  /* लहरदार पानी एनीमेशन */
+  @keyframes wavy-water {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: 0 0;
+    }
+  }
+  /* --- वॉल्यूम पैनल के लिए नया CSS --- */
 
   /* Contact Popup */
   #contact-popup {
@@ -207,12 +336,19 @@
     border: 1px solid rgba(255, 255, 255, 0.15);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     display: none;
+    text-align: center; /* Center content inside popup */
   }
   #contact-popup h3 {
     margin: 0;
     font-size: 16px;
     font-weight: bold;
-    color: white;
+    /* Keeping original H3 gradient for separation */
+    background: linear-gradient(90deg, #adadad, #777778, #adadad); 
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: water-flow 8s linear infinite;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
   }
   #contact-popup p {
     margin: 4px 0 12px;
@@ -234,54 +370,6 @@
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* Volume Control inside Contact Popup */
-  #volume-control-in-popup {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 0;
-    margin-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-  }
-
-  .volume-icon-popup {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    margin-right: 10px;
-    filter: invert(1);
-  }
-
-  .volume-slider-popup {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
-    outline: none;
-    cursor: pointer;
-  }
-
-  /* Slider Thumb Styles */
-  .volume-slider-popup::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  .volume-slider-popup::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-  }
-
   /* New CSS for blurred placeholders */
   .blurred {
     filter: blur(15px);
@@ -289,42 +377,6 @@
   }
   .loaded {
     filter: blur(0);
-  }
-
-  /* --- MANUAL HERO SLIDER STYLES --- */
-  .hero-slider-container {
-    width: 100vw;
-    max-height: 90vh;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    margin-bottom: 40px; 
-    overflow-x: scroll; 
-    scroll-snap-type: x mandatory; 
-    -webkit-overflow-scrolling: touch; 
-  }
-
-  /* Hide scrollbar for a cleaner look */
-  .hero-slider-container::-webkit-scrollbar {
-    display: none;
-  }
-  .hero-slider-container {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  .hero-slider {
-    display: flex;
-    width: fit-content;
-    height: 100%;
-  }
-
-  .hero-slide {
-    width: 100vw;
-    height: 100%;
-    object-fit: contain; 
-    flex-shrink: 0; 
-    scroll-snap-align: start;
   }
 </style>
   <script async>
@@ -340,6 +392,12 @@
         return response.json();
       })
       .then(data => {
+        // Remove the first image pair to be replaced by the hero slider
+        // This assumes the first pair in the JSON is the one to be replaced.
+        if (data.length > 0) {
+            data.shift(); 
+        }
+
         allImagePairs = data;
         // Check if the gallery element is available before trying to load
         if (document.getElementById('gallery')) {
@@ -353,30 +411,28 @@
 </head>
 <body>
 
-<button id="header-btn" class="control-btn">
-    Menu
+<button id="menu-btn" class="control-btn">
+  <div></div>
+  <div></div>
+  <div></div>
 </button>
 
 <div id="contact-popup">
+  <button id="shop-btn" class="control-btn">
+    Shop
+  </button>
+  
+  <div id="volume-panel" class="control-btn">
+    <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
+  </div>
+
   <h3>Get Your Photo Edited</h3>
   <p>Contact Us</p>
   <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
   <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
   <a id="phone-link" href="#" style="display:none;">📞 Call</a>
-  <a id="shop-link" href="shop.html">🛒 Shop</a> <div id="volume-control-in-popup">
-      <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon-popup" />
-      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider-popup" />
-  </div>
-
   <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
-</div>
-
-<div class="hero-slider-container" id="hero-slider-container">
-    <div class="hero-slider">
-        <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Portfolio Slide 1" class="hero-slide">
-        <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Portfolio Slide 2" class="hero-slide">
-        <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="Portfolio Slide 3" class="hero-slide">
-    </div>
 </div>
 
 <div id="disclaimer-popup" class="popup">
@@ -384,21 +440,17 @@
   <button onclick="closeDisclaimer()">Close</button>
 </div>
 
+<div class="hero-slider">
+    <img src="slide1.png" alt="Creative Slide 1">
+    <img src="slide2.png" alt="Creative Slide 2">
+    <img src="slide3.png" alt="Creative Slide 3">
+</div>
+
 <div id="gallery"></div>
 
 <script>
-  // ** NEW FIX: Ensure hero slider starts at the very beginning (Slide 1) **
-  window.addEventListener('load', () => {
-    const heroSlider = document.getElementById('hero-slider-container');
-    if (heroSlider) {
-        // Sets the scroll position to 0 (far left)
-        heroSlider.scrollLeft = 0;
-    }
-  });
-
-
   // Contact menu toggle
-  const headerBtn = document.getElementById('header-btn');
+  const menuBtn = document.getElementById('menu-btn');
   const contactPopup = document.getElementById('contact-popup');
   const phoneLink = document.getElementById('phone-link');
   const infoIcon = document.querySelector('.info-icon');
@@ -409,19 +461,20 @@
     phoneLink.style.display = "block";
   }
 
-  headerBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
+  menuBtn.addEventListener('click', () => {
     contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
   });
 
   document.addEventListener('click', (e) => {
-    if (!contactPopup.contains(e.target) && !headerBtn.contains(e.target)) {
+    // Check if the click is outside the popup and the menu button
+    if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
       contactPopup.style.display = "none";
     }
   });
 
   // Disclaimer toggle
   function showDisclaimer() {
+    // --- New logic to close contact popup ---
     contactPopup.style.display = 'none';
     document.getElementById('disclaimer-popup').style.display = 'block';
   }
@@ -429,58 +482,78 @@
     document.getElementById('disclaimer-popup').style.display = 'none';
   }
 
-  // Fade button on scroll
+  // Fade buttons on scroll - ONLY MENU BUTTON REMAINS FIXED NOW
+  // The Shop button and Volume Panel are inside the popup and no longer fixed/visible outside the menu.
+  const volumePanel = document.getElementById('volume-panel'); // Kept for logic
+  const shopBtn = document.getElementById('shop-btn'); // Kept for logic
+
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
-      headerBtn.style.opacity = '0';
+      menuBtn.style.opacity = '0';
+      // No need to hide volumePanel/shopBtn as they are in the contact-popup
     } else {
-      headerBtn.style.opacity = '1';
+      menuBtn.style.opacity = '1';
     }
   });
 
-  // --- VOLUME CONTROL LOGIC ---
+  // Shop button redirect
+  shopBtn.addEventListener('click', () => {
+    window.location.href = "shop.html";
+  });
+
+  // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
   let audio = null;
   const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
   const volumeSlider = document.getElementById('volume-slider');
   const volumeIcon = document.getElementById('volume-icon');
   let hasInteracted = false;
+  let isExpanded = false;
 
   function initializeAudio() {
     if (!audio) {
       audio = new Audio(musicSource);
       audio.loop = true;
       audio.volume = 0;
-      audio.load();
     }
   }
 
   volumeSlider.addEventListener('input', () => {
-    initializeAudio();
-    const newVolume = parseFloat(volumeSlider.value);
-    audio.volume = newVolume;
+    if (isExpanded) {
+      const newVolume = parseFloat(volumeSlider.value);
+      audio.volume = newVolume;
 
-    if (newVolume > 0 && audio.paused) {
-      audio.play();
-      volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
-      hasInteracted = true;
-    } else if (newVolume === 0) {
-      audio.pause();
-      volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/mute.png';
+      if (newVolume > 0) {
+        if (audio.paused) {
+          audio.play();
+        }
+        volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
+      } else {
+        audio.pause();
+        volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/mute.png';
+      }
     }
   });
 
   volumeIcon.addEventListener('click', () => {
     initializeAudio();
 
+    // Toggle the expanded state of the panel
+    if (!isExpanded) {
+        volumePanel.classList.add('expanded');
+        isExpanded = true;
+    } else {
+        volumePanel.classList.remove('expanded');
+        isExpanded = false;
+    }
+
+    // Play/Pause logic
     if (!hasInteracted) {
-      // First interaction: set to default volume and play
       audio.volume = 0.5;
       volumeSlider.value = 0.5;
       volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
       audio.play();
       hasInteracted = true;
     } else {
-      // Toggle mute/unmute
       if (audio.volume > 0) {
         audio.volume = 0;
         volumeSlider.value = 0;
@@ -494,10 +567,9 @@
       }
     }
   });
-  // --- END VOLUME CONTROL LOGIC ---
+  // --- वॉल्यूम पैनल के लिए अपडेटेड JavaScript ---
 
-
-  // --- START: GALLERY BATCH LOADING AND SLIDER CODE ---
+  // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE (Unchanged) ---
 
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
@@ -571,7 +643,7 @@
   }
 
   // --- Performance-Optimized JS for focus effect ---
-  const sliderContainers = document.querySelectorAll('.slider-container');
+  // Note: This targets .slider-container, so the hero-slider is unaffected.
   let isUpdatingFocus = false;
 
   function updateFocus() {
@@ -580,7 +652,7 @@
     const focusZoneStart = windowHeight * 0.3;
     const focusZoneEnd = windowHeight * 0.7;
 
-    const containers = document.querySelectorAll('.slider-container');
+    const containers = document.querySelectorAll('.slider-container'); // Re-querying here is okay
     containers.forEach(container => {
       const rect = container.getBoundingClientRect();
       const elementCenter = rect.top + rect.height / 2;
@@ -602,6 +674,8 @@
 
   // Run on page load to set initial focus
   window.addEventListener('load', updateFocus);
+
+  // --- END: MODIFIED CODE FOR BATCH LOADING AND BLUR EFFECT ---
 </script>
 
 </body>
