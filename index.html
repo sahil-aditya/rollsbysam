@@ -56,9 +56,6 @@
   }
   /* --- End Hero Slider Styling --- */
 
-  /* --- REMOVED HEADING CONTAINER AND H1/H3 STYLING --- */
-  /* Keeping original animations and helpers */
-
   /* Fade-up animation */
   @keyframes fadeUp {
     to {
@@ -68,7 +65,6 @@
   }
 
   /* Info icon (Disclaimer Button) - Now inside the popup */
-  /* This class is now used for the button inside the popup */
   .info-icon {
     font-size: 18px;
     color: #c0abe1;
@@ -78,8 +74,11 @@
     border-radius: 6px;
     text-align: center;
     line-height: 18px;
-    margin-top: 8px; /* Added spacing */
+    /* margin-top: 8px; REMOVED SPACING to decrease overall popup height */
     transition: background 0.3s;
+    margin: 8px auto; /* Added for centering/spacing */
+    display: block; /* Make it take full width/center */
+    width: 50%; /* Control its size */
   }
   .info-icon:hover {
     background: rgba(51, 51, 51, 0.9);
@@ -187,8 +186,7 @@
   /* Control Buttons */
   .control-btn {
     position: fixed;
-    /* CHANGE: Reduced TOP PADDING to 10px from 20px */
-    top: 10px; 
+    top: 20px;
     border: none;
     cursor: pointer;
     border-radius: 8px;
@@ -206,8 +204,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
-    /* RESTORED ORIGINAL PADDING */
-    padding: 10px 12px;
+    /* Reduced padding for smaller menu button */
+    padding: 8px 10px; 
   }
 
   #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
@@ -224,16 +222,14 @@
 
   #menu-btn {
     left: 20px;
+    top: 10px; /* Moved up to avoid overlapping hero slider */
   }
   
-  /* REMOVED FIXED POSITION FOR SHOP/VOLUME-PANEL */
-
   #menu-btn div {
-    /* RESTORED ORIGINAL SIZE */
-    width: 20px;
+    width: 16px; /* Reduced width */
     height: 2px;
     background: white;
-    margin: 4px 0;
+    margin: 3px 0; /* Reduced margin */
   }
 
   /* --- वॉल्यूम पैनल के लिए नया CSS (Updated for contact-popup) --- */
@@ -245,7 +241,7 @@
     height: 40px;
     padding: 0;
     overflow: hidden;
-    position: relative; /* Remove fixed position, now inside popup */
+    position: relative; 
     margin: 8px auto; /* Centering/Spacing inside the popup */
   }
   
@@ -253,9 +249,9 @@
   #shop-btn {
     display: block;
     width: 80%;
-    margin: 8px auto 8px auto; /* Adjusted margin for order change */
+    margin: 8px auto 8px auto; /* Reduced top margin slightly */
     text-align: center;
-    position: relative; /* Remove fixed position, now inside popup */
+    position: relative; 
   }
 
   #volume-panel.expanded {
@@ -326,8 +322,8 @@
 
   /* Contact Popup */
   #contact-popup {
-    /* CHANGE: Reduced TOP POSITION to 50px */
-    top: 50px; 
+    position: fixed;
+    top: 60px;
     left: 20px;
     color: white;
     border-radius: 10px;
@@ -445,8 +441,8 @@
 </div>
 
 <div class="hero-slider">
-    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Creative Slide 1">
-    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Creative Slide 2">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Creative Slide 1">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Creative Slide 2">
     <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="Creative Slide 3">
 </div>
 
@@ -466,13 +462,15 @@
   }
 
   menuBtn.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevents click from propagating to document
+    // Prevent the click from immediately bubbling up to the document listener
+    e.stopPropagation(); 
+    // This is the desired simple toggle functionality.
     contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
   });
 
   document.addEventListener('click', (e) => {
     // Check if the click is outside the popup and the menu button
-    if (!contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
+    if (contactPopup.style.display === "block" && !contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
       contactPopup.style.display = "none";
     }
   });
@@ -537,7 +535,10 @@
     }
   });
 
-  volumeIcon.addEventListener('click', () => {
+  volumeIcon.addEventListener('click', (e) => {
+    // Prevent this click from bubbling up to the contactPopup close logic
+    e.stopPropagation();
+
     initializeAudio();
 
     // Toggle the expanded state of the panel
@@ -549,7 +550,7 @@
         isExpanded = false;
     }
 
-    // Play/Pause logic
+    // Play/Pause logic (unaffected by expansion state change)
     if (!hasInteracted) {
       audio.volume = 0.5;
       volumeSlider.value = 0.5;
