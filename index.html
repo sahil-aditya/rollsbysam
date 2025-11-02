@@ -187,7 +187,7 @@
   /* Control Buttons */
   .control-btn {
     position: fixed;
-    /* REDUCED TOP PADDING TO 10px from 20px */
+    /* CHANGE: Reduced TOP PADDING to 10px from 20px */
     top: 10px; 
     border: none;
     cursor: pointer;
@@ -206,8 +206,8 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
-    /* REDUCED PADDING FOR SMALLER BUTTON SIZE */
-    padding: 8px 10px; 
+    /* RESTORED ORIGINAL PADDING */
+    padding: 10px 12px;
   }
 
   #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
@@ -229,11 +229,11 @@
   /* REMOVED FIXED POSITION FOR SHOP/VOLUME-PANEL */
 
   #menu-btn div {
-    /* REDUCED SIZE FOR SMALLER MENU BUTTON */
-    width: 16px; 
-    height: 1.5px; 
+    /* RESTORED ORIGINAL SIZE */
+    width: 20px;
+    height: 2px;
     background: white;
-    margin: 3px 0; /* REDUCED MARGIN */
+    margin: 4px 0;
   }
 
   /* --- वॉल्यूम पैनल के लिए नया CSS (Updated for contact-popup) --- */
@@ -253,7 +253,7 @@
   #shop-btn {
     display: block;
     width: 80%;
-    margin: 8px auto 8px auto; /* ADJUSTED MARGIN FOR ORDER CHANGE */
+    margin: 8px auto 8px auto; /* Adjusted margin for order change */
     text-align: center;
     position: relative; /* Remove fixed position, now inside popup */
   }
@@ -326,7 +326,7 @@
 
   /* Contact Popup */
   #contact-popup {
-    /* REDUCED TOP POSITION TO ACCOUNT FOR SMALLER MENU BUTTON */
+    /* CHANGE: Reduced TOP POSITION to 50px */
     top: 50px; 
     left: 20px;
     color: white;
@@ -445,8 +445,8 @@
 </div>
 
 <div class="hero-slider">
-    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Creative Slide 1">
-    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Creative Slide 2">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Creative Slide 1">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Creative Slide 2">
     <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="Creative Slide 3">
 </div>
 
@@ -465,7 +465,8 @@
     phoneLink.style.display = "block";
   }
 
-  menuBtn.addEventListener('click', () => {
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevents click from propagating to document
     contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
   });
 
@@ -487,14 +488,12 @@
   }
 
   // Fade buttons on scroll - ONLY MENU BUTTON REMAINS FIXED NOW
-  // The Shop button and Volume Panel are inside the popup and no longer fixed/visible outside the menu.
   const volumePanel = document.getElementById('volume-panel'); // Kept for logic
   const shopBtn = document.getElementById('shop-btn'); // Kept for logic
 
   window.addEventListener('scroll', () => {
     if (window.scrollY > 100) {
       menuBtn.style.opacity = '0';
-      // No need to hide volumePanel/shopBtn as they are in the contact-popup
     } else {
       menuBtn.style.opacity = '1';
     }
