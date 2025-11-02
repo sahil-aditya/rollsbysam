@@ -15,7 +15,6 @@
   <meta property="og:title" content="Creative Gallery | Colorist sahil.aditya_" />
   <meta property="og:description" content="Showcasing professional color grading and photography skills." />
   <meta property="og:image" content="https://sahil-aditya.github.io/Creative_Gallery/images/thumbnail.jpg" />
-  <meta property="og:url" content="[https://sahil-aditya.netlify.app/]" /> 
   <meta property="og:type" content="website" />
 
   <meta name="twitter:card" content="summary_large_image" />
@@ -29,70 +28,33 @@
     padding: 20px;
   }
 
-  /* --- Heading Container for Alignment --- */
-  .heading-container {
-    text-align: center;
-    padding-top: 5px; /* Reduced padding-top */
-    margin-left: 20px;
-  }
-
-  /* Title */
-  h1 {
-    text-align: center;
-    margin-bottom: 5px;
-    background: linear-gradient(90deg, #c7c9c9, #bcc7cc, #c7c9c9);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: water-flow 8s linear infinite;
-    text-shadow: 0 0 5px rgba(74, 140, 209, 0.5), 0 0 10px rgba(74, 140, 209, 0.3);
-    font-size: clamp(1rem, 2vw, 1.2rem); /* Reduced size */
-    letter-spacing: 1px;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: fadeUp 1s ease forwards;
-    margin-top: 0;
-  }
-
-  /* Fade-up animation */
-  @keyframes fadeUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   /* --- Hero Slider Styling --- */
   .hero-slider {
       max-width: 1000px;
-      margin: 20px auto 60px auto; 
+      margin: 40px auto 60px auto;
       overflow-x: scroll;
       white-space: nowrap;
       padding: 0;
       border-radius: 10px;
       scrollbar-width: none;
       -ms-overflow-style: none;
-      scroll-snap-type: x mandatory; /* Snap to each image */
+      scroll-snap-type: x mandatory;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
-      -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
   }
   .hero-slider::-webkit-scrollbar {
       display: none;
   }
-
   .hero-slider img {
-      width: 100%; /* Image takes full width of the container */
-      max-width: 1000px; /* Ensures image respects the max-width of the container */
+      width: 100%;
       height: auto;
       display: inline-block;
-      scroll-snap-align: start; /* Snap to the beginning of the image */
+      scroll-snap-align: center;
       object-fit: cover;
       max-height: 80vh;
   }
   /* --- End Hero Slider Styling --- */
 
-
-  /* Info icon (Disclaimer Button) - Now inside the popup */
+  /* Info icon (Disclaimer Button) */
   .info-icon {
     font-size: 18px;
     color: #c0abe1;
@@ -102,7 +64,7 @@
     border-radius: 6px;
     text-align: center;
     line-height: 18px;
-    margin-top: 8px; 
+    margin-top: 8px;
     transition: background 0.3s;
   }
   .info-icon:hover {
@@ -135,11 +97,8 @@
     margin-top: 8px;
     cursor: pointer;
   }
-  .popup button:hover {
-    background: #333;
-  }
 
-  /* Slider styles (for the before/after images) */
+  /* Slider styles */
   .slider-container {
     max-width: 800px;
     margin: 40px auto;
@@ -147,18 +106,12 @@
     overflow: hidden;
     border-radius: 10px;
     user-select: none;
-    transform: scale(0.98);
-    transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease, box-shadow 0.8s ease;
-    filter: brightness(0.89);
+    transition: box-shadow 0.3s ease; /* Removed transform/filter transitions */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   }
 
-  .slider-container.in-focus {
-    transform: scale(1.06);
-    filter: brightness(1);
-    box-shadow: none;
-  }
-
+  /* Removed .in-focus styling */
+  
   .after-img {
     display: block;
     width: 100%;
@@ -173,7 +126,8 @@
     clip-path: inset(0 50% 0 0);
     transition: clip-path 0.2s ease-out;
   }
-  /* IMPROVED HANDLE STYLING */
+
+  /* Handle Styling */
   .handle {
     position: absolute;
     top: 0;
@@ -208,10 +162,10 @@
     background: #333;
   }
 
-  /* Control Buttons */
+  /* Control Buttons & Water-Flow Animation */
   .control-btn {
     position: fixed;
-    top: 10px; /* Adjusted top position */
+    top: 20px;
     border: none;
     cursor: pointer;
     border-radius: 8px;
@@ -219,22 +173,17 @@
     transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     color: white;
     font-size: 12px;
-  }
-
-  /* NEW: Water-like animation and glass effect for menu button and panel */
-  #menu-btn {
     background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
     background-size: 200% 200%;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.3s ease;
-    padding: 8px 10px; /* Reduced padding */
-    width: 40px; /* Added size constraint */
-    height: 40px; /* Added size constraint */
+    padding: 10px 12px;
   }
-
-  #menu-btn:hover {
+  #menu-btn {
+    left: 20px;
+  }
+  #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
     animation: water-flow 8s linear infinite;
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
@@ -246,18 +195,13 @@
     100% { background-position: 0% 50%; }
   }
 
-  #menu-btn {
-    left: 20px;
-  }
-
+  /* Volume Panel & Shop Button Styling */
   #menu-btn div {
-    width: 18px; /* Reduced bar width */
+    width: 20px;
     height: 2px;
     background: white;
-    margin: 3px 0; /* Reduced margin */
+    margin: 4px 0;
   }
-
-  /* --- वॉल्यूम पैनल/Shop Button Inside Popup CSS --- */
   #volume-panel {
     display: flex;
     align-items: center;
@@ -267,23 +211,14 @@
     padding: 0;
     overflow: hidden;
     position: relative;
-    margin: 12px auto 8px auto; /* Moved below info button, added spacing */
-    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f); /* Kept glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    margin: 8px auto;
   }
-  
   #shop-btn {
     display: block;
     width: 80%;
-    margin: 0 auto 12px auto; /* Moved to the very bottom */
+    margin: 15px auto 8px auto;
     text-align: center;
     position: relative;
-    padding: 10px 12px;
-    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f); /* Kept glass effect */
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    top: auto; /* Override fixed top */
   }
 
   #volume-panel.expanded {
@@ -294,7 +229,51 @@
     background-size: 200% 100%;
     animation: wavy-water 10s linear infinite;
   }
-  /* ... (rest of volume panel CSS remains the same) ... */
+  .volume-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+  }
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    position: absolute;
+    right: 10px;
+  }
+  #volume-panel.expanded .volume-slider {
+    opacity: 1;
+  }
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  .volume-slider::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+  }
+  @keyframes wavy-water {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+  }
 
   /* Contact Popup */
   #contact-popup {
@@ -312,8 +291,6 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
     display: none;
     text-align: center;
-    display: flex; /* Use flexbox for reordering */
-    flex-direction: column;
   }
   #contact-popup h3 {
     margin: 0;
@@ -351,17 +328,24 @@
     filter: blur(15px);
     transition: filter 0.8s ease;
   }
-  .loaded {
-    filter: blur(0);
+  
+  /* New CSS for the temporary loading indicator (Intersection Observer target) */
+  .temp-slider-container {
+    max-width: 800px;
+    height: 400px;
+    background: #222;
+    margin: 40px auto;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 16px;
   }
 </style>
   <script async>
-    // --- START: MODIFIED DATA FETCH & BATCHING LOGIC ---
     let allImagePairs = [];
     const jsonPath = 'images.json';
-    const batchSize = 2; // Number of sliders to load per batch
-    let currentImageIndex = 0;
-    let observer = null;
 
     fetch(jsonPath)
       .then(response => {
@@ -371,24 +355,18 @@
         return response.json();
       })
       .then(data => {
-        // Remove the first image pair for the hero slider.
         if (data.length > 0) {
             data.shift(); 
         }
 
         allImagePairs = data;
-        
         if (document.getElementById('gallery')) {
-          // Start the initial batch load
-          loadNextBatch();
-          // Initialize the Intersection Observer for subsequent batches
-          setupIntersectionObserver();
+          setupLazyLoadObserver();
         }
       })
       .catch(error => {
         console.error('Error fetching the gallery data:', error);
       });
-    // --- END: MODIFIED DATA FETCH & BATCHING LOGIC ---
   </script>
 </head>
 <body>
@@ -406,22 +384,17 @@
   <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
   <a id="phone-link" href="#" style="display:none;">📞 Call</a>
   
-  <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
-
-  <div id="volume-panel" class="control-btn">
-    <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
-    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
-  </div>
+  <div class="info-icon" onclick="showDisclaimer()">ⓘ</div> 
 
   <button id="shop-btn" class="control-btn">
     Shop
   </button>
+  
+  <div id="volume-panel" class="control-btn">
+    <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
+  </div>
 </div>
-
-<div class="heading-container">
-    <h1>Creative Gallery</h1>
-    </div>
-
 
 <div id="disclaimer-popup" class="popup">
   <p>Disclaimer: Not every image here is clicked by me. Some are non-copyright images used only to demonstrate my color grading skills.</p>
@@ -434,15 +407,16 @@
     <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="Creative Slide 3">
 </div>
 
-<div id="gallery"></div>
-
-<div id="loading-sentinel" style="height: 1px;"></div>
+<div id="gallery">
+  </div>
 
 <script>
-  // Contact menu toggle
+  // --- Contact Menu & Disclaimer Logic ---
   const menuBtn = document.getElementById('menu-btn');
   const contactPopup = document.getElementById('contact-popup');
   const phoneLink = document.getElementById('phone-link');
+  const volumePanel = document.getElementById('volume-panel'); 
+  const shopBtn = document.getElementById('shop-btn'); 
 
   const phoneNumber = "";
   if (phoneNumber) {
@@ -450,18 +424,17 @@
     phoneLink.style.display = "block";
   }
 
-  menuBtn.addEventListener('click', () => {
-    contactPopup.style.display = (contactPopup.style.display === "flex") ? "none" : "flex";
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
   });
 
   document.addEventListener('click', (e) => {
-    // Check if the click is outside the popup and the menu button
-    if (contactPopup.style.display === "flex" && !contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
+    if (contactPopup.style.display === "block" && !contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
       contactPopup.style.display = "none";
     }
   });
 
-  // Disclaimer toggle
   function showDisclaimer() {
     contactPopup.style.display = 'none';
     document.getElementById('disclaimer-popup').style.display = 'block';
@@ -470,22 +443,17 @@
     document.getElementById('disclaimer-popup').style.display = 'none';
   }
 
-  // Fade menu button on scroll 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-      menuBtn.style.opacity = '0';
-    } else {
-      menuBtn.style.opacity = '1';
-    }
+    menuBtn.style.opacity = (window.scrollY > 100) ? '0' : '1';
   });
 
-  // Shop button redirect
-  const shopBtn = document.getElementById('shop-btn');
-  shopBtn.addEventListener('click', () => {
+  shopBtn.addEventListener('click', (e) => {
+    e.preventDefault(); 
     window.location.href = "shop.html";
   });
+  // --- End Contact Menu & Disclaimer Logic ---
 
-  // --- Volume Panel JS (Unchanged Logic) ---
+  // --- VOLUME PANEL LOGIC ---
   let audio = null;
   const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
   const volumeSlider = document.getElementById('volume-slider');
@@ -521,7 +489,6 @@
   volumeIcon.addEventListener('click', () => {
     initializeAudio();
 
-    // Toggle the expanded state of the panel
     if (!isExpanded) {
         volumePanel.classList.add('expanded');
         isExpanded = true;
@@ -530,7 +497,6 @@
         isExpanded = false;
     }
 
-    // Play/Pause logic
     if (!hasInteracted) {
       audio.volume = 0.5;
       volumeSlider.value = 0.5;
@@ -551,14 +517,15 @@
       }
     }
   });
-  // --- Volume Panel JS End ---
+  // --- END VOLUME PANEL LOGIC ---
 
-
-  // --- START: UPGRADED BATCH LOADING WITH INTERSECTION OBSERVER ---
+  // --- START: OPTIMIZED LAZY LOADING & SLIDER LOGIC ---
 
   const gallery = document.getElementById("gallery");
-  const loadingSentinel = document.getElementById("loading-sentinel");
-
+  const slidersToLoadAtOnce = 2; 
+  let nextImageIndex = 0;
+  let intersectionObserver = null;
+  
   function createSlider(pair) {
     const container = document.createElement("div");
     container.classList.add("slider-container");
@@ -580,11 +547,19 @@
     handle.classList.add("handle");
     container.appendChild(handle);
 
-    gallery.appendChild(container);
+    // Handle blur removal on load
+    let loadedCount = 0;
+    const checkLoad = () => {
+        loadedCount++;
+        if (loadedCount === 2) {
+            afterImg.classList.remove("blurred");
+            beforeImg.classList.remove("blurred");
+        }
+    };
+    afterImg.onload = checkLoad;
+    beforeImg.onload = checkLoad;
 
-    afterImg.onload = () => afterImg.classList.remove("blurred");
-    beforeImg.onload = () => beforeImg.classList.remove("blurred");
-
+    // Slider interaction logic
     let dragging = false;
 
     const move = (x) => {
@@ -604,80 +579,67 @@
     handle.addEventListener("touchstart", () => dragging = true);
     window.addEventListener("touchend", () => dragging = false);
     window.addEventListener("touchmove", e => { if (dragging) move(e.touches[0].clientX); });
+    
+    return container;
   }
 
   function loadNextBatch() {
-    if (currentImageIndex >= allImagePairs.length) {
-      if (observer) {
-        observer.unobserve(loadingSentinel); // Stop observing when all are loaded
+    if (nextImageIndex >= allImagePairs.length) {
+      if (intersectionObserver) {
+        intersectionObserver.disconnect();
       }
       return;
     }
 
-    const startIndex = currentImageIndex;
-    const endIndex = Math.min(startIndex + batchSize, allImagePairs.length);
-
-    for (let i = startIndex; i < endIndex; i++) {
-      createSlider(allImagePairs[i]);
+    const oldObserverTarget = document.querySelector('.temp-slider-container:last-child');
+    if (oldObserverTarget && intersectionObserver) {
+        intersectionObserver.unobserve(oldObserverTarget);
     }
-
-    currentImageIndex = endIndex;
     
-    // Re-position the sentinel after the new batch
-    if (currentImageIndex < allImagePairs.length) {
-        gallery.insertAdjacentElement('afterend', loadingSentinel);
-    } else {
-        loadingSentinel.remove(); // Remove sentinel if everything is loaded
+    const batchPairs = allImagePairs.slice(nextImageIndex, nextImageIndex + slidersToLoadAtOnce);
+    batchPairs.forEach(pair => {
+      gallery.appendChild(createSlider(pair));
+    });
+
+    nextImageIndex += slidersToLoadAtOnce;
+
+    if (nextImageIndex < allImagePairs.length) {
+        const tempPlaceholder = document.createElement('div');
+        tempPlaceholder.classList.add('temp-slider-container');
+        tempPlaceholder.innerHTML = 'Loading more sliders...';
+        gallery.appendChild(tempPlaceholder);
+
+        if (intersectionObserver) {
+            intersectionObserver.observe(tempPlaceholder);
+        }
+    }
+    
+    if (oldObserverTarget) {
+        oldObserverTarget.remove();
     }
   }
 
-  function setupIntersectionObserver() {
-    observer = new IntersectionObserver((entries) => {
+  function setupLazyLoadObserver() {
+    const tempPlaceholder = document.createElement('div');
+    tempPlaceholder.classList.add('temp-slider-container');
+    tempPlaceholder.innerHTML = 'Loading content...';
+    gallery.appendChild(tempPlaceholder);
+
+    intersectionObserver = new IntersectionObserver(entries => {
       entries.forEach(entry => {
-        // If the sentinel is visible (in the viewport), load the next batch
         if (entry.isIntersecting) {
           loadNextBatch();
         }
       });
     }, {
-      rootMargin: '200px 0px', // Start loading when 200px away from the bottom
+      rootMargin: '200px', 
       threshold: 0.1
     });
 
-    observer.observe(loadingSentinel);
+    intersectionObserver.observe(tempPlaceholder);
   }
 
-  // --- Performance-Optimized JS for focus effect (Unchanged) ---
-  let isUpdatingFocus = false;
-
-  function updateFocus() {
-    isUpdatingFocus = false;
-    const windowHeight = window.innerHeight;
-    const focusZoneStart = windowHeight * 0.3;
-    const focusZoneEnd = windowHeight * 0.7;
-
-    const containers = document.querySelectorAll('.slider-container');
-    containers.forEach(container => {
-      const rect = container.getBoundingClientRect();
-      const elementCenter = rect.top + rect.height / 2;
-
-      if (elementCenter > focusZoneStart && elementCenter < focusZoneEnd) {
-        container.classList.add('in-focus');
-      } else {
-        container.classList.remove('in-focus');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', () => {
-    if (!isUpdatingFocus) {
-      window.requestAnimationFrame(updateFocus);
-      isUpdatingFocus = true;
-    }
-  });
-
-  window.addEventListener('load', updateFocus);
-  // --- END: UPGRADED BATCH LOADING WITH INTERSECTION OBSERVER ---
+  // --- END: OPTIMIZED LAZY LOADING & SLIDER LOGIC ---
 </script>
 
 </body>
