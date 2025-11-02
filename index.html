@@ -26,11 +26,9 @@
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0; /* Changed to 0 as hero slider needs to touch sides */
+    padding: 0;
   }
 
-  /* --- Removed old Heading Container, h1, h3 styles --- */
-  
   /* Fade-up animation (Kept for gallery elements) */
   @keyframes fadeUp {
     to {
@@ -100,8 +98,9 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   }
 
+  /* UPDATED: Removed transform: scale(1.06) to stop enlargement */
   .slider-container.in-focus {
-    transform: scale(1.06);
+    transform: scale(1);
     filter: brightness(1);
     box-shadow: none;
   }
@@ -168,7 +167,7 @@
     font-size: 12px;
   }
 
-  /* NEW: Consolidated Menu Button */
+  /* Consolidated Menu Button */
   #header-btn {
     left: 20px;
     top: 20px;
@@ -197,7 +196,7 @@
   /* Contact Popup */
   #contact-popup {
     position: fixed;
-    top: 60px; /* Adjusted to be below the new button */
+    top: 60px;
     left: 20px;
     color: white;
     border-radius: 10px;
@@ -214,7 +213,7 @@
     margin: 0;
     font-size: 16px;
     font-weight: bold;
-    color: white; /* Ensure heading inside popup is visible */
+    color: white;
   }
   #contact-popup p {
     margin: 4px 0 12px;
@@ -236,7 +235,7 @@
     background: rgba(51, 51, 51, 0.9);
   }
 
-  /* NEW: Volume Control inside Contact Popup */
+  /* Volume Control inside Contact Popup */
   #volume-control-in-popup {
     display: flex;
     align-items: center;
@@ -293,41 +292,43 @@
     filter: blur(0);
   }
 
-  /* --- NEW: FULL-SCREEN HERO SLIDER STYLES --- */
+  /* --- CORRECTED: MANUAL HERO SLIDER STYLES --- */
   .hero-slider-container {
     width: 100vw;
-    height: 100vh; /* Full viewport height */
+    max-height: 90vh; /* Limits max height to prevent over-enlargement */
     position: relative;
-    overflow: hidden;
     margin: 0;
     padding: 0;
     margin-bottom: 40px; 
+    overflow-x: scroll; /* Enables horizontal user scrolling */
+    scroll-snap-type: x mandatory; /* Makes the scrolling snap perfectly to each slide */
+    -webkit-overflow-scrolling: touch; /* Better scrolling experience on iOS */
+  }
+
+  /* Hide scrollbar for a cleaner look */
+  .hero-slider-container::-webkit-scrollbar {
+    display: none;
+  }
+  .hero-slider-container {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
 
   .hero-slider {
     display: flex;
-    width: 300vw; /* 3 images * 100vw */
+    width: fit-content;
     height: 100%;
-    animation: slide-show 20s infinite ease-in-out; /* Slide speed control */
+    /* Removed animation: slide-show */
   }
 
   .hero-slide {
     width: 100vw;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the whole screen */
+    object-fit: contain; /* IMPORTANT: Use 'contain' to show the full image, 'cover' to crop and fill */
     flex-shrink: 0; 
+    scroll-snap-align: start; /* Snap point for scrolling */
   }
-
-  /* Keyframe Animation for Auto-Slide */
-  @keyframes slide-show {
-    0% { transform: translateX(0); } /* Slide 1 */
-    30% { transform: translateX(0); }
-    33% { transform: translateX(-100vw); } /* Slide 2 */
-    63% { transform: translateX(-100vw); }
-    66% { transform: translateX(-200vw); } /* Slide 3 */
-    97% { transform: translateX(-200vw); }
-    100% { transform: translateX(0); }
-  }
+  /* Removed @keyframes slide-show */
 </style>
   <script async>
     // Moved the data fetching logic to the head with 'async'
@@ -430,7 +431,7 @@
     }
   });
 
-  // --- NEW VOLUME CONTROL LOGIC INSIDE POPUP ---
+  // --- VOLUME CONTROL LOGIC ---
   let audio = null;
   const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
   const volumeSlider = document.getElementById('volume-slider');
@@ -489,7 +490,7 @@
   // --- END VOLUME CONTROL LOGIC ---
 
 
-  // --- START: YOUR ORIGINAL BATCH LOADING AND BLUR EFFECT CODE (Unchanged) ---
+  // --- START: GALLERY BATCH LOADING AND SLIDER CODE (Unchanged) ---
 
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
