@@ -26,7 +26,7 @@
     color: white;
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 0; 
   }
 
   /* Fade-up animation (Kept for gallery elements) */
@@ -84,7 +84,7 @@
     background: #333;
   }
 
-  /* Slider styles (Kept for Before/After Gallery) */
+  /* Slider styles (ORIGINAL BEFORE/AFTER GALLERY STYLES) */
   .slider-container {
     max-width: 800px;
     margin: 40px auto;
@@ -92,15 +92,14 @@
     overflow: hidden;
     border-radius: 10px;
     user-select: none;
-    transform: scale(0.98);
+    transform: scale(0.98); 
     transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.8s ease, box-shadow 0.8s ease;
     filter: brightness(0.89);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
   }
 
-  /* UPDATED: Removed transform: scale(1.06) to stop enlargement */
   .slider-container.in-focus {
-    transform: scale(1);
+    transform: scale(1.06); /* Restored original zoom effect */
     filter: brightness(1);
     box-shadow: none;
   }
@@ -292,17 +291,17 @@
     filter: blur(0);
   }
 
-  /* --- CORRECTED: MANUAL HERO SLIDER STYLES --- */
+  /* --- MANUAL HERO SLIDER STYLES --- */
   .hero-slider-container {
     width: 100vw;
-    max-height: 90vh; /* Limits max height to prevent over-enlargement */
+    max-height: 90vh;
     position: relative;
     margin: 0;
     padding: 0;
     margin-bottom: 40px; 
-    overflow-x: scroll; /* Enables horizontal user scrolling */
-    scroll-snap-type: x mandatory; /* Makes the scrolling snap perfectly to each slide */
-    -webkit-overflow-scrolling: touch; /* Better scrolling experience on iOS */
+    overflow-x: scroll; 
+    scroll-snap-type: x mandatory; 
+    -webkit-overflow-scrolling: touch; 
   }
 
   /* Hide scrollbar for a cleaner look */
@@ -310,25 +309,23 @@
     display: none;
   }
   .hero-slider-container {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   .hero-slider {
     display: flex;
     width: fit-content;
     height: 100%;
-    /* Removed animation: slide-show */
   }
 
   .hero-slide {
     width: 100vw;
     height: 100%;
-    object-fit: contain; /* IMPORTANT: Use 'contain' to show the full image, 'cover' to crop and fill */
+    object-fit: contain; 
     flex-shrink: 0; 
-    scroll-snap-align: start; /* Snap point for scrolling */
+    scroll-snap-align: start;
   }
-  /* Removed @keyframes slide-show */
 </style>
   <script async>
     // Moved the data fetching logic to the head with 'async'
@@ -374,7 +371,7 @@
   <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
 </div>
 
-<div class="hero-slider-container">
+<div class="hero-slider-container" id="hero-slider-container">
     <div class="hero-slider">
         <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Portfolio Slide 1" class="hero-slide">
         <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Portfolio Slide 2" class="hero-slide">
@@ -390,6 +387,16 @@
 <div id="gallery"></div>
 
 <script>
+  // ** NEW FIX: Ensure hero slider starts at the very beginning (Slide 1) **
+  window.addEventListener('load', () => {
+    const heroSlider = document.getElementById('hero-slider-container');
+    if (heroSlider) {
+        // Sets the scroll position to 0 (far left)
+        heroSlider.scrollLeft = 0;
+    }
+  });
+
+
   // Contact menu toggle
   const headerBtn = document.getElementById('header-btn');
   const contactPopup = document.getElementById('contact-popup');
@@ -490,7 +497,7 @@
   // --- END VOLUME CONTROL LOGIC ---
 
 
-  // --- START: GALLERY BATCH LOADING AND SLIDER CODE (Unchanged) ---
+  // --- START: GALLERY BATCH LOADING AND SLIDER CODE ---
 
   const gallery = document.getElementById("gallery");
   const batchSize = 2; // Number of sliders to load per batch
@@ -563,7 +570,7 @@
     }
   }
 
-  // --- Performance-Optimized JS for focus effect (Unchanged) ---
+  // --- Performance-Optimized JS for focus effect ---
   const sliderContainers = document.querySelectorAll('.slider-container');
   let isUpdatingFocus = false;
 
