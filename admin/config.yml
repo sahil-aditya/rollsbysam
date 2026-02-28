@@ -1,6 +1,6 @@
 backend:
   name: git-gateway
-  branch: main
+  branch: main # Agar branch 'master' hai toh yahan master likhna
 
 media_folder: "images"
 public_folder: "/images"
@@ -9,9 +9,10 @@ collections:
   - name: "gallery"
     label: "Creative Gallery"
     folder: "images"
-    extension: "json" # Isse error chala jayega
-    format: "json"    # Ye mandatory property hai jo missing thi
     create: true
+    delete: true
+    extension: "json"
+    format: "json"
     fields:
       - {label: "Image", name: "image", widget: "image"}
       - {label: "Title", name: "title", widget: "string"}
