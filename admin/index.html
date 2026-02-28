@@ -1,25 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sahil Aditya | CMS</title>
-  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sahil Aditya | Creative Gallery</title>
+    
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-  
-  <script>
-    // Isse login ke baad page apne aap refresh ho jayega
-    if (window.netlifyIdentity) {
-      window.netlifyIdentity.on("init", user => {
-        if (!user) {
-          window.netlifyIdentity.on("login", () => {
-            document.location.href = "/admin/";
-          });
+
+    <div id="gallery-container">
+        <h1>My Creative Gallery</h1>
+        </div>
+
+    <script>
+        if (window.netlifyIdentity) {
+            // Jab user invite link se aaye ya login kare
+            window.netlifyIdentity.on("init", user => {
+                if (!user) {
+                    window.netlifyIdentity.on("login", () => {
+                        // Login ke baad seedha admin panel pe bhejo
+                        document.location.href = "/admin/";
+                    });
+                }
+            });
+
+            // Isse logout hone par wapis home page par redirect hoga
+            window.netlifyIdentity.on("logout", () => {
+                document.location.href = "/";
+            });
         }
-      });
-    }
-  </script>
+    </script>
+
 </body>
 </html>
