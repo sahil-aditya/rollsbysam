@@ -2,6 +2,9 @@
   "schedule": "daily",
   "aggressive": true,
   "minSizeReductionPercentage": 10,
+  "includedFiles": [
+    "images/*"
+  ],
   "ignoredFiles": [
     "node_modules/*",
     ".github/workflows/*",
@@ -14,8 +17,6 @@
     "*.mp3",
     "*.wav",
     "*.yml",
-    "*.yaml",
-    "package-lock.json",
-    "package.json"
+    "*.yaml"
   ]
 }
