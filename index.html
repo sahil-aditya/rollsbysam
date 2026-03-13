@@ -9,120 +9,566 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Creative Gallery</title>
+
   <link rel="icon" type="image/png" href="https://sahil-aditya.github.io/Creative_Gallery/images/icon.png">
+  
   <meta property="og:title" content="Creative Gallery | Colorist sahil.aditya_" />
   <meta property="og:description" content="Showcasing professional color grading and photography skills." />
   <meta property="og:image" content="https://sahil-aditya.github.io/Creative_Gallery/images/thumbnail.jpg" />
-  <meta property="og:url" content="https://sahil-aditya.netlify.app/" /> 
+  <meta property="og:url" content="[https://sahil-aditya.netlify.app/]" /> 
   <meta property="og:type" content="website" />
+
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://sahil-aditya.github.io/Creative_Gallery/images/thumbnail.jpg" />
   <style>
-    body { background-color: #111; color: white; font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-    .hero-slider { max-width: 1200px; margin: 40px auto 60px auto; overflow-x: scroll; white-space: nowrap; padding: 0; border-radius: 10px; scrollbar-width: none; -ms-overflow-style: none; scroll-snap-type: x mandatory; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6); }
-    .hero-slider::-webkit-scrollbar { display: none; }
-    .hero-slider img { width: 100%; height: auto; display: inline-block; scroll-snap-align: center; object-fit: cover; max-height: 80vh; }
-    #gallery { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 10px; max-width: 1800px; margin: 0 auto; }
-    .slider-container { flex: 0 1 calc(16.66% - 10px); min-width: 150px; position: relative; overflow: hidden; border-radius: 6px; user-select: none; transform: scale(0.98); transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.6s ease; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); margin-bottom: 10px; }
-    .slider-container.in-focus { transform: scale(1.006); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); z-index: 5; }
-    @media (max-width: 1400px) { .slider-container { flex: 0 1 calc(25% - 10px); } }
-    @media (max-width: 900px) { .slider-container { flex: 0 1 calc(33.33% - 10px); } }
-    @media (max-width: 600px) { .slider-container { flex: 0 1 calc(50% - 10px); } }
-    @media (max-width: 400px) { .slider-container { flex: 0 1 100%; } }
-    .after-img { display: block; width: 100%; }
-    .before-img { position: absolute; top: 0; left: 0; height: 100%; width: 100%; object-fit: cover; clip-path: inset(0 50% 0 0); transition: clip-path 0.2s ease-out; }
-    .handle { position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: #fff; cursor: ew-resize; transform: translateX(-50%); z-index: 10; }
-    .handle::before { content: '←'; position: absolute; top: 50%; left: -12px; transform: translateY(-50%); color: #fff; font-size: 10px; width: 14px; height: 14px; border-radius: 50%; background: #111; border: 1px solid #fff; display: flex; align-items: center; justify-content: center; }
-    .control-btn { position: fixed; border: none; cursor: pointer; border-radius: 8px; z-index: 9999; transition: opacity 0.3s ease; color: white; font-size: 12px; background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f); background-size: 200% 200%; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); padding: 8px 10px; }
-    #menu-btn { left: 20px; top: 10px; }
-    #menu-btn div { width: 16px; height: 2px; background: white; margin: 3px 0; }
-    #contact-popup { position: fixed; top: 60px; left: 20px; width: 250px; padding: 20px; z-index: 10000; background: rgba(17, 17, 17, 0.6); backdrop-filter: blur(15px); border-radius: 10px; display: none; text-align: center; border: 1px solid rgba(255, 255, 255, 0.15); }
-    .popup { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 300px; background: #fff; color: #000; padding: 15px 20px; border-radius: 8px; z-index: 20000; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    #volume-panel { width: 40px; height: 40px; margin: 8px auto; display: flex; align-items: center; justify-content: center; position: relative; }
-    #volume-panel.expanded { width: 150px; padding: 0 10px; justify-content: space-between; }
-    .volume-slider { width: 80px; opacity: 0; position: absolute; right: 10px; pointer-events: none; }
-    #volume-panel.expanded .volume-slider { opacity: 1; pointer-events: auto; }
-    .blurred { filter: blur(15px); transition: filter 0.8s ease; }
-  </style>
+  body {
+    background-color: #111;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+  }
+
+  /* --- Hero Slider Styling --- */
+  .hero-slider {
+      max-width: 1000px;
+      margin: 40px auto 60px auto;
+      overflow-x: scroll;
+      white-space: nowrap;
+      padding: 0;
+      border-radius: 10px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+  }
+  .hero-slider::-webkit-scrollbar {
+      display: none;
+  }
+
+  .hero-slider img {
+      width: 100%;
+      height: auto;
+      display: inline-block;
+      scroll-snap-align: center;
+      object-fit: cover;
+      max-height: 80vh;
+  }
+
+  /* --- Masonry Gallery Layout (UPDATED) --- */
+  #gallery {
+    column-count: 2;
+    column-gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  /* Fade-up animation */
+  @keyframes fadeUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .info-icon {
+    font-size: 18px;
+    color: #c0abe1;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 10px 12px;
+    border-radius: 6px;
+    text-align: center;
+    line-height: 18px;
+    transition: background 0.3s;
+    margin: 8px auto;
+    display: block;
+    width: 50%;
+  }
+  .info-icon:hover {
+    background: rgba(51, 51, 51, 0.9);
+  }
+
+  .popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 300px;
+    background: #fff;
+    color: #000;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    font-size: 13px;
+    z-index: 2000;
+    text-align: center;
+  }
+  .popup button {
+    background: #000;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-top: 8px;
+    cursor: pointer;
+  }
+
+  /* Slider styles (UPDATED TRANSITION & SHADOW) */
+  .slider-container {
+    break-inside: avoid; /* Essential for Masonry */
+    width: 100%;
+    margin-bottom: 20px; /* Spacing between grid items */
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    user-select: none;
+    transform: scale(0.98);
+    /* Focus transition updated to 0.6s, box-shadow removed */
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 0.6s ease;
+    filter: brightness(0.89);
+    box-shadow: none; 
+  }
+
+  .slider-container.in-focus {
+    transform: scale(1.04); /* Adjusted scale for column layout */
+    filter: brightness(1);
+    box-shadow: none;
+  }
+
+  .after-img {
+    display: block;
+    width: 100%;
+    height: auto; /* Preserve original ratio */
+  }
+  .before-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; /* Follows the height of the container */
+    width: 100%;
+    object-fit: cover;
+    clip-path: inset(0 50% 0 0);
+    transition: clip-path 0.2s ease-out;
+  }
+
+  .handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 2px;
+    height: 100%;
+    background: #fff;
+    cursor: ew-resize;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+  .handle::before {
+    content: '←';
+    position: absolute;
+    top: 50%;
+    left: -25px;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 14px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #111;
+    border: 1px solid #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .control-btn {
+    position: fixed;
+    top: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    z-index: 9999;
+    transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    color: white;
+    font-size: 12px;
+  }
+
+  #menu-btn, #volume-panel, #shop-btn {
+    background: linear-gradient(135deg, #1a232f, #2c3e50, #1a232f);
+    background-size: 200% 200%;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    padding: 8px 10px; 
+  }
+
+  #menu-btn:hover, #volume-panel:hover, #shop-btn:hover {
+    animation: water-flow 8s linear infinite;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  }
+
+  @keyframes water-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  #menu-btn {
+    left: 20px;
+    top: 10px;
+  }
+  
+  #menu-btn div {
+    width: 16px;
+    height: 2px;
+    background: white;
+    margin: 3px 0;
+  }
+
+  #volume-panel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    overflow: hidden;
+    position: relative; 
+    margin: 8px auto;
+  }
+  
+  #shop-btn {
+    display: block;
+    width: 80%;
+    margin: 8px auto 8px auto;
+    text-align: center;
+    position: relative; 
+  }
+
+  #volume-panel.expanded {
+    width: 150px;
+    justify-content: space-between;
+    padding: 0 10px;
+    background: linear-gradient(90deg, #c0abe1, #7f6e91, #c0abe1);
+    background-size: 200% 100%;
+    animation: wavy-water 10s linear infinite;
+  }
+
+  .volume-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+  }
+
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    outline: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.4s ease-in-out;
+    position: absolute;
+    right: 10px;
+  }
+
+  #volume-panel.expanded .volume-slider {
+    opacity: 1;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: white;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  @keyframes wavy-water {
+    0% { background-position: 100% 0; }
+    100% { background-position: 0 0; }
+  }
+
+  #contact-popup {
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    color: white;
+    border-radius: 10px;
+    width: 250px;
+    padding: 20px;
+    z-index: 10000;
+    background: rgba(17, 17, 17, 0.6);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    display: none;
+    text-align: center;
+  }
+
+  #contact-popup h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #adadad, #777778, #adadad); 
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: water-flow 8s linear infinite;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+  }
+
+  #contact-popup a {
+    display: block;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.15);
+    color: white;
+    transition: background 0.3s;
+  }
+
+  .blurred {
+    filter: blur(15px);
+    transition: filter 0.8s ease;
+  }
+
+  /* Mobile adjustment */
+  @media (max-width: 600px) {
+    #gallery { column-count: 1; }
+  }
+</style>
+
+  <script async>
+    let allImagePairs = [];
+    const jsonPath = 'images.json';
+
+    fetch(jsonPath)
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        return response.json();
+      })
+      .then(data => {
+        if (data.length > 0) data.shift(); 
+        allImagePairs = data;
+        if (document.getElementById('gallery')) loadAllBatches();
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  </script>
 </head>
 <body>
-  <button id="menu-btn" class="control-btn"><div></div><div></div><div></div></button>
-  <div id="contact-popup">
-    <h3 style="margin:0; font-size:16px;">Creative Gallery</h3>
-    <p style="font-size:13px; color:#ccc;">Contact Us</p>
-    <a href="https://www.instagram.com/sahil.aditya_" target="_blank" style="color:white; display:block; padding:10px; background:rgba(0,0,0,0.2); margin-bottom:5px; border-radius:5px; text-decoration:none; font-size:14px;">📩 DM on Instagram</a>
-    <a href="mailto:sahilmaurya321@outlook.in" style="color:white; display:block; padding:10px; background:rgba(0,0,0,0.2); border-radius:5px; text-decoration:none; font-size:14px;">✉️ Send Email</a>
-    <div onclick="showDisclaimer()" style="cursor:pointer; margin-top:10px; font-size: 13px; color: #c0abe1;">ⓘ Info</div>
-    <button id="shop-btn" class="control-btn" style="position:relative; top:0; margin: 15px auto 5px auto; display:block; width: 80%;">Shop</button>
-    <div id="volume-panel" class="control-btn" style="position:relative; top:0;">
-      <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Vol" style="width:20px; cursor:pointer;" />
-      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
-    </div>
-  </div>
-  <div id="disclaimer-popup" class="popup">
-    <p style="font-size:13px;">Disclaimer: Not every image here is clicked by me. Some are non-copyright images used only to demonstrate my color grading skills.</p>
-    <button onclick="closeDisclaimer()" style="background:#000; color:#fff; border:none; padding:5px 10px; border-radius:4px; cursor:pointer;">Close</button>
-  </div>
-  <div class="hero-slider">
-    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="S1"><img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="S2"><img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="S3">
-  </div>
-  <div id="gallery"></div>
-  <script>
-    let allImagePairs = [];
-    let currentBatch = 0;
-    const gallery = document.getElementById("gallery"), menuBtn = document.getElementById('menu-btn'), contactPopup = document.getElementById('contact-popup');
-    const audio = new Audio("https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3"); audio.loop = true;
-    fetch('images.json').then(res => res.json()).then(data => { if (data.length > 0) data.shift(); allImagePairs = data; loadAllBatches(); });
-    function createSlider(pair) {
-      const container = document.createElement("div"); container.className = "slider-container";
-      const afterImg = document.createElement("img"); afterImg.src = pair.after; afterImg.className = "after-img blurred";
-      const beforeImg = document.createElement("img"); beforeImg.src = pair.before; beforeImg.className = "before-img blurred";
-      const handle = document.createElement("div"); handle.className = "handle";
-      container.append(afterImg, beforeImg, handle); gallery.appendChild(container);
-      afterImg.onload = () => afterImg.classList.remove("blurred");
-      beforeImg.onload = () => beforeImg.classList.remove("blurred");
-      let dragging = false;
-      const move = (x) => {
-        const rect = container.getBoundingClientRect();
-        let offsetX = Math.max(0, Math.min(x - rect.left, rect.width));
-        const percent = (offsetX / rect.width) * 100;
-        beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
-        handle.style.left = `${percent}%`;
-      };
-      handle.onmousedown = () => dragging = true;
-      window.onmouseup = () => dragging = false;
-      window.onmousemove = e => { if (dragging) move(e.clientX); };
-      handle.ontouchstart = () => dragging = true;
-      window.ontouchend = () => dragging = false;
-      window.ontouchmove = e => { if (dragging) move(e.touches[0].clientX); };
-    }
-    function loadAllBatches() {
-      let size = 18, start = currentBatch * size;
-      for (let i = start; i < start + size && i < allImagePairs.length; i++) createSlider(allImagePairs[i]);
-      currentBatch++; if (start + size < allImagePairs.length) setTimeout(loadAllBatches, 400);
-    }
-    function updateFocus() {
-      const vh = window.innerHeight;
-      document.querySelectorAll('.slider-container').forEach(el => {
-        const rect = el.getBoundingClientRect(), center = rect.top + rect.height / 2;
-        el.classList.toggle('in-focus', center > vh * 0.3 && center < vh * 0.7);
-      });
-      menuBtn.style.opacity = window.scrollY > 100 ? '0' : '1';
-    }
-    menuBtn.onclick = (e) => { e.stopPropagation(); contactPopup.style.display = contactPopup.style.display === "block" ? "none" : "block"; };
-    document.onclick = (e) => { if (!contactPopup.contains(e.target) && e.target !== menuBtn) contactPopup.style.display = "none"; };
-    function showDisclaimer() { contactPopup.style.display = 'none'; document.getElementById('disclaimer-popup').style.display = 'block'; }
-    function closeDisclaimer() { document.getElementById('disclaimer-popup').style.display = 'none'; }
-    const volIcon = document.getElementById('volume-icon'), volSlider = document.getElementById('volume-slider'), volPanel = document.getElementById('volume-panel');
-    volIcon.onclick = (e) => {
-      e.stopPropagation(); volPanel.classList.toggle('expanded');
-      if (audio.paused) { audio.play(); audio.volume = 0.5; volSlider.value = 0.5; volIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png'; }
-      else { audio.pause(); volIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/mute.png'; }
-    };
-    volSlider.oninput = () => audio.volume = volSlider.value;
-    document.getElementById('shop-btn').onclick = () => window.location.href = "shop.html";
-    window.onscroll = updateFocus; window.onload = updateFocus;
-  </script>
-</body>
-</html>
 
+<button id="menu-btn" class="control-btn">
+  <div></div><div></div><div></div>
+</button>
+
+<div id="contact-popup">
+  <h3>Creative Gallery</h3>
+  <p>Contact Us</p>
+  <a href="https://www.instagram.com/sahil.aditya_" target="_blank">📩 DM on Instagram</a>
+  <a href="mailto:sahilmaurya321@outlook.in">✉️ Send Email</a>
+  <a id="phone-link" href="#" style="display:none;">📞 Call</a>
+  
+  <div class="info-icon" onclick="showDisclaimer()">ⓘ</div>
+
+  <button id="shop-btn" class="control-btn">Shop</button>
+  
+  <div id="volume-panel" class="control-btn">
+    <img id="volume-icon" src="https://sahil-aditya.github.io/Creative_Gallery/images/mute.png" alt="Volume" class="volume-icon" />
+    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0" class="volume-slider" />
+  </div>
+</div>
+
+<div id="disclaimer-popup" class="popup">
+  <p>Disclaimer: Not every image here is clicked by me. Some are non-copyright images used only to demonstrate my color grading skills.</p>
+  <button onclick="closeDisclaimer()">Close</button>
+</div>
+
+<div class="hero-slider">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide1.png" alt="Creative Slide 1">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide2.png" alt="Creative Slide 2">
+    <img src="https://sahil-aditya.github.io/Creative_Gallery/images/slide3.png" alt="Creative Slide 3">
+</div>
+
+<div id="gallery"></div>
+
+<script>
+  // --- KEEPING YOUR ORIGINAL FUNCTIONS EXACTLY AS THEY WERE ---
+  const menuBtn = document.getElementById('menu-btn');
+  const contactPopup = document.getElementById('contact-popup');
+  const phoneLink = document.getElementById('phone-link');
+  const volumePanel = document.getElementById('volume-panel');
+  const shopBtn = document.getElementById('shop-btn');
+
+  menuBtn.addEventListener('click', (e) => {
+    e.stopPropagation(); 
+    contactPopup.style.display = (contactPopup.style.display === "block") ? "none" : "block";
+  });
+
+  document.addEventListener('click', (e) => {
+    if (contactPopup.style.display === "block" && !contactPopup.contains(e.target) && !menuBtn.contains(e.target)) {
+      contactPopup.style.display = "none";
+    }
+  });
+
+  function showDisclaimer() {
+    contactPopup.style.display = 'none';
+    document.getElementById('disclaimer-popup').style.display = 'block';
+  }
+  function closeDisclaimer() {
+    document.getElementById('disclaimer-popup').style.display = 'none';
+  }
+
+  window.addEventListener('scroll', () => {
+    menuBtn.style.opacity = (window.scrollY > 100) ? '0' : '1';
+  });
+
+  shopBtn.addEventListener('click', () => { window.location.href = "shop.html"; });
+
+  // --- VOLUME LOGIC (Unchanged) ---
+  let audio = null;
+  const musicSource = "https://sahil-aditya.github.io/Creative_Gallery/images/music.mp3";
+  const volumeSlider = document.getElementById('volume-slider');
+  const volumeIcon = document.getElementById('volume-icon');
+  let hasInteracted = false;
+  let isExpanded = false;
+
+  function initializeAudio() {
+    if (!audio) { audio = new Audio(musicSource); audio.loop = true; audio.volume = 0; }
+  }
+
+  volumeSlider.addEventListener('input', () => {
+    if (isExpanded) {
+      const newVolume = parseFloat(volumeSlider.value);
+      audio.volume = newVolume;
+      volumeIcon.src = newVolume > 0 ? 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png' : 'https://sahil-aditya.github.io/Creative_Gallery/images/mute.png';
+      if (newVolume > 0 && audio.paused) audio.play();
+    }
+  });
+
+  volumeIcon.addEventListener('click', (e) => {
+    e.stopPropagation();
+    initializeAudio();
+    isExpanded = !isExpanded;
+    volumePanel.classList.toggle('expanded', isExpanded);
+
+    if (!hasInteracted) {
+      audio.volume = 0.5; volumeSlider.value = 0.5;
+      volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
+      audio.play(); hasInteracted = true;
+    } else {
+      if (audio.volume > 0) {
+        audio.volume = 0; volumeSlider.value = 0;
+        volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/mute.png';
+        audio.pause();
+      } else {
+        audio.volume = 0.5; volumeSlider.value = 0.5;
+        volumeIcon.src = 'https://sahil-aditya.github.io/Creative_Gallery/images/play.png';
+        audio.play();
+      }
+    }
+  });
+
+  // --- BATCH LOADING & SLIDER LOGIC (Unchanged) ---
+  const gallery = document.getElementById("gallery");
+  const batchSize = 2;
+  let currentBatch = 0;
+
+  function createSlider(pair) {
+    const container = document.createElement("div");
+    container.classList.add("slider-container");
+
+    const afterImg = document.createElement("img");
+    afterImg.src = pair.after;
+    afterImg.classList.add("after-img", "blurred");
+
+    const beforeImg = document.createElement("img");
+    beforeImg.src = pair.before;
+    beforeImg.classList.add("before-img", "blurred");
+
+    container.appendChild(afterImg);
+    container.appendChild(beforeImg);
+
+    const handle = document.createElement("div");
+    handle.classList.add("handle");
+    container.appendChild(handle);
+
+    gallery.appendChild(container);
+
+    afterImg.onload = () => afterImg.classList.remove("blurred");
+    beforeImg.onload = () => beforeImg.classList.remove("blurred");
+
+    let dragging = false;
+    const move = (x) => {
+      const rect = container.getBoundingClientRect();
+      let offsetX = Math.max(0, Math.min(x - rect.left, rect.width));
+      const percent = (offsetX / rect.width) * 100;
+      beforeImg.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+      handle.style.left = `${percent}%`;
+    };
+
+    handle.addEventListener("mousedown", () => dragging = true);
+    window.addEventListener("mouseup", () => dragging = false);
+    window.addEventListener("mousemove", e => { if (dragging) move(e.clientX); });
+    handle.addEventListener("touchstart", () => dragging = true);
+    window.addEventListener("touchend", () => dragging = false);
+    window.addEventListener("touchmove", e => { if (dragging) move(e.touches[0].clientX); });
+  }
+
+  function loadAllBatches() {
+    let startIndex = currentBatch * batchSize;
+    let endIndex = startIndex + batchSize;
+    for (let i = startIndex; i < endIndex && i < allImagePairs.length; i++) {
+      createSlider(allImagePairs[i]);
+    }
+    currentBatch++;
+    if (startIndex + batchSize < allImagePairs.length) {
+      setTimeout(loadAllBatches, 500);
+    }
+  }
+
+  // --- FOCUS EFFECT (UPDATED TIMING TO 0.6s) ---
+  let isUpdatingFocus = false;
+  function updateFocus() {
+    isUpdatingFocus = false;
+    const windowHeight = window.innerHeight;
+    const focusZoneStart = windowHeight * 0.3;
+    const focusZoneEnd = windowHeight * 0.7;
+
+    const containers = document.querySelectorAll('.slider-container');
+    containers.forEach(container => {
+      const rect = container.getBoundingClientRect();
+      const elementCenter = rect.top + rect.height / 2;
+      if (elementCenter > focusZoneStart && elementCenter < focusZoneEnd) {
+        container.classList.add('in-focus');
+      } else {
+        container.classList.remove('in-focus');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!isUpdatingFocus) {
+      window.requestAnimationFrame(updateFocus);
+      isUpdatingFocus = true;
+    }
+  });
+  window.addEventListener('load', updateFocus);
+</script>
+
+</body>
+    </html>
+  
