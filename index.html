@@ -142,6 +142,51 @@
         padding: 16px;
         aspect-ratio: 3 / 2;
         overflow-y: auto;
+        scroll-behavior: smooth;
+        /* Custom scrollbar styling */
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+      }
+      
+      /* Webkit scrollbar styling for mobile */
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar {
+        width: 6px;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 3px;
+        transition: background 0.3s ease;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.5);
+      }
+      
+      /* Floating scroll indicator text */
+      aside[data-purpose="user-profile-section"] .glass-card::after {
+        content: 'scroll';
+        position: fixed;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+        z-index: 20;
+        text-transform: uppercase;
+        animation: fadeInOut 2s ease-in-out infinite;
+      }
+      
+      @keyframes fadeInOut {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
       }
       
       /* Profile header - spans left column */
@@ -187,6 +232,13 @@
       
       /* Hide hr elements on mobile */
       aside[data-purpose="user-profile-section"] hr {
+        display: none;
+      }
+    }
+    
+    /* Desktop: hide scroll indicator */
+    @media (min-width: 768px) {
+      aside[data-purpose="user-profile-section"] .glass-card::after {
         display: none;
       }
     }
