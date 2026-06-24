@@ -160,10 +160,11 @@
         }
 
         #hero-bg {
+            background-color: #0A0A0A;
             background-position: center;
             background-repeat: no-repeat;
-            background-size: cover;
-            transform: scale(1.1);
+            background-size: contain;
+            transform: none;
         }
 
         @media (max-width: 767px) {
@@ -396,7 +397,6 @@
             const x = (e.clientX / window.innerWidth - 0.5) * 2;
             const y = (e.clientY / window.innerHeight - 0.5) * 2;
 
-            heroBg.style.transform = `scale(1.1) translate(${x * 20}px, ${y * 20}px)`;
             heroTitle.style.transform = `translate(${-x * 40}px, ${-y * 40}px) translateZ(50px)`;
             heroSubtitle.style.transform = `translate(${-x * 60}px, ${-y * 60}px) translateZ(80px)`;
         });
