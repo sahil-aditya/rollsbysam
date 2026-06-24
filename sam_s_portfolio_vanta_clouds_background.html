@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sam - Photographer &amp; Visual Artist Portfolio</title>
+<!-- Tailwind CSS v3 CDN -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts for typography -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Vanta.js Dependencies -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds2.min.js"></script>
+<style data-purpose="typography">
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
+<style data-purpose="custom-layout">
+    /* Subtle background to make the white cards pop */
+    body {
+      background-color: #0e0e0e;
+      margin: 0;
+      padding: 0;
+    }
+    /* Fixed width/ratio for the portfolio reel image to match the UI */
+    .reel-container {
+      aspect-ratio: 16 / 9;
+      background-color: #000;
+    }
+    /* Navigation underline styling */
+    .nav-link-active {
+      border-bottom: 2px solid #fff;
+    }
+    /* Masonry Layout using CSS Columns */
+    .masonry-grid {
+      columns: 1;
+      column-gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .masonry-grid {
+        columns: 2;
+      }
+    }
+    @media (min-width: 1024px) {
+      .masonry-grid {
+        columns: 3;
+      }
+    }
+    .masonry-item {
+      break-inside: avoid;
+      margin-bottom: 1.5rem;
+    }
+    /* Vanta Background Container */
+    #vanta-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+  </style>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+</head>
+<body class="text-[#e5e2e1] antialiased min-h-screen">
+<!-- BEGIN: Vanta Background -->
+<div id="vanta-canvas"></div>
+<!-- END: Vanta Background -->
+<main class="max-w-6xl mx-auto py-12 px-6 lg:py-20 flex flex-col lg:flex-row gap-12 lg:items-start relative z-10">
+<!-- BEGIN: LeftSidebar -->
+<aside class="w-full lg:w-[350px] bg-black/40 backdrop-blur-[40px] border border-white/10 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.8),inset_0_1px_0_rgba(255,255,255,0.1)] p-8 flex flex-col gap-8 sticky top-12 relative overflow-hidden" data-purpose="profile-card">
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuALRN4cPU89j_m985Hxq5WK4hvmx4O3apT2bm73XH3LsOHMteqEgjfJFE4SwV4TQ_Y9_rJPeKmln091IYyMBG6iF7bDhermroGWmwMk-RHIJqz8yJ2bE6rJtZNtR5XJJ49CqB0G5fwsXnPQikO_ye6ths9ZRq7mvF-YJ8e78tANeNmpXBCU2Xdqijh6dP1-DRHsixkZxns7x_1h5zQjgzonA9svSxeyaVtUhY6PmUhAeciGc3CuUOR2Q08Z82qR8YDKTzylCR_BaXJe'); filter: contrast(150%) brightness(1000%);"></div>
+<!-- Profile Identity Section -->
+<section class="flex items-center gap-4" data-purpose="profile-header">
+<img alt="Sam" class="w-20 h-20 rounded-full object-cover border border-white/10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARUZ9WPOe-YbX2jHGDpJWtO43RyJ6w92nhzTdJi6BRQq-WvFxT55-85FWMaGVKKjAXMtElGljRTUk68bcwZj4W3ov3HClwOBxCoN26CTrpr-YD2hTN_2iXnlukO6seLZ3CDSjms33ojHOXTGZ2h2R5oJQItqhvywiMbu03NmVSNQgX3eFrvDGvaupNhy_LILDM8MfiDQy5L6vkECdi8KIMIMz9KZlGpmMwqUw-4HhLnHrXbpcCguvrkNsiiDDzjxN4j-i5OdJKAhEa"/>
+<div class="relative z-10">
+<h1 class="text-2xl font-bold text-white leading-tight antialiased">Sam</h1>
+<p class="text-sm text-gray-300 mb-1 font-medium">Photographer &amp; Visual Artist</p>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+<span class="text-[11px] uppercase tracking-wider font-semibold text-gray-400">Available for hire</span>
+</div>
+</div>
+</section>
+<!-- Stats Section -->
+<section class="text-center border-y border-white/10 py-6 text-white relative z-10" data-purpose="profile-stats">
+<p class="text-xl font-bold">30+</p>
+<p class="text-[10px] uppercase tracking-widest text-gray-400 font-bold">Creative Works</p>
+</section>
+<!-- Action Buttons -->
+<section class="flex gap-3 relative z-10" data-purpose="action-buttons">
+<button class="flex-1 bg-white/5 backdrop-blur-[40px] border border-white/10 text-white text-sm font-semibold py-3 px-4 rounded-lg hover:bg-white/10 transition-colors">
+<div class="flex items-center justify-center">
+<svg class="w-5 h-5 fill-current" style="color: #25D366;" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"></path>
+</svg>
+</div>
+</button>
+<a class="flex-1 bg-white/5 backdrop-blur-[40px] border border-white/10 text-white text-sm font-semibold py-3 px-4 rounded-lg hover:bg-white/10 transition-colors text-center" href="mailto:sahil.aditya@aol.com">
+<div class="flex items-center justify-center">
+<span class="material-symbols-outlined text-xl" style="color: #007bff;">mail</span>
+</div>
+</a>
+</section>
+<!-- Portfolio Reel Section -->
+<section class="relative z-10" data-purpose="portfolio-reel">
+<h3 class="text-[10px] uppercase tracking-[0.2em] font-black text-white mb-4">Portfolio Reel</h3>
+<div class="reel-container rounded-xl overflow-hidden relative flex items-center justify-center cursor-pointer group border border-white/10">
+<img alt="Portfolio Reel" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUDF9ROUZTjxYdAqxKfgx4OqgmIYUghG1qYudY1dPURzJvVRQGXXl4p3iPQNnCJXWRwP4k1jmlLGmKZzVoGbTHo8y-nE_045W6yY-nNkBMAfTXoR-vbgt4I8I-dKVu9z832u7ZvvUYdmIMZySCQpuE_LmPb1K6P44TvrNnnq1jBq4S-fZZuGkaxrng2Ehw0dz_oflA-uhxb2rnmSvbtAvAhUwcPvwNPKFxwAIrjWFoTu1CLrRgSGBu5wC_DaXZOnZw75v7Rg8llsLN"/>
+<div class="absolute inset-0 bg-black/20 flex items-center justify-center">
+<div class="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
+<svg class="h-4 w-4 text-black fill-current ml-0.5" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 22v-20l18 10-18 10z"></path>
+</svg>
+</div>
+</div>
+</div>
+</section>
+<!-- About Me Description -->
+<section class="relative z-10" data-purpose="about-me">
+<p class="text-xs text-gray-300 leading-relaxed uppercase tracking-wider">transformin RAW moments into Cinematic Visuals</p>
+</section>
+<!-- Contact Information -->
+<section class="space-y-3 relative z-10" data-purpose="contact-info">
+<div class="flex items-center gap-3 text-gray-500">
+<svg class="h-4 w-4" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<span class="text-xs text-gray-300">sahil.aditya@aol.com</span>
+</div>
+</section>
+<!-- Social Media Icons -->
+<section class="flex gap-4 pt-2 relative z-10" data-purpose="social-links">
+<a class="text-gray-400 hover:scale-110 transition-transform" href="#">
+<div class="w-5 h-5 rounded-md flex items-center justify-center" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
+<svg class="w-3.5 h-3.5 text-white fill-current" viewbox="0 0 24 24">
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.607.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.607 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.607-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.607-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.337 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.337-.2 6.78-2.618 6.98-6.98.058-1.281.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.338-2.617-6.78-6.98-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
+</svg>
+</div>
+</a>
+<a class="text-gray-400 hover:scale-110 transition-transform" href="#">
+<div class="w-5 h-5 rounded-md flex items-center justify-center" style="background: #0077b5;">
+<svg class="w-3.5 h-3.5 text-white fill-current" viewbox="0 0 24 24">
+<path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path>
+</svg>
+</div>
+</a>
+<a class="text-gray-400 hover:scale-110 transition-transform" href="#">
+<div class="w-5 h-5 rounded-md flex items-center justify-center" style="background: #1DA1F2;">
+<svg class="w-3.5 h-3.5 text-white fill-current" viewbox="0 0 24 24">
+<path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.84 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path>
+</svg>
+</div>
+</a>
+</section>
+</aside>
+<!-- END: LeftSidebar -->
+<!-- BEGIN: MainContent -->
+<div class="flex-1" data-purpose="portfolio-grid-container">
+<!-- Navigation Tabs -->
+<nav class="border-b border-white/10 mb-8" data-purpose="gallery-nav">
+<ul class="flex gap-8 overflow-x-auto pb-1">
+<li>
+<a class="nav-link-active pb-4 block text-sm font-semibold whitespace-nowrap text-white" href="#">Gallery</a>
+</li>
+</ul>
+</nav>
+<!-- Portfolio Masonry Grid -->
+<section class="masonry-grid" data-purpose="portfolio-grid">
+<!-- Grid Item 1 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Portrait" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOXECBzhJq07YY72tWRCwIp3h3V07DpGuWx_WBbZA4_6pNA7JD7C1-QnL3goaUpeBLpTyiMFcaFVTpw0QgD7SpLvAjjqm7iWoYsg3BZze8jae3UVDH2TTL95aSXi_cvYeAZDLHEGfNYVqFEwPWXMDkSxdh1r2VIrBGxDJ4LbCHow9QTXSXXrmV3MGVoRUl7v2-qxJvjCl9ago0350BIgxw9r-TJMsseLlLYq27Lo_V1IZuXYOAlBEUnCf2yA8qh5aR-KQUZp5Ij6zR"/>
+</div>
+</article>
+<!-- Grid Item 2 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Architecture" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAITiaPzFiTOjSzdna21Qkrz8vfrPQNxMNBpQWH9Z-43Kzg8Cy-Cb0Kw1A3VZGzrIVfsv_rxYLtyOjemi3qW5NTWXrcEvys9nuSHNYFZejlyLLtHDYHnKxsKcQTUaCPeLKMCRoFELVBWeeqFl8F1mOVgix3IuNK-y_Zn4MGQcdl3QJnF-EGhP1nJjDXb82vEwmXczeZFahUbW-bSgwZxVZTaWriAyBP9SjjkeGuvs6AbI1V0Va9xuw8kdRqZEVNa4hioVq4vOklwFpZ"/>
+</div>
+</article>
+<!-- Grid Item 3 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Moonscape" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXRrm99sqKZc4vpbZ4KSykXxYIDWsnm3BCRJeYOcW0nEIbJAmTEiAOKlyPE8uR8Ntfq8c11i-iVIQrh0cDtm9BqaHKO5UygfvxLEvpTiI7Wo1Xj0CcbpU6gNCDf9LVQZHg8nEns-rKDgYwThLaA45yXgPb4ysqndrfknoTk-Q8ek4zHnzbpqIwC1kkCyHGqYn9_RQ4vgTVngCyqNQMrz4CRMuofktKE-otRENfDPONzxyRcGzILZ3XtRivHyGAP14M25BNQxBPe_dT"/>
+</div>
+</article>
+<!-- Grid Item 4 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Work Abstract" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPme24oPZMVG5cN0HBcrLt6m_2d9_mL_ZHftfpBhIx4O1uY61r-OL4bYIX1GoHpls15MPyeRep443JHTud5SDMOJcA19ScxgFRjtW0tMt-aNme_P46uHjdKK_vBeMvMvRONkI6yQBM5bcMy5Qs7orss1qtc8UIWUqbn5LZskxWgu4nJkT5EaWOwMP0sWEhrkp5BiwINsXnSPCAFz1Z9R5MmpXD2vDoT50GGZWXd6fs8BfQoRpNXfiBaW7a_FFce4STJ859-_LKerTu"/>
+</div>
+</article>
+<!-- Grid Item 5 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Texture" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKoj0lz62oxRBrjK0085ZcYsqjVmpLtsK753c_4IZiQ6TrMVBdiI-yyPK5SCy7cWOaf4mtOgsJW3yBMJiMwcTeqVtXAgSHWELysY1vzhZao9DTzFHvvOuXiWNqEohXy0BOpnK81Skly19D6068lWN9u9mcQuK2QlaFDGTfxA6ZX1HmMMs-SKtouRc3PPeH0tysiJURjbceOMi6UCbHl1xDjKfLpOQhih3TdjrvXJkL6wZJ9rG7K4irLsAISsw5-DVWlciNW6XYzPRI"/>
+</div>
+</article>
+<!-- Grid Item 6 -->
+<article class="masonry-item">
+<div class="rounded-2xl overflow-hidden bg-black/40 border border-white/10 group backdrop-blur-sm">
+<img alt="Cinematic Glass" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7PHy0apbxnFE_xNuNpsQAX62tCiwH7yQNUqsyiGsDMMiQVUgmZcQ8s9uPTtw67FuYLRMi5E6tkoUyxIDQjFeUE9XYqg8zGnlnE4AuC77NXRu3yd006WYEHb1V8h0z1KnrRr6JAeZ5JjvEVet4EcfRrunIv_75JBsUvNwpA_cp-DOgWyDkjNhGiDg4WaFjNX-GlfxJU_A0ytRZPmLsGvCsK9CfIqXjtMsBdj8Vyi5Ur2_-bHDgUDdiTtR7rH_wtGmkt-77DvYY_k52"/>
+</div>
+</article>
+</section>
+</div>
+<!-- END: MainContent -->
+</main>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    VANTA.CLOUDS2({
+      el: "#vanta-canvas",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      texturePath: "https://www.vantajs.com/gallery/noise.png"
+    });
+  });
+</script>
+</body></html>
