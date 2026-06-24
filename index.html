@@ -140,8 +140,56 @@
         grid-template-rows: auto auto auto auto;
         gap: 12px;
         padding: 16px;
+        padding-right: 20px;
         aspect-ratio: 3 / 2;
         overflow-y: auto;
+        scroll-behavior: smooth;
+        position: relative;
+        /* Tiny scrollbar styling */
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+      }
+      
+      /* Webkit scrollbar styling for mobile - ultra thin */
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar {
+        width: 3px;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-thumb {
+        background: rgba(0, 0, 0, 0.25);
+        border-radius: 2px;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 0, 0, 0.4);
+      }
+      
+      /* Floating scroll indicator text - vertical */
+      aside[data-purpose="user-profile-section"] .glass-card::after {
+        content: 'S\AС\AR\AO\AL\AL';
+        white-space: pre;
+        position: absolute;
+        right: 4px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 7px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        color: rgba(0, 0, 0, 0.25);
+        pointer-events: none;
+        z-index: 10;
+        line-height: 1.2;
+        text-align: center;
+        animation: fadeInOut 2.5s ease-in-out infinite;
+      }
+      
+      @keyframes fadeInOut {
+        0%, 100% { opacity: 0.2; }
+        50% { opacity: 0.5; }
       }
       
       /* Profile header - spans left column */
@@ -188,6 +236,17 @@
       /* Hide hr elements on mobile */
       aside[data-purpose="user-profile-section"] hr {
         display: none;
+      }
+    }
+    
+    /* Desktop: hide scroll indicator */
+    @media (min-width: 768px) {
+      aside[data-purpose="user-profile-section"] .glass-card::after {
+        display: none;
+      }
+      
+      aside[data-purpose="user-profile-section"] .glass-card {
+        padding-right: 16px;
       }
     }
     .masonry-item {
