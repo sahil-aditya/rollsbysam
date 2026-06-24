@@ -138,69 +138,6 @@
     @media (min-width: 1280px) {
       .masonry-grid { column-count: 3; }
     }
-
-    /* Mobile profile card - 3:2 horizontal layout */
-    @media (max-width: 767px) {
-      aside[data-purpose="user-profile-section"] {
-        width: 100%;
-      }
-      
-      aside[data-purpose="user-profile-section"] .glass-card {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto auto auto auto;
-        gap: 12px;
-        padding: 16px;
-        aspect-ratio: 3 / 2;
-        overflow-y: auto;
-      }
-      
-      /* Profile header - spans left column */
-      div[data-purpose="profile-header"] {
-        grid-column: 1;
-        grid-row: 1;
-      }
-      
-      /* Stats section - right column top */
-      div[data-purpose="project-stats"] {
-        grid-column: 2;
-        grid-row: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 8px;
-      }
-      
-      /* Action buttons - spans both columns */
-      div.flex.space-x-3 {
-        grid-column: 1 / -1;
-        grid-row: 2;
-      }
-      
-      /* Portfolio reel - spans both columns */
-      div[data-purpose="portfolio-reel"] {
-        grid-column: 1 / -1;
-        grid-row: 3;
-      }
-      
-      /* Bio - spans both columns */
-      div[data-purpose="bio"] {
-        grid-column: 1 / -1;
-        grid-row: 4;
-      }
-      
-      /* Contact footer - spans both columns */
-      div[data-purpose="contact-footer"] {
-        grid-column: 1 / -1;
-        grid-row: 5;
-        margin-top: 0;
-      }
-      
-      /* Hide hr elements on mobile */
-      aside[data-purpose="user-profile-section"] hr {
-        display: none;
-      }
-    }
     .masonry-item {
       break-inside: avoid;
       margin-bottom: 24px;
@@ -250,10 +187,10 @@
 </defs>
 </svg>
 <!-- BEGIN: Main Layout Container -->
-<main class="max-w-[1440px] mx-auto px-4 md:px-12 py-8 md:py-16 flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+<main class="max-w-[1440px] mx-auto px-12 py-16 flex flex-col lg:flex-row gap-16 items-start">
 <!-- BEGIN: Left Sidebar (Profile Card) -->
 <aside class="w-full lg:w-[400px] shrink-0 lg:sticky lg:top-16" data-purpose="user-profile-section">
-<div class="glass-card rounded-[40px] md:p-8 p-4 md:flex md:flex-col md:gap-8 relative overflow-hidden">
+<div class="glass-card rounded-[40px] p-8 flex flex-col gap-8 relative overflow-hidden">
 <div class="absolute inset-0 -z-10" style="filter: url(#crystal-refraction); opacity: 0.5;"></div>
 <!-- Profile Header -->
 <div class="flex items-center gap-4 relative" data-purpose="profile-header">
@@ -292,7 +229,7 @@
 </div>
 <!-- Portfolio Reel Preview -->
 <div data-purpose="portfolio-reel">
-<p class="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-2 md:mb-4">Portfolio Reel</p>
+<p class="text-[10px] font-black text-black uppercase tracking-[0.2em] mb-4">Portfolio Reel</p>
 <div class="relative aspect-video bg-black rounded-xl overflow-hidden flex items-center justify-center shadow-lg group">
 <img alt="Portfolio Reel" class="w-full h-full object-cover transition duration-500 group-hover:scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGHpSwMFR5p6U8WM2mSgIop5uudG0JRDRaMZraq-A4MCFhtfMV4l-saL9VzHO1eZBh7uoJ1pxAIDC0VVagfVe8-AudP_PCNsUfIVsiv5G4Am5IrRxDX9GRNbUPuH76DE4XI5un6uoJtpvHCQWED0V_kLCP69b-B0h-pKwzjCRvGI34mPLGJMKDnhJmSXxL1t3ao4emfMlWwCiPjloDiRA1gu41FUt4Wl-NOECxY4hJ9vlmguBMsx1z1a7kRH0EYoKh2cFN8cZ4O9LA"/>
 <div class="absolute inset-0 flex items-center justify-center bg-black/20">
