@@ -52,12 +52,31 @@
       background: rgba(255, 255, 255, 0.6);
     }
 
-    /* Page background image - Vibrant Summer Meadow Watercolor */
+    /* Page background image - Vibrant Summer Meadow Watercolor
+       Keep this on a fixed viewport layer instead of using background-attachment: fixed,
+       which can jitter while scrolling on mobile browsers. */
     body {
+      position: relative;
+      overflow-x: hidden;
+      background-color: #f8f5ee;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
       background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBEr3zU9xLb9lTWZTiNHX3nn37BgKt6AkVDOACkZ5FQ4OxIQdqguzzkwJgb_02Vbn_t6BGu0lRL_n4FV5a5BQN_RwILMZbMwqXWcZwHf7gQ-krEu2di7b8ArPaDwd9Ldwh0HENtWJYHGS29SyLr3fuC6cQH97p-RnNOR1BwERskb8irJHxfmO0JcA75tLJOH3HmyLI6BfOcRweScc8aaFOhBSRX915AQ2Lv2vwdEevasfF5tO5f--yti7cP5BkBpZo6FCV6vtEzIryI');
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
     }
 
     .masonry-grid {
