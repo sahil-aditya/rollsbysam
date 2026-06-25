@@ -88,14 +88,21 @@
 
         /* Responsive Columns */
         /* Mobile: 2 Columns */
-        @media (max-width: 767px) {
+        @media (max-width: 600px) {
             .masonry {
                 column-count: 2;
             }
         }
 
+        /* Tablet: 3 Columns */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .masonry {
+                column-count: 3;
+            }
+        }
+
         /* Desktop: 4 Columns */
-        @media (min-width: 768px) {
+        @media (min-width: 1025px) {
             .masonry {
                 column-count: 4;
             }
