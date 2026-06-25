@@ -1,276 +1,150 @@
 /**
- * Creative Gallery Service Worker
- * Implements intelligent caching strategy for smooth offline experience
- * and faster repeat visits with cache versioning
+ * Aggressive Creative Gallery Service Worker
+ * Stores the site offline for a true app-like experience.
  */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2'; // Bumped version to force update
 const CACHE_NAME = `creative-gallery-${CACHE_VERSION}`;
+const IMAGE_CACHE_NAME = `creative-gallery-images-${CACHE_VERSION}`;
 
-// Assets to cache on install
+// To aggressively store the site immediately, you MUST list all critical 
+// starting assets here. The service worker will download these in the background.
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/resources.json',
+  // ADD your main CSS, JS, and hero images here to force-download them on install!
 ];
 
-// Image cache configuration
-const IMAGE_CACHE_NAME = `creative-gallery-images-${CACHE_VERSION}`;
-const MAX_CACHE_SIZE = 50; // Maximum number of images to cache
+const MAX_IMAGE_CACHE_SIZE = 200; // Increased to allow storing a full gallery
 
 /**
- * Install event - cache static assets
+ * Install event - aggressively pre-cache static assets
  */
 self.addEventListener('install', (event) => {
-  console.log('[Service Worker] Installing...');
+  console.log('[Service Worker] Installing Aggressive Cache...');
   
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('[Service Worker] Caching static assets');
-        return cache.addAll(STATIC_ASSETS);
-      })
-      .then(() => {
-        console.log('[Service Worker] Static assets cached successfully');
-        return self.skipWaiting();
-      })
-      .catch((error) => {
-        console.error('[Service Worker] Installation failed:', error);
-      })
+      .then((cache) => cache.addAll(STATIC_ASSETS))
+      .then(() => self.skipWaiting())
+      .catch((error) => console.error('[Service Worker] Install failed:', error))
   );
 });
 
 /**
- * Activate event - clean up old caches
+ * Activate event - aggressively clean up old caches
  */
 self.addEventListener('activate', (event) => {
-  console.log('[Service Worker] Activating...');
+  console.log('[Service Worker] Activating and cleaning old caches...');
   
   event.waitUntil(
     caches.keys()
       .then((cacheNames) => {
         return Promise.all(
           cacheNames.map((cacheName) => {
-            // Delete old versions of caches
             if (cacheName !== CACHE_NAME && cacheName !== IMAGE_CACHE_NAME) {
-              console.log('[Service Worker] Deleting old cache:', cacheName);
               return caches.delete(cacheName);
             }
           })
         );
       })
-      .then(() => {
-        console.log('[Service Worker] Activation complete');
-        return self.clients.claim();
-      })
+      .then(() => self.clients.claim())
   );
 });
 
 /**
- * Fetch event - implement intelligent caching strategy
- * - Static assets: Cache first, fallback to network
- * - Images: Network first, fallback to cache with size management
- * - JSON data: Network first, fallback to cache
+ * Fetch event - SINGLE routing block
+ * Strategy: Aggressive Cache First, fallback to Network, then Cache the result.
  */
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip non-GET requests
-  if (request.method !== 'GET') {
+  // Skip non-GET requests and non-HTTP protocols
+  if (request.method !== 'GET' || !url.protocol.startsWith('http')) {
     return;
   }
 
-  // Skip chrome extensions and other non-http(s) protocols
-  if (!url.protocol.startsWith('http')) {
-    return;
-  }
-
-  // Handle static assets (cache first strategy)
-  if (isStaticAsset(url)) {
-    event.respondWith(
-      caches.match(request)
-        .then((response) => {
-          if (response) {
-            console.log('[Service Worker] Serving from cache:', url.pathname);
-            return response;
-          }
-
-          return fetch(request)
-            .then((response) => {
-              // Don't cache non-successful responses
-              if (!response || response.status !== 200) {
-                return response;
-              }
-
-              // Clone and cache the response
-              const responseToCache = response.clone();
-              caches.open(CACHE_NAME)
-                .then((cache) => {
-                  cache.put(request, responseToCache);
-                });
-
-              return response;
-            })
-            .catch(() => {
-              console.log('[Service Worker] Offline - returning cached or fallback');
-              return caches.match(request);
-            });
-        })
-    );
-  }
-
-  // Handle images (network first strategy with cache size management)
-  if (isImage(url)) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          if (!response || response.status !== 200) {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          
-          // Cache the image with size management
-          caches.open(IMAGE_CACHE_NAME)
-            .then((cache) => {
-              cache.put(request, responseToCache);
-              // Manage cache size
-              manageCacheSize(IMAGE_CACHE_NAME, MAX_CACHE_SIZE);
-            });
-
-          return response;
-        })
-        .catch(() => {
-          // Fallback to cached image if offline
-          console.log('[Service Worker] Image offline - checking cache:', url.pathname);
-          return caches.match(request)
-            .then((response) => {
-              if (response) {
-                return response;
-              }
-              // Return a placeholder or error image
-              return new Response(
-                '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect fill="#f0f0f0" width="200" height="200"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#999" font-family="sans-serif" font-size="14">Image unavailable</text></svg>',
-                {
-                  headers: { 'Content-Type': 'image/svg+xml' },
-                  status: 200,
-                }
-              );
-            });
-        })
-    );
-  }
-
-  // Handle JSON data (network first strategy)
-  if (url.pathname.endsWith('.json')) {
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          if (!response || response.status !== 200) {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(CACHE_NAME)
-            .then((cache) => {
-              cache.put(request, responseToCache);
-            });
-
-          return response;
-        })
-        .catch(() => {
-          console.log('[Service Worker] JSON offline - checking cache:', url.pathname);
-          return caches.match(request);
-        })
-    );
-  }
-
-  // Default: network first strategy
+  // Use a single respondWith block to prevent the "already responded" crash
   event.respondWith(
-    fetch(request)
-      .then((response) => {
-        if (!response || response.status !== 200) {
-          return response;
+    (async () => {
+      // 1. Aggressive Cache First: Do we have it saved?
+      const cachedResponse = await caches.match(request);
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      // 2. Network Fallback: If not in cache, go to the internet
+      try {
+        const networkResponse = await fetch(request);
+        
+        // Don't cache bad responses or opaque responses from third parties
+        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
+          return networkResponse;
         }
 
-        const responseToCache = response.clone();
-        caches.open(CACHE_NAME)
-          .then((cache) => {
-            cache.put(request, responseToCache);
-          });
+        const responseToCache = networkResponse.clone();
 
-        return response;
-      })
-      .catch(() => {
-        return caches.match(request);
-      })
+        // 3. Cache the new file immediately based on its type
+        if (isImage(url)) {
+          const imageCache = await caches.open(IMAGE_CACHE_NAME);
+          await imageCache.put(request, responseToCache);
+          manageCacheSize(IMAGE_CACHE_NAME, MAX_IMAGE_CACHE_SIZE);
+        } else {
+          const mainCache = await caches.open(CACHE_NAME);
+          await mainCache.put(request, responseToCache);
+        }
+
+        return networkResponse;
+
+      } catch (error) {
+        // 4. Offline Fallback Logic
+        if (isImage(url)) {
+          // Return an SVG placeholder if the image fails to load entirely
+          return new Response(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><rect fill="#f0f0f0" width="200" height="200"/><text x="50%" y="50%" text-anchor="middle" dy=".3em" fill="#999" font-family="sans-serif" font-size="14">Image unavailable</text></svg>',
+            {
+              headers: { 'Content-Type': 'image/svg+xml' },
+              status: 200,
+            }
+          );
+        }
+        // If an HTML page fails, you could return an offline.html page here if you cached one!
+        throw error;
+      }
+    })()
   );
 });
 
-/**
- * Check if URL is a static asset
- */
-function isStaticAsset(url) {
-  const pathname = url.pathname;
-  return pathname === '/' || 
-         pathname.endsWith('.html') || 
-         pathname.endsWith('.css') || 
-         pathname.endsWith('.js') ||
-         pathname.endsWith('.json') ||
-         pathname.endsWith('.woff') ||
-         pathname.endsWith('.woff2') ||
-         pathname.endsWith('.ttf');
-}
+// --- Helper Functions ---
 
-/**
- * Check if URL is an image
- */
 function isImage(url) {
-  const pathname = url.pathname;
-  return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(pathname);
+  return /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(url.pathname);
 }
 
-/**
- * Manage cache size to prevent storage overflow
- */
 function manageCacheSize(cacheName, maxSize) {
-  caches.open(cacheName)
-    .then((cache) => {
-      cache.keys()
-        .then((keys) => {
-          if (keys.length > maxSize) {
-            // Delete oldest entries (first in, first out)
-            const keysToDelete = keys.slice(0, keys.length - maxSize);
-            keysToDelete.forEach((key) => {
-              console.log('[Service Worker] Removing from cache:', key.url);
-              cache.delete(key);
-            });
-          }
-        });
+  caches.open(cacheName).then((cache) => {
+    cache.keys().then((keys) => {
+      if (keys.length > maxSize) {
+        // Delete oldest entries first
+        const keysToDelete = keys.slice(0, keys.length - maxSize);
+        keysToDelete.forEach((key) => cache.delete(key));
+      }
     });
+  });
 }
 
-/**
- * Message handler for cache management from client
- */
+// Client message handler
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
-
   if (event.data && event.data.type === 'CLEAR_CACHE') {
-    caches.keys()
-      .then((cacheNames) => {
-        return Promise.all(
-          cacheNames.map((cacheName) => {
-            console.log('[Service Worker] Clearing cache:', cacheName);
-            return caches.delete(cacheName);
-          })
-        );
-      })
-      .then(() => {
-        event.ports[0].postMessage({ success: true });
-      });
+    caches.keys().then((cacheNames) => {
+      Promise.all(cacheNames.map((name) => caches.delete(name)))
+        .then(() => event.ports[0].postMessage({ success: true }));
+    });
   }
 });
+
