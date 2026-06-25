@@ -7,6 +7,11 @@
     <!-- Website Name -->
     <title>rollsbysam</title>
     
+    <!-- Aggressive Caching Meta Tags -->
+    <meta http-equiv="Cache-Control" content="max-age=31536000, public">
+    <meta http-equiv="Pragma" content="cache">
+    <meta http-equiv="Expires" content="31536000">
+    
     <!-- Meta Tags for SEO and Social Media Previews -->
     <meta name="description" content="Portfolio of rollsbysam - Visual Artist and Colorist">
     <meta property="og:title" content="rollsbysam">
@@ -25,6 +30,28 @@
             padding: 0;
             background-color: #141414;
             overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Custom Modern Sleek Tiny Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #141414;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        /* Firefox */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #333 #141414;
         }
 
         /* Container to clip the Canva footer buttons */
@@ -33,6 +60,9 @@
             width: 100vw;
             height: 281.1127vw; /* Adjust height based on your design's ratio */
             overflow: hidden;
+            /* Force hardware acceleration for smoother scrolling */
+            transform: translateZ(0);
+            will-change: transform;
         }
 
         /* 
@@ -62,5 +92,14 @@
         </iframe>
     </div>
 
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
 </body>
 </html>
