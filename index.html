@@ -3,54 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design by SAM</title>
+    <title>SAM | Visual Artist • Colorist</title>
     <style>
-        /* General page styling */
-        body {
+        /* Removes default browser margins and sets the matte black base */
+        html, body {
             margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f4f4f4;
-            font-family: sans-serif;
+            padding: 0;
+            background-color: #141414;
+            overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
         }
 
-        /* Container to keep the design from stretching too wide on desktop monitors */
-        .canva-wrapper {
-            width: 100%;
-            max-width: 500px; /* You can increase this number if you want it wider on desktop */
-            text-align: center;
-        }
-
-        /* Styling for the small text link underneath */
-        .canva-wrapper a {
-            color: #555;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        
-        .canva-wrapper a:hover {
-            text-decoration: underline;
+        /* Forces the design to lock to the left and right edges */
+        iframe {
+            width: 100vw; /* 100% of the viewing screen's width */
+            height: 281.1127vw; /* Scales the height precisely to your design's custom ratio */
+            border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <div class="canva-wrapper">
-        <!-- YOUR CANVA EMBED CODE STARTS HERE -->
-        <div style="position: relative; width: 100%; height: 0; padding-top: 281.1127%;
-         padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
-         border-radius: 8px; will-change: transform;">
-          <iframe loading="lazy" style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
-            src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" allowfullscreen="allowfullscreen" allow="fullscreen">
-          </iframe>
-        </div>
-        <a href="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?utm_content=DAHNmGrziE8&utm_campaign=designshare&utm_medium=embeds&utm_source=link" target="_blank" rel="noopener">Design</a> by SAM
-        <!-- YOUR CANVA EMBED CODE ENDS HERE -->
-    </div>
+    <iframe loading="lazy" 
+        src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
+        allowfullscreen="allowfullscreen" 
+        allow="fullscreen">
+    </iframe>
 
 </body>
 </html>
-
