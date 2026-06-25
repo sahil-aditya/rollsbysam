@@ -3,7 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAM | Visual Artist • Colorist</title>
+    
+    <!-- Website Name -->
+    <title>rollsbysam</title>
+    
+    <!-- Meta Tags for SEO and Social Media Previews -->
+    <meta name="description" content="Portfolio of rollsbysam - Visual Artist and Colorist">
+    <meta property="og:title" content="rollsbysam">
+    <meta property="og:description" content="Visual Artist and Colorist Portfolio">
+    <meta property="og:image" content="<!-- INSERT THUMBNAIL LINK HERE -->">
+    <meta property="og:url" content="https://sahil-aditya.github.io/Creative_Gallery/">
+    <meta name="twitter:card" content="summary_large_image">
+    
+    <!-- Favicon / Icon -->
+    <link rel="icon" href="<!-- INSERT ICON LINK HERE -->" type="image/x-icon">
+
     <style>
         /* Removes default browser margins and sets the matte black base */
         html, body {
@@ -13,10 +27,26 @@
             overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
         }
 
-        /* Forces the design to lock to the left and right edges */
+        /* Container to clip the Canva footer buttons */
+        .canva-container {
+            position: relative;
+            width: 100vw;
+            height: 281.1127vw; /* Adjust height based on your design's ratio */
+            overflow: hidden;
+        }
+
+        /* 
+           Hiding Canva Buttons:
+           Canva embeds usually have a fixed footer at the bottom. 
+           We use a container with 'overflow: hidden' and make the iframe 
+           slightly taller or shift it to hide the bottom control bar.
+        */
         iframe {
-            width: 100vw; /* 100% of the viewing screen's width */
-            height: 281.1127vw; /* Scales the height precisely to your design's custom ratio */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 40px); /* Making it slightly taller to push buttons out of view */
             border: none;
             display: block;
         }
@@ -24,11 +54,13 @@
 </head>
 <body>
 
-    <iframe loading="lazy" 
-        src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
-        allowfullscreen="allowfullscreen" 
-        allow="fullscreen">
-    </iframe>
+    <div class="canva-container">
+        <iframe loading="lazy" 
+            src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
+            allowfullscreen="allowfullscreen" 
+            allow="fullscreen">
+        </iframe>
+    </div>
 
 </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | rollsbysam</title>
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Header Bar */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            text-decoration: none;
+            color: #000000;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+
+        /* Gallery Container */
+        .gallery-container {
+            margin-top: 80px;
+            padding: 0 10px;
+        }
+
+        /* Masonry Layout using CSS Columns */
+        .masonry {
+            column-gap: 10px;
+        }
+
+        /* Responsive Columns */
+        /* Mobile: 2 Columns */
+        @media (max-width: 767px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        /* Desktop: 4 Columns */
+        @media (min-width: 768px) {
+            .masonry {
+                column-count: 4;
+            }
+        }
+
+        .masonry-item {
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 10px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .masonry-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover img {
+            transform: scale(1.02);
+        }
+
+        .caption {
+            padding: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* Modal for Enlarged Image */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        #modal img {
+            max-width: 90%;
+            max-height: 90%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        #modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-button">&larr;</a>
+        <div class="logo">rollsbysam</div>
+    </header>
+
+    <div class="gallery-container">
+        <div class="masonry" id="gallery">
+            <!-- Images will be loaded here via JavaScript -->
+        </div>
+    </div>
+
+    <div id="modal">
+        <span id="modal-close">&times;</span>
+        <img id="modal-img" src="" alt="Enlarged View">
+    </div>
+
+    <script src="gallery.js"></script>
+</body>
+</html>
