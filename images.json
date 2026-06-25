@@ -1,7 +1,7 @@
 [
-  { "id": 1, "link": "", "caption": "Your text here" },
-  { "id": 2, "link": "", "caption": "Your text here" },
-  { "id": 3, "link": "", "caption": "Your text here" },
+  { "id": 1, "https://sahil-aditya.github.io/Creative_Gallery/resources/IMG_20260507_003546.jpg": "", "me": "hello" },
+  { "id": 2, "https://sahil-aditya.github.io/Creative_Gallery/resources/IMG_20260307_160016.jpg": "", "caption": "Your text here" },
+  { "id": 3, "https://sahil-aditya.github.io/Creative_Gallery/resources/flames.jpg": "", "caption": "Your text here" },
   { "id": 4, "link": "", "caption": "Your text here" },
   { "id": 5, "link": "", "caption": "Your text here" },
   { "id": 6, "link": "", "caption": "Your text here" },
