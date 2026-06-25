@@ -19,6 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     img.alt = item.caption || '';
                     img.loading = 'lazy';
                     
+                    // Hide if image fails to load
+                    img.onerror = () => {
+                        div.style.display = 'none';
+                    };
+                    
                     // Click to enlarge
                     div.addEventListener('click', () => {
                         modalImg.src = item.link;
