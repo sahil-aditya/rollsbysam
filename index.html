@@ -13,9 +13,9 @@
     <meta http-equiv="Expires" content="31536000">
     
     <!-- Meta Tags for SEO and Social Media Previews -->
-    <meta name="description" content="Portfolio of rollsbysam - Visual Artist and Colorist">
+    <meta name="description" content="Photographer & Visual Artist">
     <meta property="og:title" content="rollsbysam">
-    <meta property="og:description" content="Visual Artist and Colorist Portfolio">
+    <meta property="og:description" content="Photographer & Visual Artist">
     <meta property="og:image" content="<!-- INSERT THUMBNAIL LINK HERE -->">
     <meta property="og:url" content="https://sahil-aditya.github.io/Creative_Gallery/">
     <meta name="twitter:card" content="summary_large_image">
@@ -55,32 +55,34 @@
             scrollbar-color: #333 #141414;
         }
 
-        /* Container to clip the Canva footer buttons */
-        .canva-container {
+        /* Container to control the exact aspect ratio per page */
+        .canva-wrapper {
             position: relative;
             width: 100vw;
-            height: 281.1127vw; /* Adjust height based on your design's ratio */
             overflow: hidden;
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
-            padding-bottom: 100px; /* Space for bottom navigation bar */
         }
 
-        /* 
-           Hiding Canva Buttons:
-           Canva embeds usually have a fixed footer at the bottom. 
-           We use a container with 'overflow: hidden' and make the iframe 
-           slightly taller or shift it to hide the bottom control bar.
+        /* Hiding Canva Buttons:
+           We make the iframe slightly taller (+45px) so the bottom 
+           control bar gets pushed outside the hidden overflow of the wrapper.
         */
-        iframe {
+        .canva-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 40px); /* Making it slightly taller to push buttons out of view */
+            height: calc(100% + 45px); /* Pushes the Canva footer out of view */
             border: none;
             display: block;
+        }
+
+        /* Spacer so your bottom glass UI nav doesn't cover up the bottom of your designs */
+        .nav-spacer {
+            width: 100%;
+            height: 100px;
         }
 
         /* Glass UI Bottom Navigation Bar */
@@ -213,18 +215,19 @@
 
     <!-- HOME PAGE -->
     <div id="home-page" class="page-container">
-        <div class="canva-container">
+        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
             <iframe loading="lazy" 
                 src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
                 allowfullscreen="allowfullscreen" 
                 allow="fullscreen">
             </iframe>
         </div>
+        <div class="nav-spacer"></div>
     </div>
 
     <!-- ABOUT ME PAGE -->
     <div id="about-page" class="page-container hidden">
-        <div class="canva-container">
+        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
             <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -232,11 +235,12 @@
                 allow="fullscreen">
             </iframe>
         </div>
+        <div class="nav-spacer"></div>
     </div>
 
     <!-- BOOK/HIRE PAGE -->
     <div id="book-page" class="page-container hidden">
-        <div class="canva-container">
+        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
             <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -244,6 +248,7 @@
                 allow="fullscreen">
             </iframe>
         </div>
+        <div class="nav-spacer"></div>
     </div>
 
     <!-- GLASS UI BOTTOM NAVIGATION BAR -->
