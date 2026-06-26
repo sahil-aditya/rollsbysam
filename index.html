@@ -55,34 +55,41 @@
             scrollbar-color: #333 #141414;
         }
 
-        /* Container to control the exact aspect ratio per page */
+        /* Responsive Embed Container using padding-bottom technique */
         .canva-wrapper {
             position: relative;
-            width: 100vw;
-            overflow: hidden;
-            /* Force hardware acceleration for smoother scrolling */
-            transform: translateZ(0);
-            will-change: transform;
+            width: 100%;
             background-color: #141414;
-            /* Safe default aspect ratio - will be overridden by JS */
-            aspect-ratio: 1366 / 2753;
+            overflow: hidden;
+            /* Padding-bottom creates the aspect ratio container
+               This is the industry standard for responsive embeds
+               1366:2753 ratio = 2753/1366 = 2.0161 = 201.61%
+            */
+            padding-bottom: 201.61%;
         }
 
-        /* Hiding Canva Buttons:
-           We make the iframe significantly taller (+120px) so the bottom 
-           control bar gets pushed completely outside the hidden overflow of the wrapper.
-           We also use clip-path as a backup to ensure no buttons are visible.
-        */
+        /* Absolute positioning for the iframe inside the container */
         .canva-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 120px); /* Pushes the Canva footer completely out of view */
+            height: 100%;
             border: none;
             display: block;
-            /* Backup: clip-path to ensure buttons stay hidden */
-            clip-path: inset(0 0 120px 0);
+            /* Hide Canva buttons by clipping */
+            clip-path: inset(0 0 50px 0);
+        }
+
+        /* Page Container */
+        .page-container {
+            width: 100vw;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page-container.hidden {
+            display: none;
         }
 
         /* Spacer so your bottom glass UI nav doesn't cover up the bottom of your designs */
@@ -203,18 +210,6 @@
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
-
-        /* Page Container */
-        .page-container {
-            width: 100vw;
-            min-height: 100vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .page-container.hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -265,68 +260,46 @@
     </div>
 
     <script>
-        // ===== CANVA DIMENSION DETECTION VIA MESSAGE EVENTS =====
-        const canvaDimensions = {
-            home: { width: 1366, height: 2753 },  // Default fallback
-            about: { width: 1366, height: 2753 }, // Default fallback
-            book: { width: 1366, height: 2753 }   // Default fallback
+        // ===== DYNAMIC ASPECT RATIO CALCULATOR =====
+        // This function calculates the correct padding-bottom percentage
+        // for any Canva design dimensions
+        function calculatePaddingBottom(width, height) {
+            return ((height / width) * 100).toFixed(2) + '%';
+        }
+
+        // Store design dimensions (can be updated dynamically)
+        const designDimensions = {
+            home: { width: 1366, height: 2753 },
+            about: { width: 1366, height: 2753 },
+            book: { width: 1366, height: 2753 }
         };
 
-        // Listen for messages from Canva iframes
+        // Apply padding-bottom to all wrappers
+        function initializeWrappers() {
+            Object.keys(designDimensions).forEach(canvaId => {
+                const wrapper = document.querySelector(`[data-canva-id="${canvaId}"]`);
+                if (wrapper) {
+                    const { width, height } = designDimensions[canvaId];
+                    const paddingBottom = calculatePaddingBottom(width, height);
+                    wrapper.style.paddingBottom = paddingBottom;
+                }
+            });
+        }
+
+        // Listen for dimension updates from Canva via postMessage
         window.addEventListener('message', (event) => {
-            // Canva sends dimension data via postMessage
-            if (event.data && event.data.type === 'CANVAS_READY') {
-                const canvaId = event.data.canvaId;
-                if (canvaId && event.data.width && event.data.height) {
-                    canvaDimensions[canvaId] = {
-                        width: event.data.width,
-                        height: event.data.height
-                    };
-                    updateWrapperAspectRatio(canvaId);
+            if (event.data && event.data.type === 'CANVA_DIMENSIONS') {
+                const { canvaId, width, height } = event.data;
+                if (canvaId && width && height) {
+                    designDimensions[canvaId] = { width, height };
+                    const wrapper = document.querySelector(`[data-canva-id="${canvaId}"]`);
+                    if (wrapper) {
+                        wrapper.style.paddingBottom = calculatePaddingBottom(width, height);
+                        console.log(`Updated ${canvaId} to ${width}x${height}`);
+                    }
                 }
             }
         });
-
-        // Function to update wrapper aspect ratio
-        function updateWrapperAspectRatio(canvaId) {
-            const wrapper = document.querySelector(`[data-canva-id="${canvaId}"]`);
-            if (wrapper && canvaDimensions[canvaId]) {
-                const { width, height } = canvaDimensions[canvaId];
-                wrapper.style.aspectRatio = `${width} / ${height}`;
-                console.log(`Updated ${canvaId} aspect ratio to ${width}/${height}`);
-            }
-        }
-
-        // Alternative: Use ResizeObserver to detect iframe size changes
-        function setupResizeObserver() {
-            const wrappers = document.querySelectorAll('.canva-wrapper');
-            
-            wrappers.forEach(wrapper => {
-                const iframe = wrapper.querySelector('iframe');
-                const canvaId = wrapper.getAttribute('data-canva-id');
-                
-                if (!iframe) return;
-
-                // Try to detect size after iframe loads
-                iframe.addEventListener('load', () => {
-                    setTimeout(() => {
-                        try {
-                            // Attempt to get iframe dimensions
-                            const rect = iframe.getBoundingClientRect();
-                            if (rect.width > 0 && rect.height > 0) {
-                                canvaDimensions[canvaId] = {
-                                    width: rect.width,
-                                    height: rect.height
-                                };
-                                updateWrapperAspectRatio(canvaId);
-                            }
-                        } catch (e) {
-                            console.log(`Could not detect ${canvaId} dimensions:`, e.message);
-                        }
-                    }, 500);
-                });
-            });
-        }
 
         // ===== PAGE NAVIGATION LOGIC =====
         const navTabs = document.querySelectorAll('.nav-tab');
@@ -361,16 +334,12 @@
 
         // Initialize on page load
         window.addEventListener('load', () => {
-            setupResizeObserver();
-            // Initialize all wrappers with default aspect ratios
-            Object.keys(canvaDimensions).forEach(canvaId => {
-                updateWrapperAspectRatio(canvaId);
-            });
+            initializeWrappers();
         });
 
         // Also run on DOMContentLoaded as backup
         document.addEventListener('DOMContentLoaded', () => {
-            setupResizeObserver();
+            initializeWrappers();
         });
 
         // Service Worker Registration
