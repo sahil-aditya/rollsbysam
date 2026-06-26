@@ -59,12 +59,14 @@
         .canva-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: calc(100vh + 40px);
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
             padding-bottom: 100px; /* Space for bottom navigation bar */
             box-sizing: border-box;
+            margin-bottom: -40px;
+            overflow: hidden;
         }
 
         /* Canva iframe - full design display without cropping */
@@ -76,6 +78,7 @@
             height: 100%;
             border: none;
             display: block;
+            clip-path: inset(0 0 40px 0); /* Hides Canva's bottom control bar */
         }
 
         /* Glass UI Bottom Navigation Bar */
