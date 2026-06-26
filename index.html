@@ -29,11 +29,9 @@
             margin: 0;
             padding: 0;
             background-color: #141414;
-            overflow: hidden;
+            overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
+            scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
-            height: 100vh;
-            width: 100vw;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         /* Custom Modern Sleek Tiny Scrollbar */
@@ -56,48 +54,19 @@
             scrollbar-color: #333 #141414;
         }
 
-        /* Main container for all pages */
-        .pages-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        /* Individual page wrapper */
-        .page-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
-            z-index: 1;
-        }
-
-        /* Active page */
-        .page-wrapper.active {
-            opacity: 1;
-            visibility: visible;
-            z-index: 10;
-        }
-
         /* Container to clip the Canva footer buttons */
         .canva-container {
             position: relative;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 281.1127vw; /* Adjust height based on your design's ratio */
             overflow: hidden;
-            background-color: #141414;
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
         }
 
         /* 
-           Hiding Canva Buttons and preventing scroll:
+           Hiding Canva Buttons:
            Canva embeds usually have a fixed footer at the bottom. 
            We use a container with 'overflow: hidden' and make the iframe 
            slightly taller or shift it to hide the bottom control bar.
@@ -107,242 +76,23 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 60px); /* Making it slightly taller to push buttons out of view */
+            height: calc(100% + 40px); /* Making it slightly taller to push buttons out of view */
             border: none;
             display: block;
-            pointer-events: none;
-        }
-
-        /* Enable pointer events only for the main content area */
-        .canva-container.interactive iframe {
-            pointer-events: auto;
-        }
-
-        /* Glass UI Bottom Navigation Bar */
-        .bottom-nav {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
-            display: flex;
-            gap: 12px;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            animation: slideUp 0.5s ease-out;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        /* Navigation Tab */
-        .nav-tab {
-            padding: 10px 20px;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 30px;
-            transition: all 0.3s ease;
-            position: relative;
-            white-space: nowrap;
-            letter-spacing: 0.5px;
-        }
-
-        /* Tab hover effect */
-        .nav-tab:hover {
-            color: rgba(255, 255, 255, 0.9);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Active tab */
-        .nav-tab.active {
-            color: #ffffff;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.2);
-        }
-
-        /* Thin shiny white border effect on active tab */
-        .nav-tab.active::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-            border-radius: 30px;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .bottom-nav {
-                bottom: 16px;
-                padding: 10px 16px;
-                gap: 8px;
-            }
-
-            .nav-tab {
-                padding: 8px 16px;
-                font-size: 13px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .bottom-nav {
-                bottom: 12px;
-                padding: 8px 12px;
-                gap: 6px;
-            }
-
-            .nav-tab {
-                padding: 6px 12px;
-                font-size: 12px;
-            }
-        }
-
-        /* Prevent text selection on buttons */
-        .nav-tab {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        /* Disable default touch behaviors */
-        body {
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
 <body>
 
-    <!-- Pages Container -->
-    <div class="pages-container">
-        <!-- Page 1: Home -->
-        <div class="page-wrapper active" data-page="1">
-            <div class="canva-container interactive">
-                <iframe loading="lazy" 
-                    src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
-                    allowfullscreen="allowfullscreen" 
-                    allow="fullscreen">
-                </iframe>
-            </div>
-        </div>
-
-        <!-- Page 2: About Me -->
-        <div class="page-wrapper" data-page="2">
-            <div class="canva-container">
-                <iframe loading="lazy" 
-                    src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
-                    allowfullscreen="allowfullscreen" 
-                    allow="fullscreen">
-                </iframe>
-            </div>
-        </div>
-
-        <!-- Page 3: Book/Hire -->
-        <div class="page-wrapper" data-page="3">
-            <div class="canva-container">
-                <iframe loading="lazy" 
-                    src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
-                    allowfullscreen="allowfullscreen" 
-                    allow="fullscreen">
-                </iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Glass UI Bottom Navigation Bar -->
-    <div class="bottom-nav">
-        <button class="nav-tab active" data-page="1">Home</button>
-        <button class="nav-tab" data-page="2">About me</button>
-        <button class="nav-tab" data-page="3">Book/Hire</button>
+    <div class="canva-container">
+        <iframe loading="lazy" 
+            src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
+            allowfullscreen="allowfullscreen" 
+            allow="fullscreen">
+        </iframe>
     </div>
 
     <script>
-        // Disable native Canva scroll and swipe features
-        document.addEventListener('wheel', (e) => {
-            if (e.target.closest('iframe')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        document.addEventListener('touchmove', (e) => {
-            if (e.target.closest('iframe')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
-        // Prevent swipe gestures
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, false);
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, false);
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            const diff = touchStartX - touchEndX;
-
-            // Only prevent swipe if it's a significant swipe
-            if (Math.abs(diff) > swipeThreshold) {
-                // Swipe detected but we do nothing - page change only via tabs
-            }
-        }
-
-        // Page switching logic
-        const navTabs = document.querySelectorAll('.nav-tab');
-        const pageWrappers = document.querySelectorAll('.page-wrapper');
-
-        navTabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const pageNumber = tab.getAttribute('data-page');
-                switchPage(pageNumber);
-            });
-        });
-
-        function switchPage(pageNumber) {
-            // Remove active class from all tabs and pages
-            navTabs.forEach(tab => tab.classList.remove('active'));
-            pageWrappers.forEach(page => page.classList.remove('active'));
-
-            // Add active class to selected tab and page
-            document.querySelector(`.nav-tab[data-page="${pageNumber}"]`).classList.add('active');
-            document.querySelector(`.page-wrapper[data-page="${pageNumber}"]`).classList.add('active');
-        }
-
-        // Prevent keyboard navigation that might trigger Canva's native controls
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
-                e.preventDefault();
-            }
-        });
-
-        // Service Worker registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -350,13 +100,6 @@
                     .catch(err => console.log('Service Worker registration failed', err));
             });
         }
-
-        // Prevent pinch zoom on mobile
-        document.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 1) {
-                e.preventDefault();
-            }
-        }, { passive: false });
     </script>
 </body>
 </html>
