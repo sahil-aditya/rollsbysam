@@ -32,6 +32,7 @@
             overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
             scroll-behavior: smooth;
             -webkit-overflow-scrolling: touch;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         /* Custom Modern Sleek Tiny Scrollbar */
@@ -63,6 +64,7 @@
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
+            padding-bottom: 100px; /* Space for bottom navigation bar */
         }
 
         /* 
@@ -80,19 +82,183 @@
             border: none;
             display: block;
         }
+
+        /* ===== GLASS UI BOTTOM NAVIGATION BAR ===== */
+        .bottom-nav-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+            gap: 10px;
+            padding: 0 15px;
+        }
+
+        /* Navigation Tab Styling */
+        .nav-tab {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+            /* ===== TEXT COLOR CODE (HASH COMMENTED) ===== */
+            /* #FFFFFF - White Text Color */
+            color: #FFFFFF;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+
+        /* Hover Effect */
+        .nav-tab:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Active Tab Styling */
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            .bottom-nav-bar {
+                width: 95%;
+                max-width: 100%;
+                height: 55px;
+                bottom: 15px;
+            }
+
+            .nav-tab {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .bottom-nav-bar {
+                width: 98%;
+                height: 50px;
+                bottom: 10px;
+                gap: 5px;
+            }
+
+            .nav-tab {
+                font-size: 11px;
+                padding: 0 5px;
+            }
+        }
+
+        /* Page Container */
+        .page-container {
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page-container.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
-    <div class="canva-container">
-        <iframe loading="lazy" 
-            src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
-            allowfullscreen="allowfullscreen" 
-            allow="fullscreen">
-        </iframe>
+    <!-- HOME PAGE -->
+    <div id="home-page" class="page-container">
+        <div class="canva-container">
+            <iframe loading="lazy" 
+                src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
+                allowfullscreen="allowfullscreen" 
+                allow="fullscreen">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- ABOUT ME PAGE -->
+    <div id="about-page" class="page-container hidden">
+        <div class="canva-container">
+            <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
+            <iframe loading="lazy" 
+                src="" 
+                allowfullscreen="allowfullscreen" 
+                allow="fullscreen">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- BOOK/HIRE PAGE -->
+    <div id="book-page" class="page-container hidden">
+        <div class="canva-container">
+            <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
+            <iframe loading="lazy" 
+                src="" 
+                allowfullscreen="allowfullscreen" 
+                allow="fullscreen">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- GLASS UI BOTTOM NAVIGATION BAR -->
+    <div class="bottom-nav-bar">
+        <div class="nav-tab active" data-page="home">Home</div>
+        <div class="nav-tab" data-page="about">About me</div>
+        <div class="nav-tab" data-page="book">Book/Hire</div>
     </div>
 
     <script>
+        // ===== PAGE NAVIGATION LOGIC =====
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const pages = {
+            home: document.getElementById('home-page'),
+            about: document.getElementById('about-page'),
+            book: document.getElementById('book-page')
+        };
+
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const pageKey = tab.getAttribute('data-page');
+                
+                // Remove active class from all tabs
+                navTabs.forEach(t => t.classList.remove('active'));
+                
+                // Add active class to clicked tab
+                tab.classList.add('active');
+                
+                // Hide all pages
+                Object.values(pages).forEach(page => {
+                    page.classList.add('hidden');
+                });
+                
+                // Show selected page
+                pages[pageKey].classList.remove('hidden');
+                
+                // Scroll to top of page
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
