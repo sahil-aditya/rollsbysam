@@ -55,32 +55,25 @@
             scrollbar-color: #333 #141414;
         }
 
-        /* Container to clip the Canva footer buttons */
+        /* Container for Canva embed */
         .canva-container {
             position: relative;
-            width: 100vw;
-            height: 281.1127vw; /* Adjust height based on your design's ratio */
-            overflow: hidden;
+            width: 100%;
+            height: auto;
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
             padding-bottom: 100px; /* Space for bottom navigation bar */
         }
 
-        /* 
-           Hiding Canva Buttons:
-           Canva embeds usually have a fixed footer at the bottom. 
-           We use a container with 'overflow: hidden' and make the iframe 
-           slightly taller or shift it to hide the bottom control bar.
-        */
+        /* Canva iframe - full design display without cropping */
         iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
+            position: relative;
             width: 100%;
-            height: calc(100% + 40px); /* Making it slightly taller to push buttons out of view */
+            height: auto;
             border: none;
             display: block;
+            min-height: 600px;
         }
 
         /* Glass UI Bottom Navigation Bar */
