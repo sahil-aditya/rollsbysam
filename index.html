@@ -59,26 +59,26 @@
         .canva-container {
             position: relative;
             width: 100%;
-            height: calc(100vh + 40px);
+            height: 100vh;
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
             padding-bottom: 100px; /* Space for bottom navigation bar */
             box-sizing: border-box;
-            margin-bottom: -40px;
-            overflow: hidden;
+            overflow: hidden; /* Clips the scaled iframe */
+            background-color: #141414;
         }
 
-        /* Canva iframe - full design display without cropping */
+        /* Canva iframe - Hiding buttons by scaling and positioning */
         iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% + 50px); /* Extend height to push buttons out */
             border: none;
             display: block;
-            clip-path: inset(0 0 40px 0); /* Hides Canva's bottom control bar */
+            margin-bottom: -50px;
         }
 
         /* Glass UI Bottom Navigation Bar */
