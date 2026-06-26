@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modalClose = document.getElementById('modal-close');
 
     // Fetch images from JSON
-    fetch('images.json')
+    fetch('../images.json')
         .then(response => response.json())
         .then(data => {
             data.forEach(item => {
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     div.className = 'masonry-item';
                     
                     const img = document.createElement('img');
-                    img.src = item.link;
+                    img.src = '../' + item.link;
                     img.alt = item.caption || '';
                     img.loading = 'lazy';
                     
@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     // Click to enlarge
                     div.addEventListener('click', () => {
-                        modalImg.src = item.link;
+                        modalImg.src = '../' + item.link;
                         modal.style.display = 'flex';
                     });
 

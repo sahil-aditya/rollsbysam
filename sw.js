@@ -2,7 +2,7 @@ const CACHE_NAME = 'creative-gallery-v1';
 const ASSETS = [
   './',
   './index.html',
-  './gallery.html',
+  './gallery/',
   './gallery.js',
   './images.json',
   './resources/IMG_20260507_003546.jpg',
