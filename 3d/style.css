@@ -10,13 +10,21 @@ body {
   min-height: 100vh;
   background-color: #ffffff; 
   font-family: "Bricolage Grotesque", sans-serif;
-  
-  display: grid;
-  place-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
-/* Base styles for the gallery buttons */
+.gallery-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .nav-btn {
   position: absolute;
   top: 50%;
@@ -41,3 +49,39 @@ body {
 
 .nav-btn-left { left: 20px; }
 .nav-btn-right { right: 20px; }
+
+.image-wrapper {
+  width: 85vw;
+  height: 85vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#galleryImg {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  border-radius: 4px;
+  /* Blur and Fade transition identical to Framer Motion */
+  transition: opacity 0.4s ease, filter 0.4s ease;
+  opacity: 0;
+  filter: blur(10px);
+}
+
+/* Jab image poori load ho jayegi, tab ye class add hogi aur image clean dikhegi */
+#galleryImg.loaded {
+  opacity: 1;
+  filter: blur(0px);
+}
+
+.gallery-title {
+  position: absolute;
+  bottom: 30px;
+  color: #1a1a1a;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 14px;
+}
