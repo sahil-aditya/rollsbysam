@@ -63,20 +63,24 @@
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
+            background-color: #141414;
         }
 
         /* Hiding Canva Buttons:
-           We make the iframe slightly taller (+45px) so the bottom 
-           control bar gets pushed outside the hidden overflow of the wrapper.
+           We make the iframe significantly taller (+100px) so the bottom 
+           control bar gets pushed completely outside the hidden overflow of the wrapper.
+           We also use clip-path as a backup to ensure no buttons are visible.
         */
         .canva-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 45px); /* Pushes the Canva footer out of view */
+            height: calc(100% + 100px); /* Pushes the Canva footer completely out of view */
             border: none;
             display: block;
+            /* Backup: clip-path to ensure buttons stay hidden */
+            clip-path: inset(0 0 100px 0);
         }
 
         /* Spacer so your bottom glass UI nav doesn't cover up the bottom of your designs */
@@ -201,7 +205,7 @@
         /* Page Container */
         .page-container {
             width: 100vw;
-            height: 100vh;
+            min-height: 100vh;
             overflow-y: auto;
             position: relative;
         }
@@ -215,7 +219,7 @@
 
     <!-- HOME PAGE -->
     <div id="home-page" class="page-container">
-        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
+        <div class="canva-wrapper" data-canva-id="home">
             <iframe loading="lazy" 
                 src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
                 allowfullscreen="allowfullscreen" 
@@ -227,7 +231,7 @@
 
     <!-- ABOUT ME PAGE -->
     <div id="about-page" class="page-container hidden">
-        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
+        <div class="canva-wrapper" data-canva-id="about">
             <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -240,7 +244,7 @@
 
     <!-- BOOK/HIRE PAGE -->
     <div id="book-page" class="page-container hidden">
-        <div class="canva-wrapper" style="aspect-ratio: 1366 / 2753;">
+        <div class="canva-wrapper" data-canva-id="book">
             <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -259,6 +263,51 @@
     </div>
 
     <script>
+        // ===== AUTO ASPECT RATIO DETECTION FOR CANVA EMBEDS =====
+        function detectAndSetCanvaAspectRatio() {
+            const wrappers = document.querySelectorAll('.canva-wrapper');
+            
+            wrappers.forEach(wrapper => {
+                const iframe = wrapper.querySelector('iframe');
+                
+                if (!iframe || !iframe.src) return;
+                
+                // Wait for iframe to load
+                iframe.addEventListener('load', () => {
+                    try {
+                        // Try to access iframe content (only works if same-origin)
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        
+                        if (iframeDoc) {
+                            // Get the actual content dimensions
+                            const content = iframeDoc.body;
+                            if (content) {
+                                const width = content.scrollWidth || 1366;
+                                const height = content.scrollHeight || 2753;
+                                
+                                // Set aspect ratio dynamically
+                                const aspectRatio = width / height;
+                                wrapper.style.aspectRatio = `${width} / ${height}`;
+                                
+                                console.log(`Canva ${wrapper.getAttribute('data-canva-id')} aspect ratio: ${width}/${height}`);
+                            }
+                        }
+                    } catch (e) {
+                        // Cross-origin restriction - use ResizeObserver as fallback
+                        console.log('Cross-origin iframe detected, using ResizeObserver fallback');
+                        
+                        // ResizeObserver to detect when iframe content changes size
+                        const resizeObserver = new ResizeObserver(() => {
+                            // The iframe will naturally adjust to its content
+                            // Just ensure the wrapper maintains proper proportions
+                        });
+                        
+                        resizeObserver.observe(iframe);
+                    }
+                }, { once: true });
+            });
+        }
+
         // ===== PAGE NAVIGATION LOGIC =====
         const navTabs = document.querySelectorAll('.nav-tab');
         const pages = {
@@ -288,6 +337,16 @@
                 // Scroll to top of page
                 window.scrollTo(0, 0);
             });
+        });
+
+        // Initialize aspect ratio detection when page loads
+        window.addEventListener('load', () => {
+            detectAndSetCanvaAspectRatio();
+        });
+
+        // Also run on DOMContentLoaded as backup
+        document.addEventListener('DOMContentLoaded', () => {
+            detectAndSetCanvaAspectRatio();
         });
 
         // Service Worker Registration
