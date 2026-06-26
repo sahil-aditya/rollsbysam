@@ -1,8 +1,3 @@
-import React, { useState } from "https://esm.sh/react@19"
-import { createRoot } from "https://esm.sh/react-dom@19/client"
-import { motion, AnimatePresence } from "https://esm.sh/motion/react"
-import { ChevronLeft, ChevronRight } from "https://esm.sh/lucide-react"
-
 const ASSETS = [
   {
     src: 'https://images.unsplash.com/photo-1769921546096-7a648d953a3e?q=80&w=1200&auto=format&fit=crop',
@@ -38,64 +33,40 @@ const ASSETS = [
   }
 ];
 
-const App = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+let currentIndex = 0;
+const imgElement = document.getElementById('galleryImg');
+const titleElement = document.getElementById('galleryTitle');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % ASSETS.length);
-  };
+function updateGallery() {
+  // Pehle image ko blur aur fade out karo
+  imgElement.classList.remove('loaded');
+  
+  // Fade out complete hone ke baad source change karo
+  setTimeout(() => {
+    imgElement.src = ASSETS[currentIndex].src;
+    titleElement.textContent = ASSETS[currentIndex].title;
+  }, 400); 
+}
 
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? ASSETS.length - 1 : prev - 1));
-  };
-
-  return (
-    <div style={{ position: 'relative', width: '100vw', height: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      
-      {/* Navigation Buttons */}
-      <button onClick={handlePrev} className="nav-btn nav-btn-left">
-        <ChevronLeft size={28} color="#1a1a1a" />
-      </button>
-
-      <AnimatePresence mode="wait">
-        <motion.img
-          key={currentIndex}
-          src={ASSETS[currentIndex].src}
-          alt={ASSETS[currentIndex].title}
-          initial={{ opacity: 0, filter: 'blur(10px)' }}
-          animate={{ opacity: 1, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, filter: 'blur(10px)' }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
-          style={{ 
-            maxWidth: '85vw', 
-            maxHeight: '85vh', 
-            objectFit: 'contain', 
-            boxShadow: '0 20px 40px rgba(0,0,0,0.08)',
-            borderRadius: '4px'
-          }}
-        />
-      </AnimatePresence>
-
-      <button onClick={handleNext} className="nav-btn nav-btn-right">
-        <ChevronRight size={28} color="#1a1a1a" />
-      </button>
-
-      {/* Image Title */}
-      <div style={{ 
-        position: 'absolute', 
-        bottom: '30px', 
-        color: '#1a1a1a', 
-        textTransform: 'uppercase', 
-        letterSpacing: '2px',
-        fontWeight: '500',
-        fontSize: '14px'
-      }}>
-        {ASSETS[currentIndex].title}
-      </div>
-    </div>
-  );
+// Jab nayi image load ho jaye, toh class wapas add karke fade in aur unblur karo
+imgElement.onload = () => {
+  imgElement.classList.add('loaded');
 };
 
-const root = createRoot(document.getElementById("app"));
-root.render(<App />);
-                
+// Next Button Click 
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % ASSETS.length;
+  updateGallery();
+});
+
+// Previous Button Click
+prevBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex === 0) ? ASSETS.length - 1 : currentIndex - 1;
+  updateGallery();
+});
+
+// Shuruwaat me pehli image set karna
+imgElement.src = ASSETS[currentIndex].src;
+titleElement.textContent = ASSETS[currentIndex].title;
