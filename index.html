@@ -13,9 +13,9 @@
     <meta http-equiv="Expires" content="31536000">
     
     <!-- Meta Tags for SEO and Social Media Previews -->
-    <meta name="description" content="Photographer & Visual Artist">
+    <meta name="description" content="Portfolio of rollsbysam - Visual Artist and Colorist">
     <meta property="og:title" content="rollsbysam">
-    <meta property="og:description" content="Photographer & Visual Artist">
+    <meta property="og:description" content="Visual Artist and Colorist Portfolio">
     <meta property="og:image" content="<!-- INSERT THUMBNAIL LINK HERE -->">
     <meta property="og:url" content="https://sahil-aditya.github.io/Creative_Gallery/">
     <meta name="twitter:card" content="summary_large_image">
@@ -55,47 +55,32 @@
             scrollbar-color: #333 #141414;
         }
 
-        /* Responsive Embed Container using padding-bottom technique */
-        .canva-wrapper {
+        /* Container to clip the Canva footer buttons */
+        .canva-container {
             position: relative;
-            width: 100%;
-            background-color: #141414;
+            width: 100vw;
+            height: 281.1127vw; /* Adjust height based on your design's ratio */
             overflow: hidden;
-            /* Padding-bottom creates the aspect ratio container
-               This is the industry standard for responsive embeds
-               1366:2753 ratio = 2753/1366 = 2.0161 = 201.61%
-            */
-            padding-bottom: 201.61%;
+            /* Force hardware acceleration for smoother scrolling */
+            transform: translateZ(0);
+            will-change: transform;
+            padding-bottom: 100px; /* Space for bottom navigation bar */
         }
 
-        /* Absolute positioning for the iframe inside the container */
-        .canva-wrapper iframe {
+        /* 
+           Hiding Canva Buttons:
+           Canva embeds usually have a fixed footer at the bottom. 
+           We use a container with 'overflow: hidden' and make the iframe 
+           slightly taller or shift it to hide the bottom control bar.
+        */
+        iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
+            height: calc(100% + 40px); /* Making it slightly taller to push buttons out of view */
             border: none;
             display: block;
-            /* Hide Canva buttons by clipping */
-            clip-path: inset(0 0 50px 0);
-        }
-
-        /* Page Container */
-        .page-container {
-            width: 100vw;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .page-container.hidden {
-            display: none;
-        }
-
-        /* Spacer so your bottom glass UI nav doesn't cover up the bottom of your designs */
-        .nav-spacer {
-            width: 100%;
-            height: 100px;
         }
 
         /* Glass UI Bottom Navigation Bar */
@@ -133,7 +118,7 @@
             padding: 10px 20px;
             background: transparent;
             border: none;
-            color: rgba(0, 0, 0, 0.7);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
@@ -146,14 +131,14 @@
 
         /* Tab hover effect */
         .nav-tab:hover {
-            color: rgba(0, 0, 0, 0.9);
+            color: rgba(255, 255, 255, 0.9);
             background: rgba(255, 255, 255, 0.1);
         }
 
         /* Active tab */
         .nav-tab.active {
             color: #ffffff;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.2);
             box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.2);
         }
 
@@ -210,25 +195,36 @@
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
+
+        /* Page Container */
+        .page-container {
+            width: 100vw;
+            height: 100vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .page-container.hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
 
     <!-- HOME PAGE -->
     <div id="home-page" class="page-container">
-        <div class="canva-wrapper" data-canva-id="home">
+        <div class="canva-container">
             <iframe loading="lazy" 
                 src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
                 allowfullscreen="allowfullscreen" 
                 allow="fullscreen">
             </iframe>
         </div>
-        <div class="nav-spacer"></div>
     </div>
 
     <!-- ABOUT ME PAGE -->
     <div id="about-page" class="page-container hidden">
-        <div class="canva-wrapper" data-canva-id="about">
+        <div class="canva-container">
             <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -236,12 +232,11 @@
                 allow="fullscreen">
             </iframe>
         </div>
-        <div class="nav-spacer"></div>
     </div>
 
     <!-- BOOK/HIRE PAGE -->
     <div id="book-page" class="page-container hidden">
-        <div class="canva-wrapper" data-canva-id="book">
+        <div class="canva-container">
             <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
             <iframe loading="lazy" 
                 src="" 
@@ -249,7 +244,6 @@
                 allow="fullscreen">
             </iframe>
         </div>
-        <div class="nav-spacer"></div>
     </div>
 
     <!-- GLASS UI BOTTOM NAVIGATION BAR -->
@@ -260,47 +254,6 @@
     </div>
 
     <script>
-        // ===== DYNAMIC ASPECT RATIO CALCULATOR =====
-        // This function calculates the correct padding-bottom percentage
-        // for any Canva design dimensions
-        function calculatePaddingBottom(width, height) {
-            return ((height / width) * 100).toFixed(2) + '%';
-        }
-
-        // Store design dimensions (can be updated dynamically)
-        const designDimensions = {
-            home: { width: 1366, height: 2753 },
-            about: { width: 1366, height: 2753 },
-            book: { width: 1366, height: 2753 }
-        };
-
-        // Apply padding-bottom to all wrappers
-        function initializeWrappers() {
-            Object.keys(designDimensions).forEach(canvaId => {
-                const wrapper = document.querySelector(`[data-canva-id="${canvaId}"]`);
-                if (wrapper) {
-                    const { width, height } = designDimensions[canvaId];
-                    const paddingBottom = calculatePaddingBottom(width, height);
-                    wrapper.style.paddingBottom = paddingBottom;
-                }
-            });
-        }
-
-        // Listen for dimension updates from Canva via postMessage
-        window.addEventListener('message', (event) => {
-            if (event.data && event.data.type === 'CANVA_DIMENSIONS') {
-                const { canvaId, width, height } = event.data;
-                if (canvaId && width && height) {
-                    designDimensions[canvaId] = { width, height };
-                    const wrapper = document.querySelector(`[data-canva-id="${canvaId}"]`);
-                    if (wrapper) {
-                        wrapper.style.paddingBottom = calculatePaddingBottom(width, height);
-                        console.log(`Updated ${canvaId} to ${width}x${height}`);
-                    }
-                }
-            }
-        });
-
         // ===== PAGE NAVIGATION LOGIC =====
         const navTabs = document.querySelectorAll('.nav-tab');
         const pages = {
@@ -330,16 +283,6 @@
                 // Scroll to top of page
                 window.scrollTo(0, 0);
             });
-        });
-
-        // Initialize on page load
-        window.addEventListener('load', () => {
-            initializeWrappers();
-        });
-
-        // Also run on DOMContentLoaded as backup
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeWrappers();
         });
 
         // Service Worker Registration
