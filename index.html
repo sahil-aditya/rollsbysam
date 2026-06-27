@@ -225,7 +225,7 @@
     <div id="about-page" class="page-container hidden">
         <div class="canva-container">
             <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
-            <iframe loading="lazy" 
+            <iframe 
                 src="https://www.canva.com/design/DAHNx3ydcZo/hVTeoUkUj4qgCleFh9rBFA/view?embed" 
                 allowfullscreen="allowfullscreen" 
                 allow="fullscreen">
@@ -237,7 +237,7 @@
     <div id="book-page" class="page-container hidden">
         <div class="canva-container">
             <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
-            <iframe loading="lazy" 
+            <iframe 
                 src="https://www.canva.com/design/DAHNx9rCgp0/z2b7eg-BNi6mtuvpvN8TEg/view?embed" 
                 allowfullscreen="allowfullscreen" 
                 allow="fullscreen">
@@ -253,6 +253,101 @@
     </div>
 
     <script>
+        // ===== PAGE PRELOADING LOGIC =====
+        const preloadedPages = new Set();
+        preloadedPages.add('home'); // Home is already loaded
+        
+        function preloadPage(pageKey) {
+            if (preloadedPages.has(pageKey)) return;
+            
+            const page = document.getElementById(`${pageKey}-page`);
+            if (!page) return;
+            
+            // Temporarily show the page to trigger iframe loading
+            const wasHidden = page.classList.contains('hidden');
+            page.classList.remove('hidden');
+            
+            // Wait a moment for the iframe to start loading, then hide again
+            setTimeout(() => {
+                if (wasHidden) {
+                    page.classList.add('hidden');
+                }
+                preloadedPages.add(pageKey);
+            }, 100);
+        }
+        
+        // Preload about and book pages after home page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                preloadPage('about');
+                preloadPage('book');
+            }, 500);
+        });
+
+        // ===== CLICK SOUND EFFECT LOGIC =====
+        let clickAudio = null;
+        
+        function initClickSound() {
+            if (!clickAudio) {
+                clickAudio = new Audio('./resources/click.mp3');
+                clickAudio.preload = 'auto';
+                clickAudio.volume = 0.5; // Adjust volume as needed
+            }
+        }
+        
+        function playClickSound() {
+            initClickSound();
+            // Stop current playback and restart for seamless overlapping
+            clickAudio.currentTime = 0;
+            clickAudio.play().catch(err => {
+                // Silently handle autoplay policy restrictions
+                console.debug('Click sound play prevented:', err);
+            });
+        }
+        
+        // Track if we're in a scroll/swipe operation
+        let isScrolling = false;
+        let scrollTimeout;
+        
+        document.addEventListener('scroll', () => {
+            isScrolling = true;
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 150);
+        }, { passive: true });
+        
+        // Track touch events to detect swipes
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isSwiping = false;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+            isSwiping = false;
+        }, { passive: true });
+        
+        document.addEventListener('touchmove', (e) => {
+            const touchEndX = e.touches[0].clientX;
+            const touchEndY = e.touches[0].clientY;
+            const diffX = Math.abs(touchEndX - touchStartX);
+            const diffY = Math.abs(touchEndY - touchStartY);
+            
+            // If horizontal or vertical movement is significant, it's a swipe/scroll
+            if (diffX > 10 || diffY > 10) {
+                isSwiping = true;
+            }
+        }, { passive: true });
+        
+        // Click sound on all clicks (except during scroll/swipe)
+        document.addEventListener('click', (e) => {
+            if (!isScrolling && !isSwiping) {
+                playClickSound();
+            }
+            isSwiping = false;
+        }, true);
+
         // ===== PAGE NAVIGATION LOGIC =====
         const navTabs = document.querySelectorAll('.nav-tab');
         const pages = {
