@@ -9,81 +9,81 @@
     <title>Gallery | rollsbysam</title>
     
     <!-- ===== SOCIAL MEDIA PREVIEW TAGS (Open Graph) ===== -->
-    <!-- These tags control how the page appears when shared on social media platforms -->
     <meta property="og:title" content="Gallery | rollsbysam">
     <meta property="og:description" content="View the latest image gallery by rollsbysam.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sahil-aditya.github.io/rollsbysam/gallery">
-    <!-- IMPORTANT: Replace 'your-image.jpg' below with a real image path from your site for the preview thumbnail -->
     <meta property="og:image" content="https://rollsbysam.vercel.app/your-image.jpg">
 
     <!-- ===== TWITTER CARD TAGS ===== -->
-    <!-- These tags control how the page appears when shared on Twitter/X -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Gallery | rollsbysam">
     <meta name="twitter:description" content="View the latest image gallery by rollsbysam.">
-    <!-- IMPORTANT: Replace 'your-image.jpg' below with a real image path from your site for the preview thumbnail -->
     <meta name="twitter:image" content="https://rollsbysam.vercel.app/your-image.jpg">
 
     <!-- ===== CACHING HEADERS ===== -->
-    <!-- These tags tell browsers to cache the page for 1 year (31536000 seconds) -->
     <meta http-equiv="Cache-Control" content="max-age=31536000, public">
     <meta http-equiv="Pragma" content="cache">
     <meta http-equiv="Expires" content="31536000">
+    
+    <!-- ===== GOOGLE FONTS ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap" rel="stylesheet">
+
     <style>
         /* ===== GENERAL RESET & BASE STYLES ===== */
-        /* Remove default browser margins and set smooth scrolling behavior */
+        * {
+            box-sizing: border-box;
+        }
+
         html {
             scroll-behavior: smooth;
         }
+
         body {
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #ffffff;
+            min-height: 100vh;
+            font-family: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ececec;
             color: #000000;
-            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+            -webkit-overflow-scrolling: touch;
         }
 
         /* ===== CUSTOM SCROLLBAR STYLING ===== */
-        /* Modern sleek scrollbar for webkit browsers (Chrome, Safari, Edge) */
         ::-webkit-scrollbar {
-            width: 6px; /* Width of the scrollbar */
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #ffffff; /* Background of scrollbar track */
+            background: #ececec;
         }
         ::-webkit-scrollbar-thumb {
-            background: #ccc; /* Color of scrollbar thumb */
-            border-radius: 10px; /* Rounded corners */
+            background: #ccc;
+            border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #999; /* Darker color on hover */
+            background: #999;
         }
-        /* Firefox scrollbar styling */
         * {
             scrollbar-width: thin;
-            scrollbar-color: #ccc #ffffff;
+            scrollbar-color: #ccc #ececec;
         }
 
         /* ===== HEADER BAR STYLES ===== */
-        /* Fixed header at the top of the page with back button and logo */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 60px;
-            background-color: #ffffff;
-            border-bottom: 1px solid #eaeaea;
+            background-color: #ececec;
+            border-bottom: 1px solid #d0d0d0;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1000; /* Stays above other content */
-            transition: all 0.3s ease; /* Smooth animation transitions */
+            z-index: 1000;
+            transition: all 0.3s ease;
         }
 
-        /* Back button styling - positioned on the left side of header */
         .back-button {
             position: absolute;
             left: 20px;
@@ -92,9 +92,13 @@
             font-size: 24px;
             font-weight: bold;
             cursor: pointer;
+            transition: opacity 0.3s ease;
         }
 
-        /* Logo styling - centered in header */
+        .back-button:hover {
+            opacity: 0.7;
+        }
+
         .logo {
             font-size: 18px;
             font-weight: 600;
@@ -102,192 +106,331 @@
             text-transform: lowercase;
         }
 
-        /* ===== GALLERY CONTAINER STYLES ===== */
-        /* Main container for the image gallery with margin for fixed header */
-        .gallery-container {
-            margin-top: 80px; /* Space below the fixed header */
-            padding: 0 10px; /* Horizontal padding for responsive design */
-            transition: margin-top 0.3s ease; /* Smooth animation when margin changes */
-        }
-
         /* ===== EMBED MODE STYLES ===== */
-        /* These styles are automatically applied when the page is embedded in an iframe */
-        /* This allows the gallery to be cleanly embedded in other websites */
         body.is-embedded header {
-            display: none !important; /* Hide header when embedded */
+            display: none !important;
         }
         body.is-embedded .gallery-container {
-            margin-top: 10px !important; /* Reduce top margin when embedded */
+            margin-top: 0 !important;
+            padding-top: 20px;
         }
-        /* Hide scrollbars specifically for embeds to look cleaner */
         body.is-embedded::-webkit-scrollbar {
-            display: none; /* Hide scrollbar in webkit browsers */
+            display: none;
         }
         body.is-embedded {
-            -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
-            scrollbar-width: none;  /* Hide scrollbar in Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        /* ===== MASONRY GALLERY LAYOUT ===== */
-        /* CSS Columns create a Pinterest-style masonry layout */
-        .masonry {
-            column-gap: 10px; /* Space between columns */
+        /* ===== GALLERY CONTAINER ===== */
+        .gallery-container {
+            margin-top: 80px;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: margin-top 0.3s ease;
         }
 
-        /* ===== RESPONSIVE COLUMN COUNTS ===== */
-        /* Mobile devices: 2 columns */
-        @media (max-width: 600px) {
-            .masonry {
-                column-count: 2;
-            }
+        /* ===== CAROUSEL STYLES ===== */
+        .carousel-wrapper {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
         }
 
-        /* Tablets: 3 columns */
-        @media (min-width: 601px) and (max-width: 1024px) {
-            .masonry {
-                column-count: 3;
-            }
+        .carousel-controls {
+            display: flex;
+            gap: 12px;
         }
 
-        /* Desktop and larger screens: 4 columns */
-        @media (min-width: 1025px) {
-            .masonry {
-                column-count: 4;
-            }
+        .carousel-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid #000;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
         }
 
-        /* ===== INDIVIDUAL GALLERY ITEM STYLES ===== */
-        /* Each image in the masonry grid */
-        .masonry-item {
-            display: inline-block;
-            width: 100%; /* Fill the column width */
-            margin-bottom: 10px; /* Space between items vertically */
-            background-color: #f9f9f9; /* Light background for loading state */
-            border-radius: 8px; /* Rounded corners */
-            overflow: hidden; /* Clip content to border radius */
+        .carousel-button:hover {
+            background: #000;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .carousel-button:active {
+            transform: scale(0.95);
+        }
+
+        .carousel-button svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        /* ===== CAROUSEL CONTENT ===== */
+        .carousel-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container {
+            width: 100%;
+            aspect-ratio: 1;
             position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #f0f0f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
-        /* Image styling within gallery items */
-        .masonry-item img {
-            width: 100%; /* Fill the item width */
-            height: auto; /* Maintain aspect ratio */
-            display: block; /* Remove inline spacing */
-            transition: transform 0.3s ease; /* Smooth zoom animation */
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        /* Hover effect: slight zoom on mouse over */
-        .masonry-item:hover img {
-            transform: scale(1.02); /* Zoom to 102% */
+        .image-title {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: 500;
+            text-align: center;
+            text-transform: capitalize;
+            letter-spacing: 0.5px;
+            min-height: 28px;
         }
 
-        /* ===== IMAGE CAPTION STYLES ===== */
-        /* Optional text caption below each image */
-        .caption {
-            padding: 8px;
-            font-size: 12px;
-            color: #666;
+        .image-counter {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #888;
             text-align: center;
         }
 
-        /* ===== MODAL (LIGHTBOX) STYLES ===== */
-        /* Full-screen overlay for viewing enlarged images */
-        #modal {
-            display: none; /* Hidden by default */
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
-            z-index: 2000; /* Appears above all other content */
-            justify-content: center; /* Center the image */
+        /* ===== MASONRY FALLBACK (hidden by default) ===== */
+        .masonry {
+            display: none;
+        }
+
+        /* ===== LOADING STATE ===== */
+        .loading {
+            display: flex;
             align-items: center;
-            cursor: zoom-out; /* Cursor indicates you can click to close */
+            justify-content: center;
+            min-height: 500px;
+            font-size: 16px;
+            color: #888;
         }
 
-        /* Enlarged image in modal */
-        #modal img {
-            max-width: 90%; /* Don't exceed 90% of screen width */
-            max-height: 90%; /* Don't exceed 90% of screen height */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Subtle shadow effect */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f0f0f0;
+            border-top: 3px solid #000;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
 
-        /* Close button (X) styling */
-        #modal-close {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 30px;
-            cursor: pointer;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== RESPONSIVE STYLES ===== */
+        @media (max-width: 768px) {
+            .carousel-wrapper {
+                flex-direction: column;
+                max-width: 100%;
+                padding: 0 10px;
+            }
+
+            .carousel-controls {
+                width: 100%;
+                justify-content: center;
+                order: 2;
+                margin-top: 16px;
+            }
+
+            .carousel-content {
+                order: 1;
+            }
+
+            .image-container {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .image-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gallery-container {
+                padding: 20px 10px;
+            }
+
+            .image-container {
+                aspect-ratio: 3/4;
+            }
+
+            .carousel-button {
+                width: 40px;
+                height: 40px;
+            }
+
+            .image-title {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
-<!-- ===== BODY CONTENT ===== -->
-<!-- The page structure is simple: header, gallery container, and modal -->
-<!-- All interactive functionality is handled by JavaScript (gallery.js) -->
-<!-- The page is fully embeddable in iframes - when embedded, the header automatically hides -->
 <body>
-
     <!-- ===== PAGE HEADER ===== -->
-    <!-- Fixed header with back button and logo -->
-    <!-- Note: The back button is only shown when NOT embedded in an iframe -->
     <header>
-        <!-- Back button: Returns to the main index.html page (only visible when not embedded) -->
         <a href="../index.html" class="back-button" id="back-button">&larr;</a>
-        <!-- Site logo/branding -->
         <div class="logo">rollsbysam</div>
     </header>
 
     <!-- ===== GALLERY CONTAINER ===== -->
-    <!-- Main container for the image gallery -->
     <div class="gallery-container">
-        <!-- Masonry grid that will be populated with images from images.json via JavaScript -->
-        <div class="masonry" id="gallery">
-            <!-- Images will be loaded here dynamically via gallery.js -->
-        </div>
-    </div>
+        <div class="carousel-wrapper">
+            <!-- Left Control -->
+            <div class="carousel-controls" id="left-controls">
+                <button class="carousel-button" id="prev-btn" aria-label="Previous image">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+            </div>
 
-    <!-- ===== MODAL/LIGHTBOX ===== -->
-    <!-- Full-screen overlay for viewing enlarged images -->
-    <!-- Clicking the image or close button (X) will close the modal -->
-    <div id="modal">
-        <!-- Close button (X) in top-right corner -->
-        <span id="modal-close">&times;</span>
-        <!-- Image will be dynamically loaded here when clicked -->
-        <img id="modal-img" src="" alt="Enlarged View">
+            <!-- Carousel Content -->
+            <div class="carousel-content">
+                <div class="image-container" id="image-container">
+                    <img id="carousel-image" src="" alt="Gallery image" />
+                </div>
+                <div class="image-title" id="image-title"></div>
+                <div class="image-counter" id="image-counter"></div>
+            </div>
+
+            <!-- Right Control -->
+            <div class="carousel-controls" id="right-controls">
+                <button class="carousel-button" id="next-btn" aria-label="Next image">
+                    <svg viewBox="0 0 24 24">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Fallback masonry gallery (hidden by default) -->
+        <div class="masonry" id="gallery"></div>
     </div>
 
     <!-- ===== EMBED DETECTION SCRIPT ===== -->
-    <!-- This script detects if the page is embedded in an iframe and applies embed-specific styles -->
-    <!-- When embedded, the header is hidden and the gallery takes up more space -->
-    <!-- This makes the gallery perfect for embedding in other websites or applications -->
     <script>
-        // Check if this page is inside an iframe
         if (window.self !== window.top) {
-            // Add the 'is-embedded' class to apply embed-specific CSS styles
             document.body.classList.add('is-embedded');
-            
-            // Disable the back button when embedded to prevent redirect issues
             const backButton = document.getElementById('back-button');
             if (backButton) {
-                // Remove the href to prevent navigation
                 backButton.removeAttribute('href');
-                // Make it non-interactive
                 backButton.style.pointerEvents = 'none';
                 backButton.style.opacity = '0.5';
             }
         }
     </script>
 
-    <!-- ===== GALLERY FUNCTIONALITY SCRIPT ===== -->
-    <!-- Loads images from images.json and handles gallery interactions -->
-    <!-- See gallery.js for the complete gallery logic -->
-    <script src="../gallery.js"></script>
-    
+    <!-- ===== CAROUSEL FUNCTIONALITY SCRIPT ===== -->
+    <script>
+        let galleryData = [];
+        let currentIndex = 0;
+
+        // Fetch images from JSON (same as gallery.js)
+        fetch('../images.json')
+            .then(response => response.json())
+            .then(data => {
+                // Filter out empty links
+                galleryData = data.filter(item => item.link && item.link.trim() !== "");
+                
+                if (galleryData.length === 0) {
+                    document.getElementById('image-container').innerHTML = '<div class="loading">No images found</div>';
+                    return;
+                }
+
+                // Initialize carousel
+                updateCarousel();
+                setupEventListeners();
+            })
+            .catch(error => {
+                console.error('Error loading gallery images:', error);
+                document.getElementById('image-container').innerHTML = '<div class="loading">Error loading images</div>';
+            });
+
+        function updateCarousel() {
+            if (galleryData.length === 0) return;
+
+            const item = galleryData[currentIndex];
+            const img = document.getElementById('carousel-image');
+            
+            // Set image source
+            img.src = '../' + item.link;
+            img.alt = item.caption || 'Gallery image';
+
+            // Update title
+            const title = document.getElementById('image-title');
+            if (item.caption && item.caption !== "Your text here") {
+                title.textContent = item.caption;
+            } else {
+                title.textContent = '';
+            }
+
+            // Update counter
+            document.getElementById('image-counter').textContent = 
+                `${currentIndex + 1} / ${galleryData.length}`;
+        }
+
+        function setupEventListeners() {
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+                updateCarousel();
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % galleryData.length;
+                updateCarousel();
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + galleryData.length) % galleryData.length;
+                    updateCarousel();
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % galleryData.length;
+                    updateCarousel();
+                }
+            });
+        }
+    </script>
+
     <!-- ===== SERVICE WORKER REGISTRATION ===== -->
-    <!-- Registers a service worker for offline support and caching -->
-    <!-- The service worker (sw.js) handles caching strategies for better performance -->
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -298,12 +441,4 @@
         }
     </script>
 </body>
-<!-- ===== END OF GALLERY PAGE ===== -->
-<!-- This page is designed to be:
-     1. Standalone: Can be viewed directly at /gallery/index.html
-     2. Embeddable: Can be embedded in iframes on other websites
-     3. Responsive: Works on mobile, tablet, and desktop screens
-     4. Fast: Uses service worker for caching and offline support
-     5. Customizable: Images are loaded from images.json for easy updates
--->
 </html>
