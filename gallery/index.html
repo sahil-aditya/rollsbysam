@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ===== DOCUMENT METADATA ===== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- PAGE TITLE: Displayed in browser tab and search results -->
+    <title>Gallery | rollsbysam</title>
+    
+    <!-- ===== SOCIAL MEDIA PREVIEW TAGS (Open Graph) ===== -->
+    <!-- These tags control how the page appears when shared on social media platforms -->
+    <meta property="og:title" content="Gallery | rollsbysam">
+    <meta property="og:description" content="View the latest image gallery by rollsbysam.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sahil-aditya.github.io/rollsbysam/gallery">
+    <!-- IMPORTANT: Replace 'your-image.jpg' below with a real image path from your site for the preview thumbnail -->
+    <meta property="og:image" content="https://rollsbysam.vercel.app/your-image.jpg">
+
+    <!-- ===== TWITTER CARD TAGS ===== -->
+    <!-- These tags control how the page appears when shared on Twitter/X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Gallery | rollsbysam">
+    <meta name="twitter:description" content="View the latest image gallery by rollsbysam.">
+    <!-- IMPORTANT: Replace 'your-image.jpg' below with a real image path from your site for the preview thumbnail -->
+    <meta name="twitter:image" content="https://rollsbysam.vercel.app/your-image.jpg">
+
+    <!-- ===== CACHING HEADERS ===== -->
+    <!-- These tags tell browsers to cache the page for 1 year (31536000 seconds) -->
+    <meta http-equiv="Cache-Control" content="max-age=31536000, public">
+    <meta http-equiv="Pragma" content="cache">
+    <meta http-equiv="Expires" content="31536000">
+    <style>
+        /* ===== GENERAL RESET & BASE STYLES ===== */
+        /* Remove default browser margins and set smooth scrolling behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #ffffff;
+            color: #000000;
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+        }
+
+        /* ===== CUSTOM SCROLLBAR STYLING ===== */
+        /* Modern sleek scrollbar for webkit browsers (Chrome, Safari, Edge) */
+        ::-webkit-scrollbar {
+            width: 6px; /* Width of the scrollbar */
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffffff; /* Background of scrollbar track */
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ccc; /* Color of scrollbar thumb */
+            border-radius: 10px; /* Rounded corners */
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #999; /* Darker color on hover */
+        }
+        /* Firefox scrollbar styling */
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #ccc #ffffff;
+        }
+
+        /* ===== HEADER BAR STYLES ===== */
+        /* Fixed header at the top of the page with back button and logo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000; /* Stays above other content */
+            transition: all 0.3s ease; /* Smooth animation transitions */
+        }
+
+        /* Back button styling - positioned on the left side of header */
+        .back-button {
+            position: absolute;
+            left: 20px;
+            text-decoration: none;
+            color: #000000;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Logo styling - centered in header */
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: lowercase;
+        }
+
+        /* ===== GALLERY CONTAINER STYLES ===== */
+        /* Main container for the image gallery with margin for fixed header */
+        .gallery-container {
+            margin-top: 80px; /* Space below the fixed header */
+            padding: 0 10px; /* Horizontal padding for responsive design */
+            transition: margin-top 0.3s ease; /* Smooth animation when margin changes */
+        }
+
+        /* ===== EMBED MODE STYLES ===== */
+        /* These styles are automatically applied when the page is embedded in an iframe */
+        /* This allows the gallery to be cleanly embedded in other websites */
+        body.is-embedded header {
+            display: none !important; /* Hide header when embedded */
+        }
+        body.is-embedded .gallery-container {
+            margin-top: 10px !important; /* Reduce top margin when embedded */
+        }
+        /* Hide scrollbars specifically for embeds to look cleaner */
+        body.is-embedded::-webkit-scrollbar {
+            display: none; /* Hide scrollbar in webkit browsers */
+        }
+        body.is-embedded {
+            -ms-overflow-style: none;  /* Hide scrollbar in IE and Edge */
+            scrollbar-width: none;  /* Hide scrollbar in Firefox */
+        }
+
+        /* ===== MASONRY GALLERY LAYOUT ===== */
+        /* CSS Columns create a Pinterest-style masonry layout */
+        .masonry {
+            column-gap: 10px; /* Space between columns */
+        }
+
+        /* ===== RESPONSIVE COLUMN COUNTS ===== */
+        /* Mobile devices: 2 columns */
+        @media (max-width: 600px) {
+            .masonry {
+                column-count: 2;
+            }
+        }
+
+        /* Tablets: 3 columns */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .masonry {
+                column-count: 3;
+            }
+        }
+
+        /* Desktop and larger screens: 4 columns */
+        @media (min-width: 1025px) {
+            .masonry {
+                column-count: 4;
+            }
+        }
+
+        /* ===== INDIVIDUAL GALLERY ITEM STYLES ===== */
+        /* Each image in the masonry grid */
+        .masonry-item {
+            display: inline-block;
+            width: 100%; /* Fill the column width */
+            margin-bottom: 10px; /* Space between items vertically */
+            background-color: #f9f9f9; /* Light background for loading state */
+            border-radius: 8px; /* Rounded corners */
+            overflow: hidden; /* Clip content to border radius */
+            position: relative;
+        }
+
+        /* Image styling within gallery items */
+        .masonry-item img {
+            width: 100%; /* Fill the item width */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Remove inline spacing */
+            transition: transform 0.3s ease; /* Smooth zoom animation */
+        }
+
+        /* Hover effect: slight zoom on mouse over */
+        .masonry-item:hover img {
+            transform: scale(1.02); /* Zoom to 102% */
+        }
+
+        /* ===== IMAGE CAPTION STYLES ===== */
+        /* Optional text caption below each image */
+        .caption {
+            padding: 8px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+        }
+
+        /* ===== MODAL (LIGHTBOX) STYLES ===== */
+        /* Full-screen overlay for viewing enlarged images */
+        #modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white background */
+            z-index: 2000; /* Appears above all other content */
+            justify-content: center; /* Center the image */
+            align-items: center;
+            cursor: zoom-out; /* Cursor indicates you can click to close */
+        }
+
+        /* Enlarged image in modal */
+        #modal img {
+            max-width: 90%; /* Don't exceed 90% of screen width */
+            max-height: 90%; /* Don't exceed 90% of screen height */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* Subtle shadow effect */
+        }
+
+        /* Close button (X) styling */
+        #modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<!-- ===== BODY CONTENT ===== -->
+<!-- The page structure is simple: header, gallery container, and modal -->
+<!-- All interactive functionality is handled by JavaScript (gallery.js) -->
+<!-- The page is fully embeddable in iframes - when embedded, the header automatically hides -->
+<body>
+
+    <!-- ===== PAGE HEADER ===== -->
+    <!-- Fixed header with back button and logo -->
+    <!-- Note: The back button is only shown when NOT embedded in an iframe -->
+    <header>
+        <!-- Back button: Returns to the main index.html page (only visible when not embedded) -->
+        <a href="../index.html" class="back-button" id="back-button">&larr;</a>
+        <!-- Site logo/branding -->
+        <div class="logo">rollsbysam</div>
+    </header>
+
+    <!-- ===== GALLERY CONTAINER ===== -->
+    <!-- Main container for the image gallery -->
+    <div class="gallery-container">
+        <!-- Masonry grid that will be populated with images from images.json via JavaScript -->
+        <div class="masonry" id="gallery">
+            <!-- Images will be loaded here dynamically via gallery.js -->
+        </div>
+    </div>
+
+    <!-- ===== MODAL/LIGHTBOX ===== -->
+    <!-- Full-screen overlay for viewing enlarged images -->
+    <!-- Clicking the image or close button (X) will close the modal -->
+    <div id="modal">
+        <!-- Close button (X) in top-right corner -->
+        <span id="modal-close">&times;</span>
+        <!-- Image will be dynamically loaded here when clicked -->
+        <img id="modal-img" src="" alt="Enlarged View">
+    </div>
+
+    <!-- ===== EMBED DETECTION SCRIPT ===== -->
+    <!-- This script detects if the page is embedded in an iframe and applies embed-specific styles -->
+    <!-- When embedded, the header is hidden and the gallery takes up more space -->
+    <!-- This makes the gallery perfect for embedding in other websites or applications -->
+    <script>
+        // Check if this page is inside an iframe
+        if (window.self !== window.top) {
+            // Add the 'is-embedded' class to apply embed-specific CSS styles
+            document.body.classList.add('is-embedded');
+            
+            // Disable the back button when embedded to prevent redirect issues
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                // Remove the href to prevent navigation
+                backButton.removeAttribute('href');
+                // Make it non-interactive
+                backButton.style.pointerEvents = 'none';
+                backButton.style.opacity = '0.5';
+            }
+        }
+    </script>
+
+    <!-- ===== GALLERY FUNCTIONALITY SCRIPT ===== -->
+    <!-- Loads images from images.json and handles gallery interactions -->
+    <!-- See gallery.js for the complete gallery logic -->
+    <script src="../gallery.js"></script>
+    
+    <!-- ===== SERVICE WORKER REGISTRATION ===== -->
+    <!-- Registers a service worker for offline support and caching -->
+    <!-- The service worker (sw.js) handles caching strategies for better performance -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed', err));
+            });
+        }
+    </script>
+</body>
+<!-- ===== END OF GALLERY PAGE ===== -->
+<!-- This page is designed to be:
+     1. Standalone: Can be viewed directly at /gallery/index.html
+     2. Embeddable: Can be embedded in iframes on other websites
+     3. Responsive: Works on mobile, tablet, and desktop screens
+     4. Fast: Uses service worker for caching and offline support
+     5. Customizable: Images are loaded from images.json for easy updates
+-->
+</html>
