@@ -1,65 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- ===== DOCUMENT METADATA ===== -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- Website Name -->
+    <!-- ===== PAGE TITLE ===== -->
+    <!-- This title appears in the browser tab and search engine results -->
+    <!-- CUSTOMIZE: Change "rollsbysam" to your name or brand -->
     <title>rollsbysam</title>
     
-    <!-- Aggressive Caching Meta Tags -->
+    <!-- ===== CACHING HEADERS ===== -->
+    <!-- These tags tell browsers to cache the page for 1 year (31536000 seconds) for faster loading -->
+    <!-- This is aggressive caching - the page will be cached for a very long time -->
     <meta http-equiv="Cache-Control" content="max-age=31536000, public">
     <meta http-equiv="Pragma" content="cache">
     <meta http-equiv="Expires" content="31536000">
     
-    <!-- Meta Tags for SEO and Social Media Previews -->
+    <!-- ===== SEO & SOCIAL MEDIA META TAGS ===== -->
+    <!-- These tags control how your page appears in search results and when shared on social media -->
+    
+    <!-- Page description for search engines and social media -->
+    <!-- CUSTOMIZE: Change this to describe what you do -->
     <meta name="description" content="Photographer & Visual Artist">
+    
+    <!-- Open Graph tags for Facebook, LinkedIn, and other social platforms -->
+    <!-- CUSTOMIZE: Update these with your own information -->
     <meta property="og:title" content="rollsbysam">
-    <meta property="og:description" content="Photographer & Visual Arist">
+    <meta property="og:description" content="Photographer & Visual Artist">
+    <!-- CUSTOMIZE: Replace with a link to your thumbnail image for social media previews -->
     <meta property="og:image" content="<!-- INSERT THUMBNAIL LINK HERE -->">
     <meta property="og:url" content="https://sahil-aditya.github.io/rollsbysam/">
+    
+    <!-- Twitter Card tags for Twitter/X sharing -->
     <meta name="twitter:card" content="summary_large_image">
     
-    <!-- Favicon / Icon -->
+    <!-- ===== FAVICON ===== -->
+    <!-- The icon that appears in the browser tab -->
+    <!-- CUSTOMIZE: Replace with a link to your own favicon/icon -->
     <link rel="icon" href="<!-- INSERT ICON LINK HERE -->" type="image/x-icon">
 
     <style>
-        /* Removes default browser margins and sets the matte black base */
+        /* ===== GENERAL RESET & BASE STYLES ===== */
+        /* Remove all default browser margins and padding, set dark background */
         html, body {
             margin: 0;
             padding: 0;
-            background-color: #141414;
-            overflow-x: hidden; /* Strictly prevents any horizontal scrolling */
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
+            background-color: #141414; /* Dark matte black background */
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            scroll-behavior: smooth; /* Smooth scrolling when navigating */
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS devices */
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
-        /* Custom Modern Sleek Tiny Scrollbar */
+        /* ===== CUSTOM SCROLLBAR STYLING ===== */
+        /* Modern sleek scrollbar for webkit browsers (Chrome, Safari, Edge) */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 6px; /* Width of the scrollbar */
         }
         ::-webkit-scrollbar-track {
-            background: #141414;
+            background: #141414; /* Background of scrollbar track (matches body) */
         }
         ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
+            background: #333; /* Color of scrollbar thumb */
+            border-radius: 10px; /* Rounded corners on scrollbar */
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #555; /* Lighter color when hovering over scrollbar */
         }
-        /* Firefox */
+        /* Firefox scrollbar styling */
         * {
-            scrollbar-width: thin;
-            scrollbar-color: #333 #141414;
+            scrollbar-width: thin; /* Make scrollbar thin */
+            scrollbar-color: #333 #141414; /* Scrollbar color and track color */
         }
 
-        /* Container for Canva embed */
+        /* ===== CANVA CONTAINER ===== */
+        /* Container for the Canva embed - takes up full viewport height */
         .canva-container {
             position: relative;
             width: 100%;
-            height: 100vh;
+            height: 100vh; /* Full viewport height */
             /* Force hardware acceleration for smoother scrolling */
             transform: translateZ(0);
             will-change: transform;
@@ -69,78 +89,87 @@
             background-color: #141414;
         }
 
-        /* Canva iframe - Hiding buttons by scaling and positioning */
+        /* ===== CANVA IFRAME STYLING ===== */
+        /* The Canva design is embedded as an iframe */
+        /* We hide the Canva buttons by scaling and positioning the iframe */
         iframe {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: calc(100% + 50px); /* Extend height to push buttons out */
+            height: calc(100% + 50px); /* Extend height to push buttons out of view */
             border: none;
             display: block;
-            margin-bottom: -50px;
+            margin-bottom: -50px; /* Negative margin to hide bottom buttons */
         }
 
-        /* Glass UI Bottom Navigation Bar */
+        /* ===== GLASS UI BOTTOM NAVIGATION BAR ===== */
+        /* Modern frosted glass effect navigation bar at the bottom */
         .bottom-nav {
             position: fixed;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
+            transform: translateX(-50%); /* Center horizontally */
+            z-index: 1000; /* Appears above other content */
             display: flex;
-            gap: 12px;
+            gap: 12px; /* Space between navigation tabs */
             padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            animation: slideUp 0.5s ease-out;
+            background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
+            border-radius: 50px; /* Pill-shaped container */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); /* Subtle shadow */
+            animation: slideUp 0.5s ease-out; /* Slide up animation on page load */
         }
 
+        /* ===== SLIDE UP ANIMATION ===== */
+        /* Animation for the navigation bar appearing on page load */
         @keyframes slideUp {
             from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(40px);
+                opacity: 0; /* Start invisible */
+                transform: translateX(-50%) translateY(40px); /* Start below final position */
             }
             to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
+                opacity: 1; /* End visible */
+                transform: translateX(-50%) translateY(0); /* End at final position */
             }
         }
 
-        /* Navigation Tab */
+        /* ===== NAVIGATION TAB STYLING ===== */
+        /* Individual navigation buttons/tabs */
         .nav-tab {
             padding: 10px 20px;
-            background: transparent;
+            background: transparent; /* No background by default */
             border: none;
-            color: rgba(0, 0, 0, 0.7);
+            color: rgba(0, 0, 0, 0.7); /* Semi-transparent black text */
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            border-radius: 30px;
-            transition: all 0.3s ease;
+            border-radius: 30px; /* Pill-shaped buttons */
+            transition: all 0.3s ease; /* Smooth animation for all properties */
             position: relative;
-            white-space: nowrap;
-            letter-spacing: 0.5px;
+            white-space: nowrap; /* Keep text on one line */
+            letter-spacing: 0.5px; /* Slight letter spacing for elegance */
         }
 
-        /* Tab hover effect */
+        /* ===== TAB HOVER EFFECT ===== */
+        /* When you hover over a tab, it becomes more visible */
         .nav-tab:hover {
-            color: rgba(0, 0, 0, 0.9);
-            background: rgba(255, 255, 255, 0.1);
+            color: rgba(0, 0, 0, 0.9); /* Darker text */
+            background: rgba(255, 255, 255, 0.1); /* Slight white background */
         }
 
-        /* Active tab */
+        /* ===== ACTIVE TAB STYLING ===== */
+        /* The currently selected tab has a different appearance */
         .nav-tab.active {
-            color: #ffffff;
-            background: rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.2);
+            color: #ffffff; /* White text */
+            background: rgba(0, 0, 0, 0.2); /* Semi-transparent black background */
+            box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.2); /* Inset shadow for depth */
         }
 
-        /* Thin shiny white border effect on active tab */
+        /* ===== ACTIVE TAB SHINE EFFECT ===== */
+        /* Thin shiny white border effect on top of active tab */
         .nav-tab.active::after {
             content: '';
             position: absolute;
@@ -152,7 +181,7 @@
             border-radius: 30px;
         }
 
-        /* Responsive adjustments */
+        /* ===== RESPONSIVE ADJUSTMENTS FOR TABLETS ===== */
         @media (max-width: 768px) {
             .bottom-nav {
                 bottom: 16px;
@@ -166,6 +195,7 @@
             }
         }
 
+        /* ===== RESPONSIVE ADJUSTMENTS FOR MOBILE ===== */
         @media (max-width: 480px) {
             .bottom-nav {
                 bottom: 12px;
@@ -179,7 +209,8 @@
             }
         }
 
-        /* Prevent text selection on buttons */
+        /* ===== PREVENT TEXT SELECTION ON BUTTONS ===== */
+        /* Users shouldn't be able to select the text in navigation buttons */
         .nav-tab {
             -webkit-user-select: none;
             -moz-user-select: none;
@@ -187,22 +218,26 @@
             user-select: none;
         }
 
-        /* Disable default touch behaviors */
+        /* ===== DISABLE DEFAULT TOUCH BEHAVIORS ===== */
+        /* Remove default browser touch callout and selection on mobile */
         body {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Page Container */
+        /* ===== PAGE CONTAINER ===== */
+        /* Container for each page (home, about, book) */
         .page-container {
-            width: 100vw;
-            min-height: 100vh;
-            overflow-y: auto;
+            width: 100vw; /* Full viewport width */
+            min-height: 100vh; /* At least full viewport height */
+            overflow-y: auto; /* Allow vertical scrolling */
             position: relative;
             background-color: #141414;
         }
 
+        /* ===== HIDDEN PAGE STYLING ===== */
+        /* Pages that are not currently displayed */
         .page-container.hidden {
             display: none;
         }
@@ -210,9 +245,14 @@
 </head>
 <body>
 
-    <!-- HOME PAGE -->
+    <!-- ===== HOME PAGE ===== -->
+    <!-- The first page shown when the site loads -->
+    <!-- Contains a Canva design embedded as an iframe -->
+    <!-- CUSTOMIZE: Replace the iframe src with your own Canva design embed link -->
     <div id="home-page" class="page-container">
         <div class="canva-container">
+            <!-- Canva embed - this displays your Canva design -->
+            <!-- To get your own embed link: Open Canva design > Share > Embed > Copy the src URL -->
             <iframe loading="lazy" 
                 src="https://www.canva.com/design/DAHNmGrziE8/LSRHJCe9RaZ0mD-ykex5bQ/view?embed" 
                 allowfullscreen="allowfullscreen" 
@@ -221,10 +261,13 @@
         </div>
     </div>
 
-    <!-- ABOUT ME PAGE -->
+    <!-- ===== ABOUT ME PAGE ===== -->
+    <!-- Second page - typically contains information about you -->
+    <!-- CUSTOMIZE: Replace the iframe src with your own Canva design embed link for the About page -->
     <div id="about-page" class="page-container hidden">
         <div class="canva-container">
-            <!-- EMBED LINK 2: PASTE YOUR ABOUT ME CANVA EMBED LINK HERE -->
+            <!-- Canva embed for About page -->
+            <!-- CUSTOMIZE: Paste your About Me Canva embed link here -->
             <iframe 
                 src="https://www.canva.com/design/DAHNx3ydcZo/hVTeoUkUj4qgCleFh9rBFA/view?embed" 
                 allowfullscreen="allowfullscreen" 
@@ -233,10 +276,13 @@
         </div>
     </div>
 
-    <!-- BOOK/HIRE PAGE -->
+    <!-- ===== BOOK/HIRE PAGE ===== -->
+    <!-- Third page - typically contains booking or hiring information -->
+    <!-- CUSTOMIZE: Replace the iframe src with your own Canva design embed link for the Book/Hire page -->
     <div id="book-page" class="page-container hidden">
         <div class="canva-container">
-            <!-- EMBED LINK 3: PASTE YOUR BOOK/HIRE CANVA EMBED LINK HERE -->
+            <!-- Canva embed for Book/Hire page -->
+            <!-- CUSTOMIZE: Paste your Book/Hire Canva embed link here -->
             <iframe 
                 src="https://www.canva.com/design/DAHNx9rCgp0/z2b7eg-BNi6mtuvpvN8TEg/view?embed" 
                 allowfullscreen="allowfullscreen" 
@@ -245,19 +291,27 @@
         </div>
     </div>
 
-    <!-- GLASS UI BOTTOM NAVIGATION BAR -->
+    <!-- ===== GLASS UI BOTTOM NAVIGATION BAR ===== -->
+    <!-- Navigation tabs to switch between pages -->
+    <!-- CUSTOMIZE: Change the text labels to whatever you want -->
     <div class="bottom-nav">
+        <!-- Home tab - shown by default as active -->
         <div class="nav-tab active" data-page="home">Home</div>
+        <!-- About Me tab -->
         <div class="nav-tab" data-page="about">About me</div>
+        <!-- Book/Hire tab -->
         <div class="nav-tab" data-page="book">Book/Hire</div>
     </div>
 
     <script>
         // ===== PAGE PRELOADING LOGIC =====
+        // This preloads the About and Book pages in the background so they load faster when clicked
+        // The home page is already loaded, so we track that
         const preloadedPages = new Set();
         preloadedPages.add('home'); // Home is already loaded
         
         function preloadPage(pageKey) {
+            // Don't preload if already preloaded
             if (preloadedPages.has(pageKey)) return;
             
             const page = document.getElementById(`${pageKey}-page`);
@@ -285,27 +339,49 @@
         });
 
         // ===== CLICK SOUND EFFECT LOGIC =====
-        let clickAudio = null;
+        // This creates a pool of audio elements to allow overlapping sound playback
+        // Instead of restarting a single audio element, we create new instances for each click
+        // CUSTOMIZE: Adjust MAX_CONCURRENT_SOUNDS to allow more/fewer overlapping sounds
+        // CUSTOMIZE: Adjust volume (0.0 to 1.0) to make the sound louder or quieter
+        let clickSoundPool = [];
+        const MAX_CONCURRENT_SOUNDS = 5; // Maximum number of overlapping click sounds
         
         function initClickSound() {
-            if (!clickAudio) {
-                clickAudio = new Audio('./resources/click.mp3');
-                clickAudio.preload = 'auto';
-                clickAudio.volume = 0.5; // Adjust volume as needed
+            // Pre-load the first click sound for immediate playback
+            if (clickSoundPool.length === 0) {
+                for (let i = 0; i < MAX_CONCURRENT_SOUNDS; i++) {
+                    const audio = new Audio('./resources/click.mp3');
+                    audio.preload = 'auto';
+                    audio.volume = 0.5; // Adjust volume as needed (0.0 to 1.0)
+                    clickSoundPool.push(audio);
+                }
             }
         }
         
         function playClickSound() {
             initClickSound();
-            // Stop current playback and restart for seamless overlapping
-            clickAudio.currentTime = 0;
-            clickAudio.play().catch(err => {
-                // Silently handle autoplay policy restrictions
+            // Find the first audio element that has finished playing
+            for (let audio of clickSoundPool) {
+                // If the audio has ended or hasn't started, reuse it
+                if (audio.paused || audio.ended) {
+                    audio.currentTime = 0; // Reset to beginning
+                    audio.play().catch(err => {
+                        // Silently handle autoplay policy restrictions
+                        console.debug('Click sound play prevented:', err);
+                    });
+                    return; // Exit after playing one sound
+                }
+            }
+            // If all sounds are playing, create a new temporary one
+            const newAudio = new Audio('./resources/click.mp3');
+            newAudio.volume = 0.5;
+            newAudio.play().catch(err => {
                 console.debug('Click sound play prevented:', err);
             });
         }
         
-        // Track if we're in a scroll/swipe operation
+        // ===== SCROLL/SWIPE DETECTION ===== 
+        // Track if we're in a scroll/swipe operation to avoid playing click sound during scrolling
         let isScrolling = false;
         let scrollTimeout;
         
@@ -317,7 +393,8 @@
             }, 150);
         }, { passive: true });
         
-        // Track touch events to detect swipes
+        // ===== TOUCH EVENT DETECTION =====
+        // Track touch events to detect swipes and distinguish them from clicks
         let touchStartX = 0;
         let touchStartY = 0;
         let isSwiping = false;
@@ -340,7 +417,8 @@
             }
         }, { passive: true });
         
-        // Click sound on all clicks (except during scroll/swipe)
+        // ===== CLICK SOUND ON CLICKS =====
+        // Play click sound on all clicks (except during scroll/swipe)
         document.addEventListener('click', (e) => {
             if (!isScrolling && !isSwiping) {
                 playClickSound();
@@ -349,6 +427,7 @@
         }, true);
 
         // ===== PAGE NAVIGATION LOGIC =====
+        // Handle switching between Home, About, and Book pages
         const navTabs = document.querySelectorAll('.nav-tab');
         const pages = {
             home: document.getElementById('home-page'),
@@ -379,7 +458,9 @@
             });
         });
 
-        // Service Worker Registration
+        // ===== SERVICE WORKER REGISTRATION =====
+        // Register a service worker for offline support and caching
+        // The service worker (sw.js) handles caching strategies for better performance
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
