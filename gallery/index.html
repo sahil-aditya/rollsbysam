@@ -231,10 +231,10 @@
 
     <!-- ===== PAGE HEADER ===== -->
     <!-- Fixed header with back button and logo -->
-    <!-- Note: target="_top" ensures the back button navigates the whole browser, not just the iframe (important for embedded mode) -->
+    <!-- Note: The back button is only shown when NOT embedded in an iframe -->
     <header>
-        <!-- Back button: Returns to the main index.html page -->
-        <a href="../index.html" class="back-button" target="_top">&larr;</a>
+        <!-- Back button: Returns to the main index.html page (only visible when not embedded) -->
+        <a href="../index.html" class="back-button" id="back-button">&larr;</a>
         <!-- Site logo/branding -->
         <div class="logo">rollsbysam</div>
     </header>
@@ -267,6 +267,16 @@
         if (window.self !== window.top) {
             // Add the 'is-embedded' class to apply embed-specific CSS styles
             document.body.classList.add('is-embedded');
+            
+            // Disable the back button when embedded to prevent redirect issues
+            const backButton = document.getElementById('back-button');
+            if (backButton) {
+                // Remove the href to prevent navigation
+                backButton.removeAttribute('href');
+                // Make it non-interactive
+                backButton.style.pointerEvents = 'none';
+                backButton.style.opacity = '0.5';
+            }
         }
     </script>
 
